@@ -190,7 +190,7 @@ export default function GlobalHeader() {
                     )}
               </li>
   </ul>
-</nav>
+</nav> 
       </div>
     </header>
   );
