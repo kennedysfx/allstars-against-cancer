@@ -1,0 +1,614 @@
+.heroSection {
+  padding: 80px 20px;
+  text-align: center;
+  background-color: #f0f4f8; 
+}
+
+.title {
+  color: #d12e2e; 
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.description {
+  max-width: 700px;
+  margin: 0 auto 30px auto;
+  font-size: 1.2rem;
+  color: #001b29;
+  line-height: 1.6;
+}
+
+.accentBar {
+  width: 100px;
+  height: 4px;
+  margin: 0 auto;
+  /* Red, Gold, Blue bar */
+  background: linear-gradient(to right, #6814ef 33%, #eba92f 33%, #dd9a1f 66%, #035e88 66%);
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    padding: 80px 15px;
+  }
+
+  .title {
+    font-size: 2.1rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+}
+
+.storyCard {
+  display: flex;
+  gap: 40px;
+  padding: 60px 20px;
+  max-width: 1500px;
+  margin: 0 auto;
+  align-items: flex-start;
+  background-color: #cbdfed; 
+  /* Adding border-radius to match a modern card look */
+  border-radius: none; 
+}
+
+.storyTitle {
+  font-size: 2rem;
+  color: #001b29;
+  margin-bottom: 15px;
+}
+
+.storyExcerpt {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #004566;
+  margin-bottom: 20px;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  position: sticky;
+  top: 40px;
+  
+}
+
+.storyBody {
+  margin-top: 30px;
+  line-height: 1.8;
+  color: #333;
+}
+
+
+/* Mobile: Column layout */
+@media (max-width: 768px) {
+  .storyCard {
+    flex-direction: column-reverse; /* Image on top, text on bottom */
+    text-align: left;
+    
+  }
+  .storyTitleExtra {
+    margin-bottom: 0px; 
+  }
+}
+
+/* Desktop: Row layout */
+@media (min-width: 769px) {
+  .storyCard {
+    flex-direction: row;
+  }
+  .textContainer, .imageContainer {
+    flex: 1;
+  }
+}
+
+
+
+/* MOBILE & TABLET: Text at the top, image below */
+@media (max-width: 1024px) {
+  .storyCard {
+    flex-direction: column;
+    
+  }
+
+}
+
+/* Desktop: Two-column layout */
+@media (min-width: 1025px) {
+  .storyCard {
+    display: grid;
+    /* Two columns: Text on the left, Image on the right */
+    grid-template-columns: 1fr 1fr;
+    /* Create specific areas for better control */
+    grid-template-areas: 
+      "text image"
+      "body image";
+    align-items: start;
+    gap: 40px;
+  }
+
+  .textContainer {
+    grid-area: text; /* Header/Title stays at the top */
+  }
+
+  .imageContainer {
+    grid-area: image;
+    /* This "brings the image down" */
+    margin-top: 80px; 
+  }
+
+  .storyBody {
+    grid-area: body; /* Pulls the story content up under the header */
+    margin-top: -20px; /* Adjust this to fine-tune how close it is to the title */
+  }
+  .toggleButton {
+    margin: 10px 0 0 0; /* Aligns button to the left */
+    text-align: left;
+  }
+  
+}
+
+.textContainer h2, 
+.textContainer p {
+  margin: 0;
+  padding: 0;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Control the space between elements yourself */
+}
+
+.fullWidthStory {
+  max-width: 1500px; /* Matches your storyCard max-width */
+  margin: 0 auto;    /* Centers it */
+  padding: 1px 20px 60px 20px; /* Matches side/bottom padding of storyCard */
+  background-color: #cbdfed; /* Matches the hero and storyCard background */
+  overflow: hidden;
+  transition: 0.9s ease-in-out; /* The animation speed */
+}
+
+/* This is the state when it is closed */
+.collapsed {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* This is the state when it is open */
+.expanded {
+  max-height: 2000px; /* Needs to be larger than your longest story */
+  padding: 20px 20px 60px 20px;
+}
+
+.fullWidthStory h3 {
+  font-size: 1.2rem;
+  color: #001b29;
+  margin: 0 0 20px 0;
+}
+
+.fullWidthStory blockquote {
+  border-left: 4px solid #d12e2e; /* Matches your accent theme */
+  padding-left: 20px;
+  margin: 30px 0;
+  font-style: italic;
+  color: #004566;
+}
+
+.toggleButton {
+  background: none;
+  border: none;
+  color: #d12e2e; /* Matches your accent theme */
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-top: 20px;
+  padding: 10px 0;
+  display: block;
+  font-style: italic;
+  padding: 0;
+  display: block;
+}
+
+.toggleButton:hover {
+  text-decoration: underline;
+}
+
+
+/* New Section styling consistent with your existing theme */
+.storyCardReverse {
+  display: flex;
+  gap: 40px;
+  padding: 60px 20px;
+  max-width: 1500px;
+  margin: 0 auto;
+  align-items: flex-start;
+  background-color: #ededdd; /* Matches your previous sections */
+}
+
+/* Ensure title matches previous sections */
+.storyCardReverse .storyTitle {
+  font-size: 2rem;
+  color: #001b29;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+/* Standard body text styles */
+.storyCardReverse .storyBody p {
+  font-size: 1rem;      /* Matches your standard body font size */
+  line-height: 1.8;       /* Consistent with your other sections */
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Bold the first paragraph after the title */
+.storyCardReverse .storyBody p:first-child {
+  font-weight: 700;       /* Bolds the text as requested */
+  color: #001b29;         /* Keeps it consistent with your title color */
+}
+
+/* Desktop: Force Image Left */
+@media (min-width: 1025px) {
+  .storyCardReverse {
+    flex-direction: row;
+  }
+  .storyCardReverse .imageContainer, 
+  .storyCardReverse .textContainer {
+    flex: 1;
+  }
+}
+
+/* Mobile: Column */
+@media (max-width: 1024px) {
+  .storyCardReverse {
+    flex-direction: column;
+  }
+}
+
+/* Style for Paul's section specifically */
+.paulSection {
+  display: flex;
+  gap: 40px;
+  padding: 60px 20px;
+  max-width: 1500px;
+  margin: 0 auto;
+  align-items: flex-start;
+  /* CHANGE THIS COLOR to whatever you like */
+  background-color: #093457; 
+}
+
+.paulSection .storyTitle {
+  font-size: 2rem;
+  color: #fefefe;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+/* Increase size and bold the first paragraph */
+.paulSection .storyBody p:first-child {
+  font-size: 1.3rem;      /* Larger text size */
+  font-weight: 800;       /* Bolder weight */
+  color: #fefefe;
+  line-height: 1.5;
+}
+
+.paulSection .storyBody p:not(:first-child) {
+  font-size: 1rem;      /* Standard size for subsequent paragraphs */
+  line-height: 1.8;
+  color: #fefefe;
+  margin-top: 20px;
+}
+
+/* Desktop: Standard layout (Text Left, Image Right) */
+@media (min-width: 1025px) {
+  .paulSection { flex-direction: row; }
+  .paulSection .textContainer, .paulSection .imageContainer { flex: 1; }
+}
+
+/* Mobile: Column */
+@media (max-width: 1024px) {
+  .paulSection { flex-direction: column; }
+}
+
+/* Independent section for the new story */
+.royceSection {
+  display: grid;
+  padding: 60px 20px;
+  background-color: #1a2a3a;
+  color: #ffffff;
+  gap: 20px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.royceTitle {
+  font-size: 2.5rem;
+  margin: 0;
+  grid-area: title;
+  text-transform: uppercase;
+}
+
+.royceSection .imageContainer { grid-area: image; }
+.royceSection .textContainer { grid-area: text; }
+
+.royceSection .storyBody p:first-child {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+.royceSection .storyBody p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #e0e0e0;
+  margin-bottom: 20px;
+}
+
+/* MOBILE: Stacks Title -> Image -> Text */
+@media (max-width: 1024px) {
+  .royceSection {
+    grid-template-areas: 
+      "title"
+      "image"
+      "text";
+  }
+}
+
+/* DESKTOP: Image Left, Title/Text Right */
+@media (min-width: 1025px) {
+  .royceSection {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+      "image title"
+      "image text";
+    gap: 40px;
+    align-items: start;
+  }
+}
+
+/* Initial hidden state */
+.animateSlideUp {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+/* Final visible state */
+.isVisible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Stagger effect: Make the text show up slightly before the image */
+.textContainer { transition-delay: 0.2s; }
+.imageContainer { transition-delay: 0.8s; }
+
+/* 1. Add this to ensure no gaps between sections */
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 2. Update your sections to be "gap-proof" */
+.storyCard, 
+.storyCardReverse, 
+.paulSection, 
+.royceSection,
+.heroSection {
+  margin: 0 !important;
+  padding: 60px 20px; /* Keep your existing padding */
+  border: none;
+  /* This prevents the browser from rendering sub-pixel white space */
+  outline: 1px solid transparent; 
+  /* This ensures the background color is solid all the way to the edge */
+  background-clip: padding-box; 
+}
+
+/* New Section Style */
+.ourStoriesSection {
+  padding: 80px 20px;
+  text-align: center;
+  background-color: #ffffff; /* White background */
+}
+
+/* Reuse your existing title and description styles 
+   but ensure the color is correct if needed */
+.ourStoriesTitle {
+  color: #d12e2e; /* Dark blue title */
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.ourStoriesDescription {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Reuse the .storyCard class for consistent structure */
+.drSection {
+  display: grid;
+  padding: 60px 20px;
+  max-width: 1500px;
+  margin: 0 auto;
+  gap: 40px;
+  background-color: #e6edf4;
+  /* Define grid areas */
+  grid-template-areas: 
+    "header"
+    "image"
+    "body";
+}
+
+/* Mobile: Default is the grid-areas above */
+
+/* Desktop: Reorder and set to 2 columns */
+@media (min-width: 1025px) {
+  .drSection {
+    grid-template-columns: 1fr 1fr;
+    /* This creates the layout: Header on top-left, Body on bottom-left, Image spans right side */
+    grid-template-areas: 
+      "header image"
+      "body image";
+    align-items: start;
+  }
+}
+
+.drHeader { grid-area: header; }
+.drImage { grid-area: image; }
+.drBody { grid-area: body; }
+
+/* Reuse the .storyCard class for consistent structure */
+.doctorsSection {
+  display: grid;
+  padding: 60px 20px;
+  max-width: 1500px;
+  margin: 0 auto;
+  gap: 40px;
+  background-color: #fcfcfd;
+  /* Define grid areas */
+  grid-template-areas: 
+    "header"
+    "image"
+    "body";
+}
+
+/* Mobile: Default is the grid-areas above */
+
+/* Desktop: Reorder and set to 2 columns */
+@media (min-width: 1025px) {
+  .doctorsSection {
+    grid-template-columns: 1fr 1fr;
+    /* This creates the layout: Header on top-left, Body on bottom-left, Image spans right side */
+    grid-template-areas: 
+      "header image"
+      "body image";
+    align-items: start;
+  }
+}
+
+.doctorsHeader { grid-area: header; }
+.doctorsImage { grid-area: image; }
+.doctorsBody { grid-area: body; }
+
+
+.groupSection {
+  display: grid;
+  padding: 60px 20px;
+  gap: 40px;
+  background-color: #f0f4f8; 
+  max-width: 1500px;
+  margin: 0 auto;
+  
+  /* Mobile: Stacked layout */
+  grid-template-areas: 
+    "image"
+    "body";
+}
+
+@media (min-width: 1025px) {
+  .groupSection {
+    grid-template-columns: 1fr 1fr;
+    /* Desktop: Image Left, Body Right */
+    grid-template-areas: 
+      "image body";
+    align-items: center; 
+  }
+}
+
+/* Mapping your classes */
+.groupImage { 
+  grid-area: image; 
+  width: 100%;
+}
+
+.groupBody { 
+  grid-area: body; 
+}
+
+/* Ensure the image fills the area correctly */
+.groupImage img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.groupBody p {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  color: #334155;
+}
+
+.ctaSection {
+  background-color: #c4b5fd; /* Light purple background */
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column; /* Stacks items for mobile as in Screenshot 2026-06-05 110439.png */
+  align-items: center;
+  text-align: center;
+}
+
+.ctaHeading {
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.ctaButton {
+  background-color: black;
+  color: white;
+  padding: 15px 40px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  
+}
+
+.ctaButton:hover {
+  background-color: #8b0fc4; /* Change to your preferred hover color */
+}
+
+
+/* Desktop layout adjustment for Screenshot 2026-06-05 110429.png */
+@media (min-width: 768px) {
+  .ctaSection {
+    flex-direction: row; /* Aligns items side-by-side */
+    justify-content: space-between;
+    text-align: left;
+    padding: 80px 100px;
+  }
+  
+  .ctaContent {
+    flex: 1;
+  }
+
+}
+/* Mobile cta Adjustments */
+@media (max-width: 1024px) {
+  
+  .ctaButton {
+    width: 100%
+  }
+}
+
+
+/* Apply this to all your section classes */
+.heroSection, .storyCard, .storyCardReverse, .paulSection, .royceSection, .ourStoriesSection, .drSection, .doctorsSection, .groupSection, .ctaSection {
+  margin: 0 !important;
+  /* Use a negative margin to overlap the border slightly */
+  margin-bottom: -1px !important; 
+  /* This prevents the sub-pixel background color gap */
+  background-clip: padding-box; 
+  /* Ensures no stray pixels show between sections */
+  border: none !important;
+}
+

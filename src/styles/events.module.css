@@ -1,0 +1,280 @@
+.heroContainer {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-image: url('/images/efhero-section.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  /* Desktop: Align to right, center vertically */
+  align-items: center; 
+  justify-content: flex-end; 
+  padding-right: 5%;
+}
+
+.heroHeading {
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Mobile: Change alignment to bottom-left */
+@media (max-width: 768px) {
+  .heroContainer {
+    align-items: center;   /* Pushes text to the bottom */
+    justify-content: flex-start; /* Pushes text to the left */
+    padding-left: 5%;
+    padding-bottom: 5%;
+    padding-right: 0;
+  }
+
+  .heroHeading {
+    font-size: 2rem; /* Slightly smaller for mobile screens */
+  }
+}
+
+.descriptionSection {
+  background-color: #eef2f9; /* A light blue-gray background matching the image */
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.descriptionText {
+  max-width: 800px;
+  color: #1a365d; /* Dark navy text for readability */
+  font-size: 1.25rem;
+  line-height: 1.6;
+  font-weight: 500;
+  text-align: center;
+}
+
+.reliveSection {
+  padding: 60px 20px;
+  background-color: #ffffff;
+}
+
+.reliveTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #1a202c;
+  margin-bottom: 10px;
+}
+
+.reliveDescription {
+  font-size: 1.1rem;
+  color: #4a5568;
+  margin-bottom: 40px;
+}
+
+/* The Grid Container */
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns on desktop */
+  gap: 50px; /* Space between images */
+}
+
+/* Image styling */
+.eventImage {
+  width: 100%;
+  height: 300px;
+  object-fit: cover; /* Keeps images uniform even if sizes differ */
+  border-radius: 4px;
+  
+}
+
+/* Mobile: Stack in one column */
+@media (max-width: 768px) {
+  .imageGrid {
+    grid-template-columns: 1fr; /* Switch to 1 column */
+  }
+}
+
+.eventCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eventTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 10px 0 0 0;
+  color: #1a202c;
+}
+
+.eventDate {
+  font-size: 1.1rem;
+  color: #4a5568;
+  margin: 0;
+}
+
+.eventLink {
+  color: #2b6cb0;
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+@media (min-width: 768px) {
+    .reliveSection {
+  padding: 60px 50px;
+    }
+
+}
+
+.headlinesSection {
+  padding: 60px 5%;
+  background-color: #ffffff;
+  border: none !important; /* Ensure no border is being applied */
+  margin: 0 !important;    /* Ensure no margin is creating a gap */
+  margin-top: -1px !important; 
+  position: relative;
+}
+
+.headlinesTitle {
+  color: #1a202c; /* Orange color matching the screenshot */
+  font-size: 2.85rem;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.headlinesSubtitle {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+.eventDateHeading {
+  color: #2b6cb0; /* Blue color */
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+}
+
+.pressGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 20px;
+}
+
+.pressItem {
+  margin-bottom: 25px;
+}
+
+.publicationName {
+  font-size: 1rem;
+  color: #050505;
+  margin-bottom: 5px;
+}
+
+.headlineLink {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1a202c;
+  text-decoration: none;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .pressGrid { grid-template-columns: 1fr; }
+  .headlinesTitle {
+  color: #1a202c; /* Orange color matching the screenshot */
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+}
+
+.phaseHeader {
+  color: #580a91; /* Gold color */
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.contentBox {
+  background-color: #f9f9f9; /* Slightly more opaque so it's visible */
+  border: 1px solid rgba(0, 0, 0, 0.1);       /* A faint dark border to define the box */
+  border-radius: 12px;
+  padding: 30px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+
+
+/* Initial state: invisible and shifted down */
+.fadeUp {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  will-change: opacity, transform;
+}
+
+/* Class added by the observer to trigger the slide-up */
+.isVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ctaSection {
+  background-color: #c4b5fd; /* Light purple background */
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column; /* Stacks items for mobile as in Screenshot 2026-06-05 110439.png */
+  align-items: center;
+  text-align: center;
+}
+
+.ctaHeading {
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.ctaButton {
+  background-color: black;
+  color: white;
+  padding: 15px 40px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  
+}
+
+.ctaButton:hover {
+  background-color: #8b0fc4; /* Change to your preferred hover color */
+}
+
+
+/* Desktop layout adjustment for Screenshot 2026-06-05 110429.png */
+@media (min-width: 768px) {
+  .ctaSection {
+    flex-direction: row; /* Aligns items side-by-side */
+    justify-content: space-between;
+    text-align: left;
+    padding: 80px 100px;
+  }
+  
+  .ctaContent {
+    flex: 1;
+  }
+
+}
+/* Mobile cta Adjustments */
+@media (max-width: 1024px) {
+  
+  .ctaButton {
+    width: 100%
+  }
+}
+

@@ -1,0 +1,553 @@
+/* Add this to the top of your research.module.css or inside the global styles */
+html {
+  scroll-behavior: smooth;
+}
+
+.heroSection {
+  background-color: #d2b98b; /* Tan background */
+  padding: 80px 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  min-height: 300px; /* Ensures a consistent hero height */
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url('/images/research-hero.jpg');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  min-height: 400px; /* Increased height slightly for a hero feel */
+}
+
+/* Rest of your existing styles... */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.subHeading {
+  color: #d4af37; /* Gold text looks great over a dimmed photo */
+  letter-spacing: 0.15em;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.mainHeading {
+  color: #ffffff; /* Switched to white for better contrast over the image */
+  font-size: 5rem;
+  line-height: 0.9;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .heroSection {
+    padding: 50px 1.5rem;
+  }
+  
+  .mainHeading {
+    font-size: 2.8rem; /* Scaled down for mobile readability */
+    line-height: 1.1;
+  }
+
+  .subHeading {
+    font-size: 0.9rem;
+  }
+}
+
+/* New Content Section */
+.contentSection {
+  padding: 80px 2rem;
+  background-color: #ddecc9; /* Keep your light green background */
+  display: flex;
+  justify-content: flex-start; /* Change from center to start */
+  padding-left: 5%; /* Add a left margin to push it off the edge */
+}
+
+.contentContainer {
+  max-width: 800px;
+  text-align: left;
+}
+
+.sectionHeading {
+  color: #001b29; /* Matches your brand's dark blue */
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.sectionText {
+  color: #333333;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .mainHeading { font-size: 2.5rem; }
+  .sectionHeading { font-size: 1.6rem; }
+}
+
+/* desktop Responsiveness */
+@media (min-width: 769px) {
+  .contentContainer {
+    text-align: left;
+  }
+   
+}
+
+/* Container for the page */
+.pageContainer {
+  position: relative; /* Essential for the floating box */
+  width: 100%;
+}
+
+/* The Testimonial Section */
+.testimonialWrapper {
+  padding: 0;
+  /* This pulls the box up into the hero section */
+  margin-top: -150px; 
+  position: relative;
+  z-index: 10;
+}
+
+.testimonialBox {
+  background-color: #093457;
+  color: #ffffff;
+  padding: 50px; /* Added a bit more breathing room */
+  border-radius: 1px;
+  /* REMOVED: max-height and overflow-y to allow full height without scrolling */
+  height: auto; 
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically centers the text block */
+  align-items: flex-start;
+}
+
+.quote {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+  text-align: left; /* This creates the clean, natural look from image_bf0401.png */
+  max-width: 100%;
+}
+.author {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.title {
+  display: block;
+  font-weight: 400;
+  margin-top: 5px;
+  opacity: 0.9;
+}
+
+
+
+/* Desktop: Floating Box */
+@media (min-width: 1024px) {
+  .testimonialWrapper {
+    position: absolute;
+    top: 270px; 
+    right: 0%;
+    width: 500px; /* Slightly wider for better desktop proportion */
+    margin-top: 70;
+  }
+  .contentContainer {
+    max-width: 50%; /* This forces it to stop at 50% */
+  }
+}
+
+/* Mobile: 100% width and clean flow */
+@media (max-width: 1023px) {
+  .testimonialWrapper {
+    position: relative;
+    padding: 0;
+    margin-top: 0px; /* Give it space from the section above */
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* --- Research That Saves Lives Section Styles --- */
+
+.listSection {
+  background-color: #1a222e; /* Dark navy background */
+  color: #ffffff;
+  padding: 80px 2rem;
+}
+
+.listHeading {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* Accordion Styles (Mobile View) */
+.accordionWrapper {
+  border-top: 1px solid #334050;
+}
+
+.accordionWrapper:last-child {
+  border-bottom: 1px solid #334050;
+}
+
+.accordionItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #d4af37; /* Gold accent color */
+}
+
+.accordionContent {
+  padding: 0 0 20px 0;
+  line-height: 1.6;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+/* Desktop Styles */
+@media (min-width: 1024px) {
+  .mobileView {
+    display: none; /* Hide accordion on desktop */
+  }
+
+  .desktopView {
+    display: block;
+  }
+
+  .gridContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns side-by-side */
+    gap: 40px;
+  }
+
+  .instName {
+    color: #d4af37;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  .instLoc {
+    font-style: italic;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    opacity: 0.9;
+  }
+
+  .content {
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+}
+
+/* Mobile/Tablet Styles */
+@media (max-width: 1023px) {
+  .desktopView {
+    display: none; /* Hide desktop grid on mobile */
+  }
+
+  .mobileView {
+    display: block;
+  }
+}
+
+.whoWeFundSection {
+  padding: 80px 2rem;
+  background-color: #ffffff;
+  
+}
+
+.whoWeFundHeading {
+  color: #7B2CBF;
+  font-size: 2.5rem;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.fundSupportText {
+  color: #333333;
+  font-weight: 700;
+  margin: 30px 0 20px 0;
+  line-height: 1.6;
+}
+
+/* Two-Column Grid for the list */
+.fundingListGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 40px;
+}
+
+.fundingListItem {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333333;
+  padding-left: 10px;
+}
+
+/* Mobile: Switch to one column */
+@media (max-width: 768px) {
+  .fundingListGrid {
+    grid-template-columns: 1fr;
+  }
+  .whoWeFundHeading {
+  color: #7B2CBF;
+  font-size: 2rem;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  font-weight: 700;
+  }
+  
+}
+
+.committeeSection {
+  padding: 80px 2rem;
+  background-color: #ffffff;
+  width: 100%;
+  border: none; /* Explicitly ensure no border */
+  
+}
+
+.committeeHeading {
+  color: #7B2CBF;
+  font-size: 2.5rem;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* 1. Base style (Mobile) */
+.committeeGrid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 40px !important;
+  margin-top: 40px !important;
+  width: 100% !important;
+}
+
+/* 2. Tablet (Specific override) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .committeeGrid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* 3. Desktop (Specific override) */
+@media (min-width: 1025px) {
+  .committeeGrid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+.memberCard {
+  text-align: left;
+  border: none; /* Explicitly ensure no border */
+}
+
+.memberImagePlaceholder {
+  width: 100%;
+  height: 300px;
+  background-color: #ddd;
+  margin-bottom: 20px;
+}
+
+.memberName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+.memberTitle {
+  font-weight: 600;
+  margin: 0;
+}
+
+.memberAffiliation {
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 5px;
+}
+.memberImage {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  display: block; /* Ensures the image behaves correctly */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+
+.fundingBox {
+  background-color: #f9f9f9; /* Choose your desired background color */
+  border: 1px solid #e0e0e0; /* Adds the box border */
+  border-radius: 8px;        /* Softens the corners */
+  padding: 40px;             /* Adds internal breathing room */
+  margin: 0;            /* Adds space outside the box */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Adds a subtle lifted effect */
+}
+
+.testimonialSplitSection {
+  position: relative;
+  width: 100%;
+  min-height: 400px; /* Desktop height */
+  display: flex;
+  align-items: center;
+  background-image: url('/images/research.avif');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+/* This creates the blend overlay on top of the image */
+.testimonialSplitSection::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #021e63 30%, rgba(9, 52, 87, 0.4) 70%, transparent 100%);
+}
+
+.splitContentSide {
+  position: relative; /* Keeps text above the gradient */
+  width: 100%;
+  padding: 60px 5%;
+  color: #ffffff;
+  z-index: 1;
+}
+
+/* Mobile: Thinner height */
+@media (max-width: 768px) {
+  .testimonialSplitSection {
+    min-height: 250px; /* Thinner for mobile */
+  }
+  
+  .testimonialSplitSection::before {
+    /* Adjusts the gradient to be more solid on mobile for readability */
+    background: linear-gradient(to right, #021e63 50%, rgba(9, 52, 87, 0.5) 100%);
+  }
+}
+
+/* Ensure no media query exists here that changes flex-direction to column */
+
+.quoteText {
+  font-size: 1.5rem;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.accentLine {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #770ddb, #eabe2e, #0077b6); /* Red to Gold to Blue gradient */
+  margin-bottom: 20px;
+}
+
+.authorName {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* --- Animation Styles --- */
+
+/* The initial hidden state for all animated elements */
+.fadeUp {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* The state added by the IntersectionObserver when the element enters the view */
+.fadeUp.isVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 
+  Use this class on paragraph text to make it fade in slightly 
+  after the heading above it 
+*/
+.fadeUp.body {
+  transition-delay: 0.3s;
+}
+
+/* --- Keep your existing component styles below this line --- */
+
+.ctaSection {
+  background-color: #c4b5fd; /* Light purple background */
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column; /* Stacks items for mobile as in Screenshot 2026-06-05 110439.png */
+  align-items: center;
+  text-align: center;
+}
+
+.ctaHeading {
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.ctaButton {
+  background-color: black;
+  color: white;
+  padding: 15px 40px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  
+}
+
+.ctaButton:hover {
+  background-color: #8b0fc4; /* Change to your preferred hover color */
+}
+
+
+/* Desktop layout adjustment for Screenshot 2026-06-05 110429.png */
+@media (min-width: 768px) {
+  .ctaSection {
+    flex-direction: row; /* Aligns items side-by-side */
+    justify-content: space-between;
+    text-align: left;
+    padding: 80px 100px;
+  }
+  
+  .ctaContent {
+    flex: 1;
+  }
+
+}
+/* Mobile cta Adjustments */
+@media (max-width: 1024px) {
+  
+  .ctaButton {
+    width: 100%
+  }
+}

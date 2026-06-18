@@ -1,0 +1,1360 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+
+:root {
+  --foundation-red: #7409d2; /* Gold color */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #111; 
+}
+
+* { box-sizing: border-box; }
+
+/* Core Hero Background Setup */
+/* Core Hero Background Setup */
+.hero-section {
+  width: 100%;
+  min-height: 100vh;
+  
+  /* FIXED: Points to your exact file /homepage-bg.jpg and adds a 40% dark tint overlay */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/homepage-bg.jpg'); 
+  background-size: cover;
+  background-position: center right; /* Keeps subjects on the right side of the photo visible */
+  background-repeat: no-repeat;
+  
+  /* Flexbox configuration to push content to the left side and vertically center it */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  
+  padding-top: 70px; /* Accommodates the thin global header */
+  padding-left: 8%;  /* Generates elegant breathing space on the left edge */
+  box-sizing: border-box;
+}
+/* Constrained Container for Left-Side Alignment */
+.hero-content-left {
+  max-width: 680px;  /* Prevents text from leaking into the right half of the screen */
+  width: 100%;
+  text-align: left;  /* Sets hard left text alignment like the reference images */
+  padding: 20px;
+}
+
+/* Cause-Driven Editorial Typography */
+.hero-title {
+  color: #ffffff;
+  font-family: 'Oswald', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 4.8rem;       /* Ultra bold, large desktop scale */
+  font-weight: 700;
+  line-height: 1.1;        /* Tight line-height matching the reference site */
+  letter-spacing: -0.01em;  /* Slight compression for a sleek presentation */
+  text-transform: uppercase;
+  margin: 0;
+  text-shadow: 0 3px 15px rgba(0, 0, 0, 0.4); /* Protects text legibility against complex background assets */
+}
+
+/* RESPONSIVE TABLET FIX */
+@media (max-width: 1024px) {
+  .hero-section {
+    padding-left: 6%;
+  }
+  .hero-title {
+    font-size: 3.5rem;
+  }
+  .hero-content-left {
+    max-width: 550px;
+  }
+}
+
+/* RESPONSIVE MOBILE FIX */
+@media (max-width: 600px) {
+  .hero-section {
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center; /* Vertically balances the layout on smaller portrait viewports */
+    height: 60vh !important;
+    min-height: 60vh !important;
+  }
+
+  
+  .hero-content-left {
+    max-width: 100%;
+    padding: 0;
+  }
+  .hero-title {
+    font-size: 2.6rem;   /* Scaled down to fit perfectly on standard mobile devices without overflows */
+    line-height: 1.15;
+  }
+}
+
+/* ==========================================================================
+    DYNAMIC BOX-STYLE CELEBRITY PROFILE LAYOUT SYSTEM
+   ========================================================================== */
+
+.campaign-master-container {
+  width: 100%;
+  background-color: #111;
+}
+
+/* Master wrapper that combines header + split content over one continuous background image */
+.campaign-hero-bg-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/homepage-bg.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  padding-top: 90px;
+}
+
+/* Flexbox container for side-by-side alignment on desktop */
+.slug-page-content-split {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 4%;
+  box-sizing: border-box;
+  gap: 40px;
+}
+
+/* Slogan Area */
+.slug-left-branding {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.slug-branding-overlay {
+  width: 100%;
+}
+
+.slug-brand-text {
+  color: #ffffff;
+  font-family: 'Oswald', sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin: 0;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Floating Panel Container - Switched to structural layout 
+  so it sits naturally inside the container instead of cutting off 
+*/
+.slug-floating-box {
+  width: 46%;
+  height: 450px; /* Locked down exact uniform desktop height */
+  background-color: #ffffff;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 10;
+  border-radius: 4px;
+  
+  opacity: 0;
+  transform: translateX(100px);
+  animation: slugSlideInRight 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Subdivide row container wrapper elements */
+.slug-box-main-split {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+/* Left Side Column Image Container Card Box */
+.slug-image-column {
+  width: 45%;
+  height: 100%;
+  padding: 24px 16px;
+  box-sizing: border-box;
+}
+
+/* Image Graphic Box Aspect Ratio Frame */
+.slug-box-image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-color: #000;
+  border-radius: 12px;
+}
+
+/* Right Side Details Column */
+.slug-details-column {
+  width: 55%;
+  height: 100%;
+  padding: 35px 25px 35px 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive Button Inner Copy Visibility Drivers */
+.btn-text-desktop { display: inline; }
+.btn-text-mobile { display: none; }
+
+/* Identity & Heading Typography Tuning */
+.slug-identity-wrapper { margin-bottom: 20px; }
+.slug-name-row { display: flex; align-items: center; gap: 6px; }
+.slug-celebrity-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #001b29;
+  text-transform: uppercase;
+  margin: 0;
+}
+.slug-campaign-sub {
+  font-size: 0.8rem;
+  color: #667085;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 4px 0 0 0;
+  font-weight: 600;
+}
+
+/* Action Callouts Box Setup */
+.slug-action-wrapper { margin-bottom: 20px; }
+.slug-donate-btn {
+  width: 100%;
+  background-color: #7B2CBF;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  transform: scale(1);
+}
+
+.slug-donate-btn:hover {
+  background-color: #094c98; 
+  transform: scale(1.04); 
+}
+
+/* Inline Desktop Scroll Container Body Text elements */
+.slug-narrative-desktop-container { flex-grow: 1; overflow-y: auto; padding-right: 4px; }
+.slug-narrative-desktop-container::-webkit-scrollbar { width: 4px; }
+.slug-narrative-desktop-container::-webkit-scrollbar-thumb { background: #d0d5dd; border-radius: 4px; }
+.slug-narrative-text { font-size: 0.95rem; color: #344054; line-height: 1.5; margin: 0; }
+
+/* Mobile Structural Variant Block Default Hidden */
+.slug-narrative-mobile-container { display: none; }
+
+/* Entry Keyframe Animations Rules */
+@keyframes slugSlideInRight { to { opacity: 1; transform: translateX(0); } }
+@keyframes slugSlideInUp { to { opacity: 1; transform: translateY(0); } }
+
+/* Celebrity Name Italic Layout Customization Rules */
+.slug-italic-name {
+  font-style: italic;
+  display: inline-block;
+  margin-left: 4px;
+}
+
+/* ==========================================================================
+    TABLET RESPONSIVE VIEWPORTS SYSTEM (601px up to 1024px Screen Limits)
+   ========================================================================== */
+@media (max-width: 1024px) and (min-width: 601px) {
+  /* 1. Strip the crowd background image off the master wrapper on tablet */
+  .campaign-hero-bg-wrapper {
+    background-image: none !important;
+    background-color: #111;
+    padding-top: 0; /* Reset desktop padding */
+  }
+
+  .slug-page-content-split {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0; /* Remove padding so layout stays flush */
+    gap: 0;
+  }
+
+  /* 2. Put the crowd background image exclusively behind the slogan section */
+  /* 2. SLUG MOOD FIXED HEIGHT */
+  .slug-left-branding {
+    width: 100%;
+    height: 80vh !important; 
+    padding: 70px 24px 0 24px !important;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('/homepage-bg.jpg'); 
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+  }
+
+
+  /* 3. The floating box now sits cleanly below on a crisp white background */
+  .slug-floating-box {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: #ffffff;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 50px 8%;
+    margin: 0;
+    margin: 40px 0 0 0;
+    
+    opacity: 0;
+    transform: translateY(60px);
+    animation: slugSlideInUp 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .slug-box-main-split {
+    flex-direction: row;
+    height: auto;
+    gap: 5%;
+  }
+
+  .slug-image-column {
+    width: 48%;
+    height: 400px;
+    padding: 0;
+  }
+  
+  .slug-box-image {
+    border-radius: 12px;
+  }
+
+  .slug-details-column {
+    width: 48%;
+    height: auto;
+    padding: 0;
+  }
+}
+
+/* ==========================================================================
+    MOBILE RESPONSIVE VIEWPORTS SYSTEM (Up to 600px Screen Boundaries)
+   ========================================================================== */
+@media (max-width: 600px) {
+  /* 1. Strip the crowd background image off the master wrapper on mobile */
+  .campaign-hero-bg-wrapper {
+    background-image: none !important;
+    background-color: #111;
+    padding-top: 0; /* Reset desktop padding */
+  }
+
+  .slug-page-content-split {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0; /* Flush alignment */
+    gap: 0;
+  }
+
+  /* 2. Put the crowd background image exclusively behind the mobile slogan */
+  
+/* ==========================================================================
+      SLUG PORTRAIT MOBILE CONTAINER FIXED CORRECTION
+     ========================================================================== */
+
+  .slug-left-branding {
+    width: 100% !important;
+    
+    /* Hard-locks the container background strictly to 60% of the screen height */
+    height: 60vh !important; 
+    min-height: 60vh !important;
+    max-height: 60vh !important;
+    
+    /* Keeps content centered cleanly inside the 60vh container space */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    
+    /* Slightly lower top padding to fit everything inside the 60vh window */
+    padding: 60px 24px 10px 24px !important; 
+    
+    background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('/homepage-bg.jpg') !important; 
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important; /* Prevents text bounds from overflowing the image area */
+  }
+
+  /* Shrinks the text sizing slightly so it fits inside the 60vh limit comfortably */
+  .slug-brand-text {
+    font-size: 2.5rem !important;
+    line-height: 1.15 !important;
+    text-align: left !important; /* Centers the headline visually on mobile viewports */
+    width: 100% !important;
+  }
+  .slug-brand-text {
+    font-size: 2.3rem;
+    line-height: 1.15;
+  }
+
+  /* 3. The panel rests on its own clean white background, completely free of the crowd image */
+  .slug-floating-box {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: #ffffff;
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 30px 20px;
+    
+    opacity: 0;
+    transform: translateY(60px);
+    animation: slugSlideInUp 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .slug-box-main-split {
+    flex-direction: row;
+    height: 185px;
+    width: 100%;
+  }
+
+  
+
+  .slug-image-column {
+    width: 45%;
+    height: 100%;
+    padding: 0;
+  }
+
+  .slug-box-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+  }
+
+  .slug-details-column {
+    width: 55%;
+    height: 100%;
+    padding: 0 0 0 16px;
+  }
+
+  .slug-celebrity-name { font-size: 1.35rem; }
+  .slug-campaign-sub { font-size: 0.75rem; }
+  .slug-donate-btn { padding: 12px 16px; font-size: 0.95rem; }
+
+  .slug-narrative-desktop-container { display: none; }
+
+  .slug-narrative-mobile-container {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 0;
+    border-top: 1px solid #f2f4f7;
+    padding-top: 20px;
+  }
+  
+  .slug-narrative-text {
+    font-size: 0.92rem;
+    color: #344054;
+    line-height: 1.6;
+  }
+
+  .btn-text-desktop { display: none; }
+  .btn-text-mobile { display: inline-block; }
+}
+
+
+/* FIX FOR HORIZONTAL BLACK BAR LEAK */
+  .commitment-section,
+  .mission-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .commitment-container,
+  .mission-container,
+  .commitment-text,
+  .mission-statement {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Safety lockdown hook added inside your max-width: 600px block */
+  .partners-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    padding: 40px 0 !important;
+  }
+
+
+/* ==========================================================================
+   DESKTOP ONLY SCROLL PROMPT ANIMATION INDICATOR
+   ========================================================================== */
+
+/* 1. Base Setup: Hidden by default on mobile and tablet devices */
+@media (max-width: 900px) {
+  .scroll-prompt-container {
+    display: none !important;
+  }
+}
+
+/* 2. Desktop Execution Rules */
+@media (min-width: 901px) {
+  .scroll-prompt-container {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    opacity: 0; /* Hidden initially when page mounts */
+    pointer-events: none;
+    
+    /* Animation sequence: wait 5s, fade in over 0.5s, then persist visible */
+    animation: fadeInPrompt 0.5s ease-out 5s forwards;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+  }
+
+  /* Smooth Bouncing Loop Behavior */
+  .scroll-arrow-bounce {
+    animation: arrowBounce 2s infinite;
+    background: rgba(123, 44, 191, 0.85); /* Matches your purple theme overlay */
+    padding: 12px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* The class appended by React instantly when user rolls mouse wheel */
+  .scroll-prompt-container.slide-out-exit {
+    transform: translate(-50%, 100px) !important; /* Drops arrow downward offscreen */
+    opacity: 0 !important;
+  }
+}
+
+/* 3. Animation Keyframe Frameworks */
+@keyframes fadeInPrompt {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes arrowBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-4px);
+  }
+}
+/* --- New Homepage Sections Styling --- */
+
+/* 100% Commitment Block (Dark Teal) */
+.commitment-section {
+  background-color: #004566; /* Matches the screenshot's deep teal color */
+  color: #ffffff;
+  padding: 64px 24px;
+}
+
+.commitment-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.commitment-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+
+/* The distinctive orange & light blue dual underline split */
+.commitment-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, #e15b3e 30%, #469cb1 30%);
+}
+
+.commitment-text {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  max-width: 900px;
+  font-weight: 300;
+  color: #e5f1f4;
+}
+
+.commitment-text strong {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Mission Statement Block (Light Lavender) */
+.mission-section {
+  background-color: #ebf0fa; /* Soft light blue/lavender background */
+  color: #093457; /* Deep blue text color */
+  padding: 64px 24px;
+}
+
+.mission-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mission-tag {
+  color: #9a099a; /* Coral red tag accent */
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.mission-statement {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.35;
+  max-width: 950px;
+}
+
+/* Mobile responsive scaling */
+@media (max-width: 768px) {
+  .commitment-section, .mission-section {
+    padding: 48px 16px;
+  }
+  .commitment-title {
+    font-size: 1.35rem;
+  }
+  .commitment-text {
+    font-size: 1.1rem;
+  }
+  .mission-statement {
+    font-size: 1.6rem;
+  }
+}
+/* --- Fixes the black gap issue completely on desktop and mobile --- */
+.hero-section.hide-hero-bg {
+  background-image: none !important;
+  background-color: transparent !important;
+  
+  /* Forces the empty container to collapse to zero height on slug links */
+  min-height: 0 !important; 
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}/* --- Master Campaign Layout Background Stretch Fix --- */
+
+/* ==========================================================================
+    SCROLL-TRIGGERED ANIMATION ENGINE
+   ========================================================================== */
+
+/* 1. Initial State: Hidden and pushed 100px to the right */
+.animate-slide-right {
+  opacity: 0;
+  transform: translateX(100px);
+  transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), 
+              transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform, opacity; /* Optimizes mobile performance */
+}
+
+/* 2. Triggered State: Snaps back smoothly to its original position */
+.animate-slide-right.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+    ADJUSTED LOGO CAROUSEL ENGINE (Mission Font Matched + Increased Height)
+   ========================================================================== */
+
+.partners-section {
+  background-color: #ffffff !important; 
+  padding: 45px 0 !important; /* Increased padding to make the section less thin */
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  margin: 0 !important;       /* Keeps dark line gaps completely removed */
+  border: none !important;
+}
+
+.partners-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+/* Updated to match the mission statement title typography layout exactly */
+.partners-title {
+  color: #093457 !important;  /* Dark blue brand palette tone */
+  font-family: sans-serif;    /* Cascades natively into your master layout font */
+  font-size: 2rem !important; /* Matches prominent mission header sizing */
+  font-weight: 500 !important;
+  letter-spacing: -0.02em !important; /* Clean tracking matching the mission text */
+  margin-top: 0 !important;
+  margin-bottom: 35px !important; /* More breathing room before the logos */
+  text-align: center !important;
+}
+
+.slider-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+}
+
+.slider-track {
+  display: flex;
+  width: calc(220px * 18);    
+  animation: infiniteScrollLoop 28s linear infinite;
+}
+
+.slide {
+  width: 220px;
+  height: 65px;               /* Slightly taller frame window for bigger logos */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 25px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.slide img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  filter: none !important;     
+  opacity: 1 !important;      
+}
+
+@keyframes infiniteScrollLoop {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-220px * 9)); }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 600px) {
+  .partners-section {
+    padding: 35px 0 !important; /* Gives mobile view elegant spacing as well */
+  }
+  .partners-title {
+    font-size: 1.6rem !important;
+  }
+}
+
+/* ==========================================================================
+    CAMPAIGN ACTION CENTER SYSTEM (Horizontal Desktop / Vertical Mobile)
+   ========================================================================== */
+
+.action-center-section {
+  background-color: #ffffff;
+  padding: 80px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 !important;
+  border: none !important;
+}
+
+.action-center-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Header Text Alignments */
+.action-header-block {
+  text-align: center;
+  max-width: 850px;
+  margin: 0 auto 55px auto;
+}
+
+.action-main-title {
+  color: #093457; /* Updated to match your exact "Our Mission" title color */
+  font-family: 'Oswald', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 0 0 15px 0;
+  line-height: 1.1;
+}
+
+.action-sub-text {
+  color: #2c3e50;
+  font-family: sans-serif;
+  font-size: 1.35rem;
+  line-height: 1.6;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* --- DEFAULT DESKTOP VIEW: HORIZONTAL SIDE-BY-SIDE --- */
+.action-boxes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal side-by-side columns on desktop */
+  gap: 30px;
+  width: 100%;
+}
+
+/* Master Feature Card Box Architecture */
+.action-card {
+  padding: 55px 45px;
+  border-radius: 4px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 380px; /* Forces boxes to preserve matching sizes in row formats */
+  box-sizing: border-box;
+}
+
+/* Box Variant 1: Deep Navy Blue */
+.card-dark-blue {
+  background-color: #1e293b; 
+  color: #ffffff;
+}
+
+/* Box Variant 2: Desert Sand Gold */
+.card-gold {
+  background-color: #dfb147; 
+  color: #ffffff;
+}
+
+/* Typography inside the boxes */
+.action-card .card-title {
+  font-family: sans-serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 20px 0;
+}
+
+.action-card .card-description {
+  font-family: sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin: 0 0 30px 0;
+  opacity: 0.95;
+}
+
+/* Special Text Links */
+.card-link {
+  font-family: sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  margin-top: auto; 
+  transition: opacity 0.2s ease;
+}
+
+.link-orange {
+  color: #dfb147;
+}
+
+.card-link:hover {
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+    TABLET & MOBILE BREAKPOINT: VERTICAL STACK OVERRIDE
+   ========================================================================== */
+
+@media (max-width: 968px) {
+  .action-main-title {
+    font-size: 2.5rem;
+  }
+
+  /* Automatically collapses columns to layer on top of each other */
+  .action-boxes-grid {
+    grid-template-columns: 1fr; 
+    gap: 24px;
+  }
+
+  .action-card {
+    padding: 40px 30px;
+    min-height: auto; /* Drops fixed vertical rules so items auto-size beautifully */
+  }
+  
+  .action-card .card-title {
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-main-title {
+    font-size: 2rem;
+  }
+  
+  .action-sub-text {
+    font-size: 1.1rem;
+  }
+  
+  .action-card .card-title {
+    font-size: 1.5rem;
+  }
+}
+/* ==========================================================================
+    AUTOMATIC MOBILE & TABLET NAVIGATION TEXT COLOR STABILIZER FIX
+   ========================================================================== */
+
+/* Automatically targets any div container handling your navigation overlay elements */
+div[class*="menu"], 
+div[class*="nav"],
+div[class*="mobile-nav"] {
+  -webkit-text-fill-color: initial;
+}
+
+/* Forces all anchors, list items, and span tags within menu blocks to lock to white */
+div[class*="menu"] a, div[class*="nav"] a,
+div[class*="menu"] li, div[class*="nav"] li,
+div[class*="menu"] span, div[class*="nav"] span {
+  color: #ffffff !important; /* Overrides global page state changes */
+  opacity: 1 !important;
+}
+
+/* Disables sticky touch hover highlights on mobile and tablet touchscreens */
+div[class*="menu"] a:hover, div[class*="nav"] a:hover,
+div[class*="menu"] a:active, div[class*="nav"] a:active,
+div[class*="menu"] a:visited, div[class*="nav"] a:visited {
+  color: #ffffff !important;
+}
+
+/* Targets the Close button wrapper and paths to ensure it stays white */
+button[class*="close"] svg,
+div[class*="menu"] button svg,
+div[class*="menu"] svg,
+div[class*="menu"] svg path {
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Erases native touch gray flash boxes on mobile devices */
+div[class*="menu"] *, div[class*="nav"] * {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* ==========================================================================
+    OUR STORIES SECTION STYLES (Universal Mobile/Tablet Defaults)
+   ========================================================================= */
+
+.stories-section {
+  background-color: #ffffff;
+  padding: 60px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 !important;
+  border: none !important;
+}
+
+.stories-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Main title matching mission statement font architecture */
+.stories-section-title {
+  color: #d94f30; 
+  font-family: 'Oswald', sans-serif; 
+  font-size: 2.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  text-align: center;
+  margin: 0 0 35px 0;
+}
+
+/* Default Mobile/Tablet Grid Framework (Stacked) */
+.stories-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 45px;
+  width: 100%;
+}
+
+/* Individual Story Card */
+.story-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center; 
+  text-align: center;  
+  width: 100%;
+}
+
+/* Default Mobile/Tablet Image Container Frame */
+.story-image-wrapper {
+  width: 100%;
+  max-width: 100%;      
+  padding-bottom: 65%;  
+  height: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  margin-bottom: 18px;
+}
+
+.story-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute; 
+  top: 0;
+  left: 0;
+  transition: none !important; 
+  filter: none !important; 
+  transform: none !important; 
+  opacity: 1 !important;
+}
+
+/* Subheading Typography */
+.story-subheading {
+  color: #1e293b;
+  font-family: sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 16px 0;
+  max-width: 100%;
+}
+
+/* Clean "Read More" links */
+.story-link {
+  color: #ff6b4a; 
+  font-family: sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  margin-top: auto; 
+  width: max-content;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.story-link:hover {
+  color: #d94f30;
+  transform: translateX(4px); 
+}
+
+
+/* ==========================================================================
+    DESKTOP ONLY OVERRIDES (min-width: 969px)
+   ========================================================================== */
+
+@media (min-width: 969px) {
+  .stories-section {
+    padding: 80px 24px;
+  }
+
+  .stories-container {
+    max-width: 1100px; /* Pulls layout inward strictly on desktop viewports */
+  }
+
+  .stories-section-title {
+    font-size: 3rem;
+    margin-bottom: 50px;
+  }
+
+  /* Two side-by-side columns on desktop screen widths */
+  .stories-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+  }
+
+  /* --- DESKTOP ONLY: RECTANGULAR & INSET IMAGE OVERRIDES --- */
+  .story-image-wrapper {
+    max-width: 440px;    /* Constrains the rectangular boxes from touching edges */
+    padding-bottom: 65%; /* Elegant 16:10 aspect ratio layout */
+    margin-bottom: 24px;
+  }
+
+  .story-subheading {
+    font-size: 1.3rem;
+    max-width: 440px;    /* Keeps text wrapping perfectly beneath the 440px container */
+  }
+}
+
+/* ==========================================================================
+    MOBILE & TABLET ONLY: SEPARATION LINE REMOVAL FIX
+   ========================================================================== */
+
+@media (max-width: 968px) {
+  /* 1. Force the stories section boundaries to overlap sub-pixel gaps */
+  .stories-section {
+    margin-top: -1px !important; /* Pulls the section up slightly to swallow the gap */
+    border-top: none !important;
+    border-bottom: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 2. Target the section immediately preceding the stories section if it has a line */
+  .stories-section::before {
+    display: none !important;
+  }
+
+  /* 3. If the line is coming from the container directly above or below */
+  div[class*="container"], 
+  section {
+    border-color: transparent !important;
+  }
+}
+
+/* ==========================================================================
+    MAILING LIST / NEWSLETTER SECTION (Default Mobile/Tablet First)
+   ========================================================================= */
+
+.newsletter-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column; /* Stacked on mobile platforms */
+  margin: 0 !important;
+  border: none !important;
+  box-sizing: border-box;
+}
+
+/* --- LEFT PROMO SIDE BLOCK --- */
+.newsletter-promo-block {
+  background-color: #3b82f6; /* Flat blue tone match */
+  padding: 55px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.newsletter-promo-content {
+  max-width: 480px;
+  width: 100%;
+}
+
+.newsletter-headline {
+  color: #ffffff;
+  font-family: 'Oswald', sans-serif; /* Your global headers configuration */
+  font-size: 2.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 16px 0;
+  letter-spacing: 0.02em;
+}
+
+.newsletter-subtext {
+  color: #ffffff;
+  font-family: sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 400;
+  opacity: 0.95;
+}
+
+/* --- RIGHT FORM SIDE BLOCK --- */
+.newsletter-form-block {
+  background-color: #1e293b; /* Deep off-black/slate background */
+  padding: 45px 24px 60px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Anchors the decorative background arc mask */
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* --- CORNER BACKGROUND ACCENT RINGS (MOBILE/TABLET DEPLOYMENT) --- */
+.newsletter-form-block::after {
+  content: "";
+  position: absolute;
+  bottom: -60px; /* Anchored precisely at the bottom edge on mobile screens */
+  right: 50%;
+  transform: translateX(50%); /* Centers the burst element on smaller screens */
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0.35;
+  
+  /* Precision concentric linear ring paths */
+  background: 
+    radial-gradient(circle at center, transparent 35%, #1e293b 35%, transparent 45%, #1e293b 45%, transparent 58%, #1e293b 58%, transparent 70%, #1e293b 70%),
+    conic-gradient(from 0deg, #a855f7, #6366f1, #a855f7); /* Purple/Indigo aesthetic spectrum */
+}
+
+.newsletter-form {
+  max-width: 440px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  z-index: 2;
+}
+
+/* --- INPUT INTAKE SYSTEM FIELDS --- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.form-label {
+  color: #ffffff;
+  font-family: sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.form-input {
+  width: 100%;
+  height: 50px;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 2px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  font-size: 1.05rem;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.form-input:focus {
+  border: 2px solid #3b82f6;
+}
+
+/* --- ORANGE ACTION SUBMIT BUTTON --- */
+.newsletter-submit-btn {
+  width: 100%;
+  height: 52px;
+  background-color: #7B2CBF; /* Matches your brand orange highlight accent */
+  color: #ffffff;
+  font-family: sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-top: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.newsletter-submit-btn:hover {
+  background-color: #094c98;
+}
+
+
+/* ==========================================================================
+    DESKTOP VIEWPORT SPECIFIC FIXES (min-width: 969px)
+   ========================================================================== */
+
+@media (min-width: 969px) {
+  .newsletter-section {
+    flex-direction: row; /* Split horizontal view grid */
+    min-height: 480px;
+    margin-top: -1px !important; /* Safety subpixel anti-bleed overlap protection */
+  }
+
+  .newsletter-promo-block {
+    width: 45%; /* Symmetrical offset ratio block alignment */
+    padding: 80px 60px;
+    text-align: left;
+    justify-content: flex-end; /* Shoves contents flush against inside gutter center alignment */
+  }
+
+  .newsletter-promo-content {
+    max-width: 380px; /* Elegant layout column margin constraints */
+  }
+
+  .newsletter-headline {
+    font-size: 3.4rem;
+    margin-bottom: 20px;
+  }
+
+  .newsletter-form-block {
+    width: 55%;
+    padding: 80px 80px;
+    justify-content: flex-start; /* Aligns form clean down starting gutter line */
+  }
+
+  .newsletter-form {
+    max-width: 440px;
+    gap: 22px;
+  }
+
+  .newsletter-submit-btn {
+    width: 180px; /* Snaps from 100% full width to a modular square inline button asset layout */
+  }
+
+  /* --- DESKTOP POSITIONING ACCENT RINGS --- */
+  .newsletter-form-block::after {
+    bottom: auto;
+    top: 50%;
+    right: -160px; /* Snaps layout safely flat to the right outer frame wall boundary */
+    transform: translateY(-50%);
+    width: 420px;
+    height: 420px;
+    opacity: 0.4;
+    
+    background: 
+      radial-gradient(circle at center, transparent 35%, #1e293b 35%, transparent 45%, #1e293b 45%, transparent 58%, #1e293b 58%, transparent 70%, #1e293b 70%),
+      conic-gradient(from 0deg, #a855f7, #6366f1, #a855f7);
+  }
+}
+
+@font-face {
+  font-family: 'Clash Display';
+  src: url('/fonts/ClashDisplay-Variable.woff2') format('woff2'); /* Ensure your file path is correct */
+  font-weight: 200 700;
+  font-display: swap;
+}
+
+/* Add this to your global stylesheet to make the anchor-link jump smooth */
+html {
+  scroll-behavior: smooth;
+}

@@ -1,0 +1,490 @@
+.helpSection {
+  background-image: url('/images/donate-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 80px 20px;
+  color: white;
+}
+
+.overlay {
+  background: rgba(85, 130, 255, 0.85); /* Adjust opacity to match your blue tint */
+  padding: 40px;
+  border-radius: 8px;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: row; /* Desktop: side-by-side */
+  align-items: center;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.badgeContainer {
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+/* Mobile arrangement */
+@media (max-width: 768px) {
+  .contentWrapper {
+    flex-direction: column; /* Mobile: stacked */
+    text-align: center;
+  }
+  
+  .badgeContainer {
+    justify-content: center;
+  }
+}
+
+.subHeading { letter-spacing: 2px; margin-bottom: 10px; }
+.mainHeading { font-size: 3rem; margin-bottom: 20px; }
+.description { margin-bottom: 20px; line-height: 1.6; }
+.efficiency { font-weight: bold; margin-bottom: 30px; }
+.badge { height: 100px; width: auto; }
+
+
+
+/* --- CENTRAL CONTAINER BOX MODAL FRAMEWORK --- */
+.donationModalContainer {
+  max-width: 460px; /* Compacted from 540px */
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+    FORM ROW ACTION SECTIONS
+   ========================================================================= */
+.formPanelSide {
+  width: 100%;
+  padding: 24px 20px; /* Reduced vertical space footprint from 36px 24px */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+.brandContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px; /* Balanced down from 24px */
+}
+
+.brandLogo {
+  height: 60px; /* Scaled down from 48px */
+  object-fit: contain;
+}
+
+/* --- TOGGLE BUTTON MATRIX --- */
+.cycleToggleTrack {
+  width: 100%;
+  background-color: #e4e5f1;
+  padding: 4px;
+  border-radius: 10px;
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px; /* Balanced down from 24px */
+}
+
+.toggleButton {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px 14px; /* Reduced from 12px 16px */
+  font-family: sans-serif;
+  font-size: 0.95rem; /* Slightly reduced from 1rem */
+  font-weight: 600;
+  color: #000000;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.toggleButton:hover:not(.activeCycleButton) {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.activeCycleButton {
+  background-color: #3b3ee8;
+  color: #ffffff !important;
+}
+
+.checkmarkIcon {
+  font-size: 0.95rem;
+}
+
+.sectionDirectiveText {
+  font-family: sans-serif;
+  font-size: 1.05rem; /* Scaled down from 1.15rem */
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0 0 12px 0; /* Reduced from 20px */
+  text-align: center;
+}
+
+/* --- PRESET MATRIX BUTTONS GRIDS --- */
+.amountsGridSystem {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px; /* Reduced from 12px */
+  margin-bottom: 10px; /* Reduced from 12px */
+}
+
+.amountSelectionCell {
+  background-color: #e4e5f1;
+  border: 1px solid transparent;
+  padding: 12px 8px; /* Tighter padding core from 16px 8px */
+  font-family: sans-serif;
+  font-size: 1.15rem; /* Balanced down from 1.25rem */
+  font-weight: 700;
+  color: #0f172a;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.amountSelectionCell:hover:not(.activeAmountCell) {
+  background-color: #f1f9f6;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.activeAmountCell {
+  background-color: #3b3ee8;
+  color: #ffffff;
+}
+
+/* --- OTHER AMOUNT INPUT ROW --- */
+.customAmountFieldRow {
+  width: 100%;
+  display: flex;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  overflow: hidden;
+  margin-bottom: 18px; /* Reduced from 24px */
+  transition: all 0.2s ease;
+}
+
+.customAmountFieldRow:hover:not(.activeCustomRow) {
+  background-color: #f1f5f9;
+}
+
+.activeCustomRow {
+  border-color: #6366f1;
+  background-color: #ffffff;
+}
+
+.currencyPrefixCell {
+  background-color: transparent;
+  padding: 0 14px; /* Balanced down from 16px */
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Tighter gap */
+  border-right: 1px solid #e2e8f0;
+  font-family: sans-serif;
+  font-size: 0.9rem; /* Scaled from 0.95rem */
+  font-weight: 600;
+  color: #475569;
+}
+
+.dropdownCaretIcon {
+  font-size: 0.65rem;
+  color: #94a3b8;
+}
+
+.inputWrapperBlock {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  position: relative;
+}
+
+.currencySymbolInline {
+  font-family: sans-serif;
+  font-size: 1.15rem;
+  color: #0f172a;
+  margin-right: 2px;
+}
+
+.rawNumericInput {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: sans-serif;
+  font-size: 1.15rem; /* Scaled down from 1.25rem */
+  font-weight: 700;
+  color: #0f172a;
+  outline: none;
+  padding: 12px 0; /* Compact field depth from 16px */
+}
+
+/* ==========================================================================
+   STEP 1 PRIMARY CTA SUBMISSION BUTTON (FIXED CLASS MATCH)
+   ========================================================================= */
+.primaryActionStep1SubmitCTA {
+  width: 100%;
+  background-color: #262423; /* Matching that rich charcoal-black matte tone */
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  border: none;
+  height: 46px; /* Matches your Step 2 continue button height perfectly */
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.primaryActionStep1SubmitCTA:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.primaryActionStep1SubmitCTA:active {
+  transform: translateY(0);
+}
+
+.primaryActionStep1SubmitCTA:disabled {
+  background-color: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+
+/* ==========================================================================
+    DESKTOP VIEWPORT LAYOUT ALIGNMENTS (min-width: 840px)
+   ========================================================================= */
+@media (min-width: 840px) {
+  .pageWrapper {
+    padding-top: 20px; /* Reduced from 60px to anchor it beautifully without layout overflows */
+  }
+
+  .formPanelSide {
+    padding: 28px 32px; /* Rebalanced from 44px 40px */
+  }
+}
+
+/* ==========================================================================
+    MONTHLY SUBSCRIPTION EXTRA EXPANSION FIELDS
+   ========================================================================= */
+.monthlyDateWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 14px; /* Perfectly sized to fit within the non-scroll boundary */
+  animation: fadeInField 0.2s ease-out;
+}
+
+.fieldLabelText {
+  font-family: sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155; /* Neutral slate text color matching the brand layout framework */
+}
+
+.dateInputWrapper {
+  width: 100%;
+  display: flex;
+  background-color: #f8fafc; /* Matches your grid cells background */
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+/* Accent highlight when editing or interacting with the date picker */
+.dateInputWrapper:focus-within {
+  border-color: #6366f1; /* Brand Purple theme glow color */
+  background-color: #ffffff;
+}
+
+.dateFieldInput {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #0f172a;
+  outline: none;
+  padding: 12px 14px; /* Matches custom numerical wrapper sizing footprint exactly */
+  cursor: pointer;
+}
+
+/* This targets the left container specifically on desktop */
+@media (min-width: 769px) {
+  .textContainer {
+    flex: 0 0 50%; /* Occupies exactly 50% of the flex parent */
+    max-width: 50%;
+  }
+
+  .donationFormWrapper {
+    flex: 1; /* Allows the form to fill the remaining 50% */
+  }
+}
+
+@media (max-width: 768px) {
+  .overlay {
+    padding: 20px 15px; /* Reduced from 40px to 15px to reclaim width */
+  }
+
+  .contentWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Ensure content fills available space */
+  }
+
+  .donationFormWrapper { 
+    order: 3; 
+    width: 100%;
+    padding: 0; /* Remove internal padding to let the modal span */
+  }
+
+  .donationModalContainer {
+    max-width: 100% !important; /* Force full width */
+    width: 100% !important;
+    margin: 0 !important;       /* Remove margins that were pushing it inward */
+    border-radius: 16;           /* Optional: remove rounding if you want edge-to-edge look */
+  }
+}
+
+/* Desktop arrangement */
+@media (min-width: 769px) {
+  .contentWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; /* Allows the badges to drop below */
+    align-items: flex-start;
+  }
+
+  .textContainer {
+    flex: 0 0 50%;
+    order: 1;
+  }
+
+  .donationFormWrapper {
+    flex: 1;
+    order: 2;
+  }
+
+  .badgeContainer {
+    flex: 0 0 100%; /* Spans full width under both */
+    justify-content: flex-start;
+    order: 3;
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 480px) { /* Targeting smaller phones specifically */
+  .donationModalContainer {
+    max-width: 100% !important; /* Forces it to use the full width available */
+    margin: 0 10px;             /* Adds a tiny margin so it doesn't touch the screen edge */
+    width: auto !important;     /* Removes fixed width constraints */
+  }
+  
+  .donationFormWrapper {
+    width: 100%;
+    padding: 0 5px;             /* Tightens the side padding to give more room */
+  }
+}
+
+.testimonialSplitSection {
+  position: relative;
+  width: 100%;
+  min-height: 400px; /* Desktop height */
+  display: flex;
+  align-items: center;
+  background-image: url('/images/help.jpg');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+/* This creates the blend overlay on top of the image */
+.testimonialSplitSection::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #021e63 30%, rgba(9, 52, 87, 0.4) 70%, transparent 100%);
+}
+
+.splitContentSide {
+  position: relative; /* Keeps text above the gradient */
+  width: 100%;
+  padding: 60px 5%;
+  color: #ffffff;
+  z-index: 1;
+opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+.splitContentSide.animateIn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mobile: Thinner height */
+@media (max-width: 768px) {
+  .testimonialSplitSection {
+    min-height: 250px; /* Thinner for mobile */
+  }
+  
+  .testimonialSplitSection::before {
+    /* Adjusts the gradient to be more solid on mobile for readability */
+    background: linear-gradient(to right, #021e63 50%, rgba(9, 52, 87, 0.5) 100%);
+  }
+}
+
+/* Ensure no media query exists here that changes flex-direction to column */
+
+.quoteText {
+  font-size: 1.5rem;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.accentLine {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #770ddb, #eabe2e, #0077b6); /* Red to Gold to Blue gradient */
+  margin-bottom: 20px;
+}
+
+.authorName {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+

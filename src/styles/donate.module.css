@@ -1,0 +1,1268 @@
+/* ==========================================================================
+    ISOLATION OVERRIDES (Shows homepage background blurred behind modal)
+   ========================================================================= */
+.isolatedPageViewportOverride {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  
+  /* Concert Arena background setup */
+  background-image: url('/images/donate-bg.jpg'); 
+  background-size: cover;
+  background-position: center 30%; 
+  background-repeat: no-repeat;
+
+  
+
+  /* Dark tint overlay layer configuration */
+  background-color: rgba(10, 15, 30, 0.65); 
+  background-blend-mode: multiply; 
+  
+  /* Modern CSS glassmorphism blur effect */
+  backdrop-filter: blur(90px);
+  -webkit-backdrop-filter: blur(90px); /* Safari support */
+  
+  overflow-y: auto;
+}
+
+.pageWrapper {
+  width: 100%;
+  min-height: 100vh;
+  padding: 16px 16px 32px 16px; /* Tightened from 24px 16px 40px 16px */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Changed from flex-start to keep center aligned without scrolling */
+}
+
+/* --- UPPER HEADER CLOSE SYSTEM ACTION ROW --- */
+.topControlBar {
+  max-width: 460px; /* Adjusted to match new card size */
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px; /* Tightened up slightly */
+  margin-bottom: 6px; 
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-family: sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.closeButton:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* --- CENTRAL CONTAINER BOX MODAL FRAMEWORK --- */
+.donationModalContainer {
+  max-width: 460px; /* Compacted from 540px */
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+    FORM ROW ACTION SECTIONS
+   ========================================================================= */
+.formPanelSide {
+  width: 100%;
+  padding: 24px 20px; /* Reduced vertical space footprint from 36px 24px */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+.brandContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px; /* Balanced down from 24px */
+}
+
+.brandLogo {
+  height: 60px; /* Scaled down from 48px */
+  object-fit: contain;
+}
+
+/* --- TOGGLE BUTTON MATRIX --- */
+.cycleToggleTrack {
+  width: 100%;
+  background-color: #e4e5f1;
+  padding: 4px;
+  border-radius: 10px;
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px; /* Balanced down from 24px */
+}
+
+.toggleButton {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px 14px; /* Reduced from 12px 16px */
+  font-family: sans-serif;
+  font-size: 0.95rem; /* Slightly reduced from 1rem */
+  font-weight: 600;
+  color: #000000;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.toggleButton:hover:not(.activeCycleButton) {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.activeCycleButton {
+  background-color: #3b3ee8;
+  color: #ffffff !important;
+}
+
+.checkmarkIcon {
+  font-size: 0.95rem;
+}
+
+.sectionDirectiveText {
+  font-family: sans-serif;
+  font-size: 1.05rem; /* Scaled down from 1.15rem */
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0 0 12px 0; /* Reduced from 20px */
+  text-align: center;
+}
+
+/* --- PRESET MATRIX BUTTONS GRIDS --- */
+.amountsGridSystem {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px; /* Reduced from 12px */
+  margin-bottom: 10px; /* Reduced from 12px */
+}
+
+.amountSelectionCell {
+  background-color: #e4e5f1;
+  border: 1px solid transparent;
+  padding: 12px 8px; /* Tighter padding core from 16px 8px */
+  font-family: sans-serif;
+  font-size: 1.15rem; /* Balanced down from 1.25rem */
+  font-weight: 700;
+  color: #0f172a;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.amountSelectionCell:hover:not(.activeAmountCell) {
+  background-color: #f1f9f6;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.activeAmountCell {
+  background-color: #3b3ee8;
+  color: #ffffff;
+}
+
+/* --- OTHER AMOUNT INPUT ROW --- */
+.customAmountFieldRow {
+  width: 100%;
+  display: flex;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  overflow: hidden;
+  margin-bottom: 18px; /* Reduced from 24px */
+  transition: all 0.2s ease;
+}
+
+.customAmountFieldRow:hover:not(.activeCustomRow) {
+  background-color: #f1f5f9;
+}
+
+.activeCustomRow {
+  border-color: #6366f1;
+  background-color: #ffffff;
+}
+
+.currencyPrefixCell {
+  background-color: transparent;
+  padding: 0 14px; /* Balanced down from 16px */
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Tighter gap */
+  border-right: 1px solid #e2e8f0;
+  font-family: sans-serif;
+  font-size: 0.9rem; /* Scaled from 0.95rem */
+  font-weight: 600;
+  color: #475569;
+}
+
+.dropdownCaretIcon {
+  font-size: 0.65rem;
+  color: #94a3b8;
+}
+
+.inputWrapperBlock {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  position: relative;
+}
+
+.currencySymbolInline {
+  font-family: sans-serif;
+  font-size: 1.15rem;
+  color: #0f172a;
+  margin-right: 2px;
+}
+
+.rawNumericInput {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: sans-serif;
+  font-size: 1.15rem; /* Scaled down from 1.25rem */
+  font-weight: 700;
+  color: #0f172a;
+  outline: none;
+  padding: 12px 0; /* Compact field depth from 16px */
+}
+
+/* ==========================================================================
+   STEP 1 PRIMARY CTA SUBMISSION BUTTON (FIXED CLASS MATCH)
+   ========================================================================= */
+.primaryActionStep1SubmitCTA {
+  width: 100%;
+  background-color: #262423; /* Matching that rich charcoal-black matte tone */
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  border: none;
+  height: 46px; /* Matches your Step 2 continue button height perfectly */
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.primaryActionStep1SubmitCTA:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.primaryActionStep1SubmitCTA:active {
+  transform: translateY(0);
+}
+
+.primaryActionStep1SubmitCTA:disabled {
+  background-color: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.faqFooterLinkBlock {
+  font-family: sans-serif;
+  font-size: 0.85rem; /* Rebalanced from 0.9rem */
+  color: #64748b;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.faqFooterLinkBlock:hover {
+  color: #4f46e5;
+}
+
+/* ==========================================================================
+    DESKTOP VIEWPORT LAYOUT ALIGNMENTS (min-width: 840px)
+   ========================================================================= */
+@media (min-width: 840px) {
+  .pageWrapper {
+    padding-top: 20px; /* Reduced from 60px to anchor it beautifully without layout overflows */
+  }
+
+  .formPanelSide {
+    padding: 28px 32px; /* Rebalanced from 44px 40px */
+  }
+}
+
+/* ==========================================================================
+    MONTHLY SUBSCRIPTION EXTRA EXPANSION FIELDS
+   ========================================================================= */
+.monthlyDateWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 14px; /* Perfectly sized to fit within the non-scroll boundary */
+  animation: fadeInField 0.2s ease-out;
+}
+
+.fieldLabelText {
+  font-family: sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155; /* Neutral slate text color matching the brand layout framework */
+}
+
+.dateInputWrapper {
+  width: 100%;
+  display: flex;
+  background-color: #f8fafc; /* Matches your grid cells background */
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+/* Accent highlight when editing or interacting with the date picker */
+.dateInputWrapper:focus-within {
+  border-color: #6366f1; /* Brand Purple theme glow color */
+  background-color: #ffffff;
+}
+
+.dateFieldInput {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #0f172a;
+  outline: none;
+  padding: 12px 14px; /* Matches custom numerical wrapper sizing footprint exactly */
+  cursor: pointer;
+}
+
+/* Smooth fade execution for clean UI expansion toggling */
+@keyframes fadeInField {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+    FAQ VIEWPORT INTERFACE MODAL PANELS (STANDALONE /faq PAGE)
+   ========================================================================= */
+.faqPanelSide {
+  width: 100%;
+  min-height: 520px;       /* Added to give the FAQ container the same default long format length as the form */
+  padding: 32px 24px;       /* Widened default spacing values to match your main panel inputs layout */
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border-radius: 20px;      /* Ensures corners drop off exactly like the donation box framework */
+  animation: fadeInField 0.25s ease-out;
+}
+
+.faqHeaderBar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 14px;
+}
+
+.faqTitleText {
+  font-family: sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.faqCloseCircleButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #f1f5f9;
+  border: none;
+  color: #0f172a;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+}
+
+.faqCloseCircleButton:hover {
+  background-color: #e2e8f0;
+}
+
+/* --- ACCORDION LIST STRUCTURE --- */
+.accordionContainerList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.accordionCardWrapper {
+  width: 100%;
+  background-color: #f1f5f9; /* Soft tint backdrop panel matching your screenshots */
+  border-radius: 12px;
+  overflow: hidden;
+  transition: background-color 0.2s ease;
+}
+
+.accordionHeaderTrigger {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+}
+
+.accordionQuestionText {
+  font-family: sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.accordionIndicatorArrow {
+  font-size: 0.75rem;
+  color: #0f172a;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.arrowRotateUp {
+  transform: rotate(180deg); /* Flips pointing arrow directly upwards on click */
+}
+
+/* --- COLLAPSIBLE DRAWER TRANSITION LOGIC --- */
+.accordionContentCollapsePanel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.panelExpanded {
+  max-height: 200px; /* Slides the block card area safely into full visibility */
+}
+
+.accordionContentInnerBuffer {
+  padding: 0 20px 20px 20px;
+}
+
+.faqAnswerParagraphText {
+  font-family: sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #334155;
+  margin: 0;
+}
+
+/* --- BOTTOM REDIRECT TRIGGER LINK ON MAIN CARD --- */
+button.faqFooterLinkBlock {
+  background: none;
+  border: none;
+  outline: none;
+  display: block;
+  margin: 0 auto;
+  font-family: sans-serif;
+  font-size: 0.85rem;
+  color: #64748b;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 
+}
+
+/* ==========================================================================
+    MAIN WHITE CARD CONTEXT WRAPPER
+   ========================================================================= */
+.donationModalContainer {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 20px;       /* Matches Image 2's smooth card container corner */
+  padding: 24px;             /* Compact padding to bring elements closer */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+    STEP 2: PAYMENT HEADER (Clean, proportional typography)
+   ========================================================================= */
+.paymentMethodHeaderContainer {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 18px;       /* Tightened space below header */
+}
+
+.paymentMethodMainTitle {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1.45rem;        /* Scaled down from massive billboard size */
+  font-weight: 700;          /* Clean, modern bold weight */
+  color: #1a1a1a;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.2px;
+}
+
+.secureSubHeaderBadgeRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.secureShieldBadgeText {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.82rem;        /* Small, elegant indicator typography */
+  color: #555555;
+  font-weight: 400;
+}
+
+/* ==========================================================================
+    PAYMENT METHODS OPTIONS LIST WRAPPER (Image 2 Rounded Outer Border Box)
+   ========================================================================= */
+.paymentMethodOptionsListContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e1e1e1; /* Subtle modern border line */
+  border-radius: 14px;       /* Clean outer capsule rounding */
+  overflow: hidden;
+  background-color: #ffffff;
+  margin-bottom: 24px;
+  box-sizing: border-box;
+}
+
+.methodSelectRowCard {
+  width: 100%;
+  padding: 25px 16px;       /* Tight desktop/mobile viewport spacing matrix */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eeeeee;
+  cursor: pointer;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.methodSelectRowCard:last-of-type {
+  border-bottom: none;
+}
+
+/* THE PERFECTLY MAPPED SELECTED ITEM STATE FROM IMAGE 2 */
+.activeMethodRowCard {
+  background-color: #eaeaea !important; /* Authentic light gray background tint */
+  border: 2px solid #111111 !important;  /* High contrast solid dark perimeter path */
+  margin: -1px -1px;                     /* Prevents double-border layouts */
+  z-index: 5;
+}
+
+/* Seamless corner wrapping fixes when an edge item is active */
+.methodSelectRowCard:first-of-type.activeMethodRowCard {
+  border-top-left-radius: 13px;
+  border-top-right-radius: 13px;
+}
+.methodSelectRowCard:last-of-type.activeMethodRowCard {
+  border-bottom-left-radius: 13px;
+  border-bottom-right-radius: 13px;
+}
+
+.cardLeftControlArea {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* SYSTEM RADIO INDICATORS */
+.customUIRadioCircle {
+  width: 18px;               /* Compact radio circle sizing */
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #b5b5b5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+.activeMethodRowCard .customUIRadioCircle {
+  border: 5px solid #ff5a36 !important; /* Standard clean orange active tracking rim */
+}
+
+.brandIconNameFlexRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.paymentMethodLabelText {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.95rem;        /* Scaled down to standard layout reading size */
+  font-weight: 400;          /* Clean medium weight as shown in your upload */
+  color: #111111;
+}
+
+/* --------------------------------------------------------------------------
+    BRAND ASSET EMBEDS & FINTECH BADGES (Merged Styles)
+   -------------------------------------------------------------------------- */
+
+/* 1. Google Pay Capsule Border Box */
+.gpayAssetCapsuleImageTwo {
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 1px 5px;
+  background-color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  box-sizing: border-box;
+  
+}
+
+/* 2. Credit Card Badges Flex Container */
+.cardBrandBadgesRightGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fintechLogoBadge {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.55rem;
+  font-weight: 800;
+  padding: 2px 4px;
+  border-radius: 3px;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  letter-spacing: -0.1px;
+  text-transform: uppercase;
+  display: inline-block;
+  line-height: 1;
+}
+
+.visaLogo { 
+  color: #0a2540; 
+}
+
+.amexLogo { 
+  color: #ffffff; 
+  background-color: #0070cd; 
+  border-color: #0070cd; 
+}
+
+.discoverLogo { 
+  color: #ff6600; 
+  border-color: #fed7aa; 
+}
+
+/* Custom CSS layout recreating the Mastercard interlocking spheres */
+.mastercardBadgeAsset {
+  width: 24px;
+  height: 15px;
+  border-radius: 3px;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mcLeftCircle { 
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  background-color: #f1001c; 
+  left: 4px; 
+}
+
+.mcRightCircle { 
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  background-color: #ff5f00; 
+  right: 4px; 
+  opacity: 0.9; 
+}
+
+/* 3. PayPal Overlapping Monogram Moniker */
+.paypalMonogramAsset {
+  display: inline-flex;
+  font-family: "Arial Black", Impact, sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.1rem;
+  position: relative;
+  width: 16px;
+  height: 18px;
+  line-height: 1;
+}
+
+.ppDarkBlue { 
+  color: #003087; 
+  position: absolute; 
+  left: 0; 
+  top: 0; 
+  z-index: 2; 
+}
+
+.ppLightBlue { 
+  color: #0079c1; 
+  position: absolute; 
+  left: 5px; 
+  top: 2px; 
+  z-index: 1; 
+}
+
+/* 4. Cryptocurrency Label Pill Tokens */
+.cryptoTokenCoinBadgesRightGroup {
+  display: flex;
+  gap: 4px;
+}
+
+.cryptoCoinBadgeAsset {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #ffffff;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.btcColor { background-color: #f7931a; }
+.ethColor { background-color: #627eea; }
+.usdtColor { background-color: #26a17b; }
+
+/* ==========================================================================
+    IMAGE 2 MULTI-STATE LOWER ACTIONS CONTROLS BLOCK
+   ========================================================================= */
+.paymentContextActionButtonContainer {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.primaryActionStep2SubmitCTA {
+  width: 100%;
+  height: 46px;              /* Exact proportional layout height from Image 2 */
+  border: none;
+  border-radius: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.98rem;        /* Clean baseline text */
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  transition: opacity 0.1s ease;
+}
+
+.primaryActionStep2SubmitCTA:hover {
+  opacity: 0.9;
+}
+
+/* Dark variant "Continue" configuration mapping */
+.continueExactBlackButton {
+  background-color: #262423; /* Matching that rich charcoal-black matte tone */
+  color: #ffffff;
+}
+
+/* PayPal Context Option Layout */
+.paypalExactGoldButton {
+  background-color: #ffc439;
+  color: #003087;
+}
+
+/* ==========================================================================
+    GLOBAL SCREEN FOOTER FAQ COMPONENT BLOCK
+   ========================================================================= */
+.faqFooterLinkBlock {
+  width: 100%;
+  background: none;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.82rem;        /* Clean, non-distracting sizing */
+  font-weight: 400;
+  color: #444444;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  padding: 4px 0;
+  display: block;
+}
+
+.faqFooterLinkBlock:hover {
+  text-decoration: underline;
+}
+/* ==========================================================================
+    BACK ACTION CHEVRON LINK STYLE BLOCK
+   ========================================================================= */
+.formPanelSidePaymentVariant {
+  width: 100%;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  position: relative; /* Crucial anchor context for absolute positioning */
+}
+
+.backButtonChevronLink {
+  position: absolute;
+  top: 24px;       /* Aligns evenly with the container's top padding */
+  left: 20px;      /* Aligns evenly with the container's side padding */
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;        /* Gap distance between arrow glyph and text */
+  color: #64748b;  /* Clean slate-gray text color path */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.backButtonChevronLink:hover {
+  color: #111111;  /* Darkens seamlessly on user hover */
+}
+
+.backButtonChevronLink svg {
+  display: block;  /* Strips inline spacing baselines around the vector */
+}
+
+/* ==========================================================================
+    STEP 2 CLOSE BUTTON OVERRIDES
+   ========================================================================= */
+.closeButtonAbsolute {
+  background: none;
+  border: none;
+  color: #fcfcfc; /* Dark charcoal color so it's readable on the background */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Spacing between the word "Close" and the "✕" icon */
+  opacity: 0.75;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  padding: 0;
+}
+
+.closeButtonAbsolute:hover {
+  opacity: 1;
+}
+
+.closeXGlyph {
+  font-size: 0.85rem; /* Makes the X icon sharp and crisp */
+  line-height: 1;
+}
+
+/* Adjusting the main control bar configuration when in step 2 if needed */
+@media (max-width: 840px) {
+  .topControlBar {
+    padding: 4px 8px; /* Extra breathing space on smaller screens */
+  }
+}
+/* ==========================================================================
+   AUTHENTIC DEBIT OR CREDIT DESIGN ROW LAYOUT OVERRIDES
+   ========================================================================= */
+
+/* Left-side vector icon alignment */
+.leftCreditCardIcon {
+  color: #111111; /* Sharp dark stroke matching your text */
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 12px; /* Adds breathing room between the icon and the text */
+}
+
+/* Flex container holding the brand badges on the right side */
+.cardBrandBadgesRightGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Tight, professional spacing between card asset cells */
+}
+
+/* Clean up individual image assets to replicate the bounding boxes in your screenshot */
+.fintechImageAsset {
+  height: 26px; /* Proportional vertical scaling */
+  width: auto;
+  padding: 2px 4px; /* Balances the internal asset whitespace */
+  
+}
+
+/* Text style adjustment to match the clean, readable sans-serif look */
+.paymentMethodLabelText {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 400; /* Standard weight for cleaner readability */
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+}
+
+/* Ensure the radio circle and icon row are vertically centered */
+.brandIconNameFlexRow {
+  display: flex;
+  align-items: center;
+}
+
+/* Container for the overlapping coin icons */
+.cryptoBadgeContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+}
+
+/* Individual coin styling */
+.cryptoCoinIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #ffffff; /* White ring to create separation */
+  background-color: #f3f4f6;
+  object-fit: cover;
+}
+
+/* Text alignment for the two-line crypto label */
+.cryptoTextWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.paymentMethodSubText {
+  font-size: 0.85rem;
+  color: #666666;
+  margin-top: 2px;
+}
+
+/* Add these to your CSS module */
+.cryptoStepContainer {
+  margin-top: 24px;
+}
+
+.cryptoActionContainer {
+  margin-top: 32px;
+}
+
+.cryptoTitle {
+  margin-bottom: 24px;
+}
+/* Add these styles to your existing donate.module.css file */
+
+.cryptoAddressDisplay {
+  display: block;
+  margin: 15px 0;
+  background: #f4f4f4;
+  padding: 12px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: #333;
+  word-break: break-all;
+  border: 1px solid #e5e5e5;
+}
+
+
+
+.step4InstructionText {
+  font-size: 1rem;
+  color: #4a4a4a;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.confirmPaymentButton {
+  width: 100%;
+  padding: 16px;
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.confirmPaymentButton:hover {
+  background-color: #333333;
+}
+
+
+/* --- FORM INPUT FIELD STYLING --- */
+.donorCollectionForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.inputField {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 16px; /* IMPORTANT: 16px prevents auto-zoom on iOS */
+  box-sizing: border-box; /* Ensures padding doesn't push the input off-screen */
+  background-color: #ffffff;
+}
+
+.inputField:focus {
+  outline: 2px solid #0b0c0c;
+  border-color: transparent;
+}
+
+/* Optional: Label/Instruction text styling for the form */
+.instructionText {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+/* --- MOBILE RESPONSIVE WRAPPER (Applied to all steps) --- */
+@media (max-width: 480px) {
+  .donationModalContainer {
+    width: 90vw; /* Keeps the container within the phone screen width */
+    border-radius: 12px;
+    margin: 10px auto;
+  }
+
+  .formPanelSidePaymentVariant, 
+  .formPanelSide {
+    padding: 20px 16px; /* Optimized padding for mobile */
+  }
+
+  /* Center the titles and elements consistently on mobile */
+  .paymentMethodMainTitle {
+    font-size: 1.25rem; /* Slightly smaller for mobile screens */
+    margin-bottom: 12px;
+  }
+
+  /* Ensure the buttons fill the width on mobile */
+  .confirmPaymentButton, 
+  .primaryActionStep2SubmitCTA {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+  }
+}
+/* --- MOBILE SPECIFIC FIXES --- */
+@media (max-width: 480px) {
+  /* 1. Fix the Back Button Alignment */
+  .formPanelSidePaymentVariant {
+    padding-top: 60px; /* Provides space for the absolute-positioned back button */
+  }
+
+  .backButtonChevronLink {
+    top: 15px; /* Moves it higher toward the top */
+    left: 10px;
+    font-size: 0.9rem;
+  }
+
+  /* 2. Fix Payment Method Rows (Google Pay, PayPal, etc) */
+  .paymentMethodOptionsListContainer {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .methodSelectRowCard {
+    padding: 16px 10px; /* Reduced horizontal padding */
+    gap: 8px;
+  }
+
+  /* 3. Force scaling of content within the rows */
+  .brandIconNameFlexRow {
+    flex-wrap: nowrap; /* Prevents text from wrapping to the next line */
+    overflow: hidden;
+  }
+
+  .paymentMethodLabelText {
+    font-size: 0.85rem; /* Slightly smaller to fit on small screens */
+    white-space: nowrap;
+  }
+}
+/* --- MOBILE ICON SCALING --- */
+@media (max-width: 480px) {
+  .cardBrandBadgesRightGroup {
+    gap: 0.5px; /* Tighten the space between icons on tiny screens */
+  }
+
+  .fintechLogoBadge {
+    /* Adjust these values to make the icons smaller or larger */
+    font-size: 0.45rem; 
+    padding: 1px 2px;
+    height: 14px; 
+    line-height: 14px;
+  }
+}
+
+/* The main card wrapper */
+.cryptoPaymentCard {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* The high-visibility network alert */
+.networkBadge {
+  background-color: #fffbeb;
+  color: #b45309;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #f59e0b;
+  font-size: 0.9rem;
+  margin: 12px 0;
+  font-weight: 500;
+}
+
+/* Container for the QR code */
+.qrCodeWrapper {
+  margin: 16px 0;
+  padding: 12px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* The address box styling */
+.cryptoAddressContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 10px;
+}
+
+.cryptoAddressDisplay {
+  font-family: monospace;
+  font-size: 0.85rem;
+  word-break: break-all;
+  color: #333;
+  flex: 1;
+  text-align: left;
+  margin-right: 10px;
+}
+
+.copyAddressButton {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.copyAddressButton:hover {
+  background: #333;
+}
+
+.qrAndAddressGroup {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px 0;
+  width: 100%;
+}
+
+.addressTextUnderQR {
+  font-family: monospace;
+  font-size: 0.85rem;
+  margin-top: 0px;
+  text-align: center;
+  word-break: break-all;
+  color: #333;
+  padding: 0 1px;
+}
+
+.cryptoActionRow {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.iconBtn {
+  background: #f0f0f0;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.iconBtn:hover {
+  background: #e0e0e0;
+}
+

@@ -1,0 +1,142 @@
+/* Use a more specific selector to beat globals.css */
+.container {
+  padding: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: sans-serif;
+  background-color: #ffffff !important; /* Force white */
+  color: #000000 !important;             /* Force black text */
+  min-height: 100vh;                     /* Cover the full screen */
+}
+
+/* Force table styles to override any global table resets */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #ffffff !important;        /* Force white table */
+  color: #000000 !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.loginBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* Ensures full screen height */
+  width: 100vw;      /* Ensures full screen width */
+  background-color: #050505; /* Deep black/terminal background */
+  color: #00ff41;           /* Classic hacker green */
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
+}
+
+.loginBox h1 {
+  font-size: 2.9rem; /* Increase this value as needed */
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px #00ff41;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.loginBox h2 {
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px #00ff41;
+}
+
+.loginBox input {
+  background: #111;
+  border: 1px solid #00ff41;
+  color: #00ff41;
+  padding: 12px;
+  width: 300px;
+  text-align: center;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.loginBox button {
+  background: transparent;
+  border: 1px solid #00ff41;
+  color: #00ff41;
+  padding: 10px 30px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.loginBox button:hover {
+  background: #00ff41;
+  color: #000;
+  box-shadow: 0 0 20px #00ff41;
+}
+
+.container {
+  padding: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table th, .table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.loginBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  gap: 15px;
+}
+
+.adminGreeting {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #000000;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  padding-left: 5px;
+}
+
+/* Ensure the html and body take up the full screen and have a white background */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff; /* This forces the entire page background to white */
+}
+
+/* Ensure your admin content wrapper also fills the screen */
+.admin-page-container {
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 40px; /* Gives your content some breathing room from the edges */
+  width: 100%;
+}

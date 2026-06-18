@@ -1,0 +1,222 @@
+.footerContainer {
+  background-color: #cacdce;
+  color: white;
+  padding: 4rem 1.5rem 2rem 1.5rem;
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
+  box-sizing: border-box;
+  
+}
+
+.footerTop {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 3rem;
+}
+
+.linksGrid {
+  display: flex;
+  flex-direction: column; /* Stacked accordion on mobile viewport */
+}
+
+/* --- MOBILE ACCORDION STYLES (< 768px) --- */
+.linkColumn {
+  border-bottom: 2px solid rgba(0, 27, 41, 0.25); /* Soft split line using your primary text color */
+  display: flex;
+  flex-direction: column;
+}
+
+.columnHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 0.5rem;
+  cursor: pointer;
+}
+
+.columnHeader h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  color: #001b29;
+  white-space: nowrap;
+}
+
+.mobileArrow {
+  font-size: 0.8rem;
+  color: rgba(0, 27, 41, 0.6);
+  transition: transform 0.25s ease;
+}
+
+.arrowRotate {
+  transform: rotate(180deg);
+}
+
+/* Desktop horizontal bar hidden on mobile rows */
+.headerLine {
+  display: none;
+}
+
+.linkList {
+  list-style: none;
+  padding: 0 0.5rem;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.linkList.isOpen {
+  max-height: 500px;
+  padding-bottom: 1.5rem;
+  opacity: 1;
+}
+
+.linkList a {
+  color: rgba(0, 27, 41, 0.8);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+.linkList a:hover {
+  color: #8c248c;
+}
+
+/* Right Section Alignment Blocks */
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.badgesContainer {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.badgesContainer img {
+  height: 75px;
+  width: auto;
+  object-fit: contain;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.socialIcons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background-color: #001b29;
+  color: white;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.socialIcons a:hover {
+  transform: scale(1.1);
+  background-color: #fefdfe96;
+  color: #8c248c; /* Ensures SVG icons shift color correctly inside the container */
+}
+
+.footerBottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0, 27, 41, 0.927);
+  gap: 1.5rem;
+}
+
+.footerLogo {
+  height: 50px;
+  width: auto;
+}
+
+.copyrightWrapper p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(14, 0, 0, 0.6);
+}
+
+/* --- TABLET AND DESKTOP LAYOUT (>= 768px) --- */
+@media (min-width: 768px) {
+  .footerContainer {
+    padding: 4rem 4rem 2rem 4rem;
+  }
+
+  .footerTop {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 4rem;
+  }
+
+  .linksGrid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(120px, 1fr));
+    gap: 2rem;
+    flex: 3;
+  }
+
+  .linkColumn {
+    border-bottom: none;
+  }
+
+  .columnHeader {
+    padding: 0 0 0.5rem 0;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .mobileArrow {
+    display: none;
+  }
+
+  .headerLine {
+    display: block;
+    height: 1px;
+    background-color: rgba(0, 27, 41, 0.3);
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .linkList {
+    max-height: none !important;
+    opacity: 1 !important;
+    padding: 0;
+  }
+
+  .rightSection {
+    align-items: flex-end;
+    flex: 1;
+    margin-top: 3rem;
+  }
+
+  .footerBottom {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 0;
+  }
+}

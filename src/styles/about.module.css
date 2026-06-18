@@ -1,0 +1,825 @@
+.heroSection {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  background-image: url('/images/about-hero-bg.jpg'); /* Ensure this image is in /public */
+  background-size: cover;
+  background-position: center;
+  padding: 0.5%;
+}
+
+.heroSection {
+  /* ... existing styles ... */
+  padding: 120px 40px; /* Pushes the whole block down from the header */
+}
+
+.label {
+  font-family: 'Clash Display', sans-serif;
+  letter-spacing: 2px;
+  color: #d4af37; /* Gold/Bronze accent color from your screenshot */
+  margin-bottom: 20px;
+}
+
+.title {
+  font-family: 'Clash Display', sans-serif;
+  font-weight: 700;
+  font-size: 4rem;
+  line-height: 1.1;
+  color: #ffffff;
+  max-width: 800px;
+}
+
+.description {
+  color: #f0f0f0;
+  font-size: 1rem;
+  max-width: 600px;
+  margin-top: 30px;
+  line-height: 1.6;
+}
+
+.mobileAccent {
+  color: #ffffff; 
+}
+
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .title {
+    font-size: 3.5rem;
+  }
+  .heroSection {
+    min-height: 60vh;
+    padding: 100px 25px;
+  }
+  .mobileAccent {
+    color: #000000;
+  }
+}
+
+/* --- Animations --- */
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Apply animation to all children of heroContent */
+.heroContent > * {
+  opacity: 0;
+  animation: slideUp 1s ease-out forwards;
+}
+
+/* Stagger the animations */
+.heroContent > :nth-child(1) { animation-delay: 0.3s; } /* Label */
+.heroContent > :nth-child(2) { animation-delay: 0.3s; } /* Title */
+.heroContent > :nth-child(3) { animation-delay: 1s; }   /* Description */
+
+/* --- Mobile Letter Coloring --- */
+/* We target the letters by their position in the string using nth-child spans */
+@media (max-width: 768px) {
+  .title span:nth-child(1) { color: black; } /* "t" in fight */
+  .title span:nth-child(2) { color: black; } /* "c" in cancer */
+}
+
+/* The white background section */
+.impactSection {
+  background-color: #ffffff;
+  padding: 50px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none !important; /* Forces removal of any lines */
+  margin: 0 !important;
+}
+
+/* The wide blue box */
+.impactBox {
+  background-color: #1e293b; /* Adjust this blue to your brand's specific shade */
+  width: 100%;
+  min-height: 50vh;
+  max-width: 1100px; /* Limits width on desktop */
+  padding: 60px 40px;
+  border-radius: 1px; /* Optional: adds a soft look */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none; /* Removed shadow to prevent "line" artifacts */
+}
+
+/* The bold center text */
+.impactText {
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+  .impactSection {
+    padding: 30px 15px; 
+  }
+
+  .impactBox {
+    padding: 90px 20px; /* Adjust this to make it thinner/taller */
+    min-height: auto;   /* THIS IS THE FIX: Allows the box to shrink */
+    height: auto;       /* Ensures it only takes up needed space */
+  }
+
+  .impactText {
+    font-size: 1.25rem;
+  }
+}
+
+.impactBox {
+  position: relative;
+  overflow: hidden; /* This keeps the pattern contained within the box */
+  /* ... your existing box styles ... */
+}
+
+.patternOverlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  /* Makes the pattern cover roughly half the box */
+  width: 50%; 
+  height: 100%;
+  
+  /* Bold lines: Increased opacity and adjusted spacing */
+  background: repeating-linear-gradient(
+    45deg, 
+    rgba(255, 255, 255, 0.2) 0px, 
+    rgba(255, 255, 255, 0.2) 4px, 
+    transparent 4px, 
+    transparent 30px
+  );
+  
+  /* Optional: Adds a gentle fade effect so it doesn't clash with the text */
+  mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
+  
+  pointer-events: none;
+}
+/* --- Add this to your CSS file --- */
+@keyframes movePattern {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 30px 200px; /* Moves the lines diagonally */
+  }
+}
+
+.patternOverlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  
+  /* Applying the animation */
+  animation: movePattern 3s linear infinite;
+  
+  background: repeating-linear-gradient(
+    45deg, 
+    rgba(255, 255, 255, 0.612) 0px, 
+    rgba(36, 10, 234, 0.756) 4px, 
+    transparent 4px, 
+    transparent 30px
+  );
+  
+  mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
+  
+  pointer-events: none;
+}
+
+.impactText {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+
+/* This class is added by the IntersectionObserver */
+.animateSlideUp {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.impactBox {
+  background-color: #1e293b;
+  width: 100%;
+  max-width: 1100px;
+  padding: 40px 20px;
+  border-radius: 1px;
+  position: relative;
+  overflow: hidden;
+  
+  /* THIS IS THE FIX: Changes layout to stack vertically */
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.slugSubtext {
+  color: #d4af37;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1rem; /* Adjust size as needed */
+  font-weight: 700;
+  margin-top: 20px; /* Space between the main text and this subtext */
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  
+  /* Animation */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out 0.2s;
+}
+
+.animateSlideUp {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.missionSection {
+  background-color: #ffffff;
+  padding: 100px 20px; /* Generous padding for a clean, premium feel */
+  display: flex;
+  justify-content: center;
+  border: none !important; /* Ensures no line here */
+  margin-top: -1px; /* Overlaps with section above to seal the gap */
+}
+
+.missionContent {
+  max-width: 800px;
+  text-align: center;
+}
+
+.missionHeading {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.5rem;
+  color: #7B2CBF; /* Matches your blue box color for brand consistency */
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.missionSubtext {
+  font-size: 2rem;
+  color: #000000; /* A professional dark grey */
+  line-height: 1.8;
+  
+}
+
+/* Mobile adjustment for smaller screens */
+@media (max-width: 768px) {
+  .missionSection {
+    padding: 60px 20px;
+    
+  }
+  .missionHeading {
+    font-size: 1.2rem;
+  }
+  .missionSubtext {
+    font-size: 1.5rem;
+  }
+}
+
+.principlesSection {
+  background-color: #ffffff; /* Section background is black */
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none !important; /* Ensures no line here */
+  margin-top: -1px; /* Overlaps with section above to seal the gap */
+}
+
+.principlesBox {
+  background-color: #f5f5f0; /* Beige box background */
+  max-width: 1000px;
+  width: 100%;
+  padding: 60px;
+  border-radius: 4px;
+}
+
+.principlesHeader {
+  color: #4a7cff; /* Blue color from your design */
+  letter-spacing: 2px;
+  margin-bottom: 50px;
+}
+
+.principleItem {
+  padding: 40px 0;
+  border-bottom: none !important;
+}
+
+.principleItem:last-child { border-bottom: none; }
+
+/* --- RESPONSIVE LAYOUTS --- */
+
+/* Mobile: Single column, smaller text */
+@media (max-width: 480px) {
+  .principlesBox { padding: 30px 20px; }
+  .principleTitle { font-size: 1.5rem; }
+  .principleText { font-size: 1rem; }
+}
+
+/* Tablet: Slightly tighter padding */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .principlesBox { padding: 50px 40px; }
+  .principleTitle { font-size: 1.2rem; }
+}
+
+/* Desktop: Wide view */
+@media (min-width: 1025px) {
+  .principlesBox { padding: 80px; }
+}
+
+/* --- Desktop: Side-by-side layout --- */
+.storySection {
+  position: relative; /* Needed to anchor the corners */
+  overflow: hidden;
+  --stripeColor: rgba(59, 130, 246, 0.15); /* Electric Blue with 15% opacity */
+  --stripeColorTransparent: rgba(59, 246, 137, 0);
+  font-family: 'Playfair Display', serif;
+  background-color: #094c98;
+  color: #ffffff;
+  padding: 100px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1500px;
+  margin: 0 auto;
+  gap: 60px;
+}
+
+.storyContent { 
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03); /* Extremely subtle white transparency */
+  backdrop-filter: blur(15px);           /* Creates the frosted glass blur */
+  -webkit-backdrop-filter: blur(15px);  /* For Safari compatibility */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1px;
+  padding: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.storyHeading {
+  font-size: 2.2rem;
+  margin-bottom: 60px;
+  
+}
+
+.storyText {
+  font-size: 1.1rem;
+  line-height: 1.2;
+  margin-bottom: 25px;
+}
+
+.storyImages { flex: 1.2; position: relative; }
+
+/* Desktop Positioning (Matching your screenshot style) */
+.mainImg { width: 80%; border-radius: 1px; display: block; }
+.subImg { width: 80%; position: absolute; bottom: 0px; right: 0; border: 5px solid white;  }
+
+
+/* --- DESKTOP VERSION (1025px and up) --- */
+@media (min-width: 1025px) {
+  .storyContent {
+    margin-top: -50px; 
+  }
+
+  .storyImages {
+    flex: 1;
+    position: relative;
+    /* Add this line to push the entire image block down */
+    margin-top: 80px; 
+    /* Maintain the padding for the overlap */
+    padding-bottom: 100px; 
+    min-height: 460px;
+  }
+
+  .mainImg {
+    width: 90%;
+    border-radius: 1px;
+    display: block;
+  }
+
+  .subImg {
+    width: 90%;
+    position: absolute;
+    bottom: -60px;
+    right: -20px;
+    border: 5px solid #000000;
+    z-index: 2;
+  }
+}
+
+/* --- Tablet (768px - 1024px) --- */
+@media (max-width: 1024px) {
+  .storySection { flex-direction: column; padding: 60px 30px; }
+  .storyImages { display: none; } /* Hide the original desktop container */
+  
+  /* Show the mobile-friendly images instead */
+  .mobileImage { width: 100%; margin: 20px 0; border-radius: 4px; }
+}
+
+/* --- Mobile (< 768px) --- */
+@media (max-width: 767px) {
+  .storySection { padding: 40px 20px; }
+  .storyHeading { font-size: 2rem; }
+  .mobileImage { width: 100%; }
+}
+
+/* --- Desktop Default --- */
+.mobileVisibleImg {
+  display: none; /* Hidden by default on desktop */
+}
+
+/* --- Tablet & Mobile (1024px and below) --- */
+@media (max-width: 1024px) {
+  /* Hide the original desktop image container */
+  .storyImages {
+    display: none;
+  }
+
+  /* Show the mobile images and style them */
+  .mobileVisibleImg {
+    display: block;
+    width: 100%;
+    margin: 25px 0;
+    border-radius: 1px;
+    object-fit: cover;
+  }
+}
+
+/* The stripe pattern generator */
+.storySection::before,
+.storySection::after {
+  content: "";
+  position: absolute;
+  width: 300px;  /* Size of the corner square */
+  height: 300px;
+  background: linear-gradient(
+    135deg, 
+   var(--stripeColor) 25%, 
+    var(--stripeColorTransparent) 25%, 
+    var(--stripeColorTransparent) 50%, 
+    var(--stripeColor) 50%, 
+    var(--stripeColor) 75%, 
+    var(--stripeColorTransparent) 75%, 
+    var(--stripeColorTransparent)
+  );
+  background-size: 40px 40px; /* Adjust for stripe thickness */
+  pointer-events: none; /* Let users click text through the stripes */
+  z-index: 0;
+}
+
+/* Top Left Corner */
+.storySection::before {
+  top: 0;
+  left: 0;
+}
+
+/* Bottom Right Corner */
+.storySection::after {
+  bottom: 0;
+  right: 0;
+}
+
+/* Ensure content sits above the stripes */
+.storyContent, .storyImages {
+  position: relative;
+  z-index: 1;
+}
+
+/* INITIAL HIDDEN STATE FOR ELEMENTS THAT WILL SLIDE */
+.storyImages {
+  flex: 1.2;
+  position: relative;
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.8s ease-out;
+}
+
+.animateSlideRight {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.animateSlideLeft {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+/*CANCER FACTS SECTION*/
+.factsSection {
+  padding: 80px 20px;
+  background-color: #ffffff;
+  width: 100%;
+  display: block; /* Ensure section is a block */
+  min-height: 400px; /* Force minimum space */
+  
+  
+}
+
+.sectionHeading {
+  font-family: 'Clash Display', sans-serif, Arial; /* Matches Principles font */
+  font-size: 1.5rem;
+  color: #1e293b;
+  margin-bottom: 50px;
+  
+  /* Alignment Fixes */
+  text-align: left; /* Moves title to the left */
+  letter-spacing: 1px; /* Matches the spacing in Principles */
+  text-transform: uppercase; /* Ensures it matches the style */
+}
+
+
+.factsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 200px;
+  opacity: 1
+  
+}
+
+.factCard {
+  background-color: #d1d5d8;
+  padding: 30px;
+  position: relative;
+  border-top: 6px solid #1e293b;
+  min-height: 250px;
+  border-radius: 4px;
+  overflow: hidden;
+
+  /* ANIMATION INITIAL STATE */
+  opacity: 0;
+  transform: translateY(30px);
+  /* The transition must be here, on the element that moves */
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* 2. Trigger State: When the Grid has 'animateFadeIn', cards reveal */
+.factsGrid.animateFadeIn .factCard {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+.factCard::before {
+  content: "";
+  position: absolute;
+  top: -6px; /* Aligned with the border-top */
+  left: 0;
+  width: 100%;
+  height: 4px; /* The thickness of your tri-color stripe */
+  
+  /* The tri-color gradient */
+  background: linear-gradient(
+    90deg, 
+    #d14a4a 0%, #d14a4a 33.33%, 
+    #d4af37 33.33%, #d4af37 66.66%, 
+    #1e293b 66.66%, #1e293b 100%
+  );
+}
+.factNumber {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #c40f0f; /* Matches the red accent from your screenshot */
+  opacity: 0.8;
+}
+
+.factTitle {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 1.3rem;
+  color: #1e293b;
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
+
+.factText {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #475569;
+}
+
+/* Responsive Logic */
+@media (max-width: 1024px) {
+  .factsGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .factsGrid { grid-template-columns: 1fr; }
+}
+
+/* LEADERSHIP SECTION */
+.lsLeadershipSection {
+  padding: 80px 20px;
+  background-color: #ffffff; /* Explicit white background */
+  color: #1e293b; /* Set default text color for the section */
+  width: 100%;
+  
+}
+
+.lsContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.lsLabel {
+  color: #d4af37; 
+  letter-spacing: 2px;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  font-weight: 600; /* Added weight for better visibility */
+}
+
+.lsTitle {
+  font-size: 2.5rem;
+  color: #000000;
+  margin-bottom: 30px;
+  line-height: 1.2; /* Better spacing for large titles */
+}
+
+.lsVerticalsTitle {
+  font-size: 2rem;
+  color: #000000;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.lsText {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #000000; /* Soft dark grey for readability */
+  margin-bottom: 20px;
+}
+
+/* --- Board Section Container --- */
+.desktopView {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 40px;
+}
+
+.col h3 {
+  font-size: 1.25rem;
+  color: #000000;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 10px;
+}
+
+.boardList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.boardList li {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #000000;
+}
+
+/* --- Mobile/Tablet Accordion --- */
+.mobileAccordionView {
+  display: none; /* Hidden by default */
+  margin-top: 40px;
+}
+
+.accordionWrapper {
+  border-top: 2px solid #e2e8f0;
+  
+  
+}
+
+.accordionItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  cursor: pointer;
+  font-weight: 600;
+  color: #000000;
+  font-size: 1.1rem;
+  
+}
+
+.accordionContent {
+  list-style: none;
+  padding: 0 0 20px 0;
+  margin: 0;
+  color: #000000;
+}
+
+.accordionContent li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  
+}
+
+/* --- Responsive Switcher --- */
+@media (max-width: 1024px) {
+  .desktopView {
+    display: none; /* Hide grid on tablets and below */
+  }
+  
+  .mobileAccordionView {
+    display: block; /* Show accordion on tablets and below */
+    
+  }
+}
+
+/* The container that will be hidden and then slide up */
+.lsContentContainer {
+  opacity: 0;
+  transform: translateY(50px); /* Starts 50px below */
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+/* This triggers the slide, referencing the same class you used for other sections */
+.animateSlideUp {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ctaSection {
+  background-color: #c4b5fd; /* Light purple background */
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column; /* Stacks items for mobile as in Screenshot 2026-06-05 110439.png */
+  align-items: center;
+  text-align: center;
+}
+
+.ctaHeading {
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.ctaButton {
+  background-color: black;
+  color: white;
+  padding: 15px 40px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  
+}
+
+.ctaButton:hover {
+  background-color: #8b0fc4; /* Change to your preferred hover color */
+}
+
+/* Animation classes */
+.ctaContentContainer {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.7s ease-out, transform 1.7s ease-out;
+}
+
+.animateSlideUp {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Desktop layout adjustment for Screenshot 2026-06-05 110429.png */
+@media (min-width: 768px) {
+  .ctaSection {
+    flex-direction: row; /* Aligns items side-by-side */
+    justify-content: space-between;
+    text-align: left;
+    padding: 80px 100px;
+  }
+  
+  .ctaContent {
+    flex: 1;
+  }
+
+}
+/* Mobile cta Adjustments */
+@media (max-width: 1024px) {
+  
+  .ctaButton {
+    width: 100%
+  }
+}

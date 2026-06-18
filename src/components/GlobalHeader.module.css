@@ -1,0 +1,439 @@
+/* src/components/GlobalHeader.module.css */
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  background: transparent;
+  /* Bolder white line */
+  border-bottom: 2px solid rgb(255, 255, 255);
+}
+
+.logoImage {
+  height: 60px;
+  width: auto;
+}
+
+/* This container pushes all nav/buttons to the right */
+.mainNavWrapper {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-left: auto; 
+}
+
+.navDesktop ul {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* ==========================================================================
+    CORRECTED DESKTOP NAV HOVER SYSTEM (CSS MODULE FRIENDLY)
+   ========================================================================== */
+
+/* 1. Base Default State (Top of page, dark background) */
+.navDesktop a,
+.navLink {
+  color: #ffffff !important; /* Forces link visible over hero asset images */
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.3s ease; 
+}
+
+/* 2. Base Hover State */
+.navDesktop a:hover,
+.navLink:hover {
+  color: #de18de !important; /* Your vibrant purple hover */
+  cursor: pointer;
+}
+
+/* ==========================================================================
+    SCROLLED STATE FIXES (Prevents breaking hover effects)
+   ========================================================================== */
+
+/* When scrolled down, turn links dark blue/black */
+.header.scrolled .navDesktop a,
+.header.scrolled .navLink {
+  color: #001b29 !important;
+}
+
+/* CRITICAL: Allows links to turn purple when hovered on the white scrolled header! */
+.header.scrolled .navDesktop a:hover,
+.header.scrolled .navLink:hover {
+  color: #de18de !important; 
+}
+
+
+.donateButton:hover {
+  background-color: #094c98;
+  transform: scale(1.06); /* Increases the button size by 6% */
+}
+
+.iconButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin-left: 10px;
+}
+
+@media (max-width: 1024px) {
+  /* 1. Force the header to show on mobile */
+  .header { 
+    display: flex !important; 
+    padding: 1rem 1.5rem; 
+    border-bottom: none;
+  }
+
+  /* 2. Hide the desktop nav wrapper entirely */
+  .mainNavWrapper { 
+    display: none !important; 
+  }
+
+  /* 3. Show the mobile-specific container */
+  .mobileMenuContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+  }
+
+  /* Style the mobile donate link inside the container */
+  .mobileMenuContainer a {
+    background-color: var(--foundation-red);
+    color: white !important;
+    text-decoration: none !important;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: transform 0.2s ease;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+  }
+
+  .mobileMenuContainer a:hover {
+    transform: scale(1.06);
+    background-color: #094c98; /* Vibrant red hover */
+  }
+  
+  .hamburger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .hamburger span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: white;
+  }
+}
+
+/* 4. Hide mobile container when on desktop */
+@media (min-width: 1025px) {
+  .mobileMenuContainer {
+    display: none;
+  }
+}
+
+/* FULL SCREEN MOBILE OVERLAY CORE CSS */
+.mobileOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #004566;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+  
+  /* FIX: Ensure content can overflow and be scrolled */
+  overflow-y: auto; 
+  -webkit-overflow-scrolling: touch;
+}
+
+.menuActive {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobileOverlayHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.mobileNavLinks {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 0 2rem 60px 2rem; /* Added bottom padding to reach the bottom item */
+  box-sizing: border-box;
+}
+
+.mobileNavLinks ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+}
+
+.mobileNavLinks li {
+  width: 92%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.801);
+  /* FIX: Ensure they are visible for the scroll calculation */
+  opacity: 1; 
+}
+
+.mobileNavLinks a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 1.2rem 0;   /* Cleaned up padding to align flush with the lines */
+  position: relative;  /* Anchors the arrow element */
+}
+
+/* ANIMATION LOGIC ENGINE */
+.menuActive .slideRight {
+  animation: slideInFromRight 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.menuActive .slideLeft {
+  animation: slideInFromLeft 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+/* Adds a down-pointing arrow to all mobile nav items except the first one (Home) */
+
+
+.header {
+  /* Floats the header natively over your homepage background on load */
+  position: absolute; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: transparent;
+  padding: 3px 20px; 
+  box-sizing: border-box;
+  /* Animates the header transformation smoothly when classes swap */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+/* --- SCROLLED STATE (Applies to ALL screens on scroll) --- */
+.header.scrolled {
+  position: fixed; /* Locks the header bar to the very top of the window viewport */
+  background-color: #ffffff; 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Adds a crisp separation shadow */
+}
+
+/* ⚠️ IMPORTANT COLOR CHECK: 
+   If your nav links or hamburger icon bars are white by default to contrast 
+   with the dark background image, you must override them to dark colors here 
+   so they don't vanish against the new white scrolled background! */
+.header.scrolled a,
+.header.scrolled button,
+.header.scrolled svg{
+  color: #001b29; /* Adjust this color code to match your theme's dark tone */
+  stroke: #001b29; 
+}
+/* 3. MOBILE HAMBURGER TURN BLACK ON WHITE SCROLL BACKGROUND */
+/* Targets the three span lines making up your hamburger switch */
+.header.scrolled .hamburger span {
+  background-color: #000000 !important;
+}
+/* FORCE DONATE BUTTON TEXT TO REMAIN WHITE ON SCROLL */
+.header.scrolled .donateButton,
+.header.scrolled .donateButtonMobile {
+  color: #ffffff !important;
+}
+
+/* Inside GlobalHeader.module.css */
+.navLink {
+  color: #ffffff;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  color: #7B2CBF; /* Your brand theme purple */
+}
+
+/* ==========================================================================
+    DONATE BUTTON COMPLETE STATES SYSTEM
+   ========================================================================== */
+
+/* 1. Base Default State (Top of page, transparent header) */
+.header .mainNavWrapper .donateButton,
+.header .actions .donateButton {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  background-color: var(--foundation-red) !important;
+  display: inline-block !important;
+  padding: 10px 20px !important;
+  border-radius: 10px !important;
+  transition: transform 0.2s ease, background-color 0.2s ease !important;
+}
+
+/* 2. Base Hover State (Transparent header hover) */
+.header .mainNavWrapper .donateButton:hover,
+.header .actions .donateButton:hover {
+  background-color: #094c98 !important; /* Changes to blue */
+  transform: scale(1.06) !important;
+  color: #ffffff !important;
+}
+
+/* 3. Scrolled State (White header background) */
+.header.scrolled .mainNavWrapper .donateButton,
+.header.scrolled .actions .donateButton {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  background-color: var(--foundation-red) !important; /* Stays purple by default */
+  display: inline-block !important;
+  padding: 10px 20px !important;
+  border-radius: 10px !important;
+  transition: transform 0.2s ease, background-color 0.2s ease !important;
+}
+
+/* 4. Scrolled Hover State (Forces the blue transformation when scrolled) */
+.header.scrolled .mainNavWrapper .donateButton:hover,
+.header.scrolled .actions .donateButton:hover {
+  background-color: #094c98 !important; /* Forcing the blue color change */
+  transform: scale(1.06) !important;
+  color: #ffffff !important;
+}
+
+/* Bold weight for the parent "About Us" */
+.aboutParentText {
+  font-weight: 700;
+  font-size: 1.1rem; /* Adjust to match other menu items */
+}
+
+/* Container for accordion items */
+.accordionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 15px 0;
+  color: white;
+}
+
+/* Submenu items: smaller, thinner, dotted underline */
+.subMenuItem {
+  display: block;
+  font-weight: 500; /* Thinner weight */
+  font-size: 0.8rem; /* Smaller size */
+  padding: 10px 0;
+  color: #ccc;
+  text-decoration: none;
+  border-bottom: 2px dotted rgba(255, 255, 255, 0.4); /* Dotted line */
+}
+
+/* Ensure the submenu list removes default padding/styles */
+.subMenu {
+  list-style: none;
+  padding-left: 15px;
+  margin-bottom: 10px;
+}
+
+.homeLink {
+  font-weight: 800 !important; /* Makes Home text thicker */
+}
+
+/* This targets list items specifically inside the About Us submenu */
+.subMenu li {
+  border-bottom: none !important;
+}
+
+/* Specifically for the stories page header */
+.storiesPageHeader .navDesktop a, 
+.storiesPageHeader .navDesktop ul li a {
+  color: #000 !important; /* Changes text to black */
+}
+
+/* Changes the hamburger icon spans to black */
+.storiesPageHeader .hamburger span {
+  background-color: #000 !important;
+}
+
+/* If you have a search icon (SVG), change its fill to black */
+.storiesPageHeader .iconButton svg {
+  fill: #000 !important;
+}
+
+/* If you have a bottom border on your header, make it black */
+.storiesPageHeader {
+  border-bottom: 1px solid #000;
+}
+/* 1. Remove the bottom border on mobile screens for the stories page */
+@media (max-width: 768px) {
+  .storiesPageHeader {
+    border-bottom: none !important;
+  }
+}
+
+/* 2. Add extra weight (thickness) to the desktop border on the stories page */
+@media (min-width: 769px) {
+  .storiesPageHeader {
+    border-bottom: 2px solid #000 !important; /* Increase to 4px or desired weight */
+  }
+  .storiesPageHeader.scrolled {
+    border-bottom: none !important;
+  }
+}
