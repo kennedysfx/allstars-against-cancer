@@ -256,7 +256,7 @@ export default function Stories() {
 
   {/* 2. Image Area */}
   <div className={`${styles.doctorsImage} ${styles.imageContainer} ${styles.animateSlideUp}`}>
-    <img src="/images/Doctors-Story.png" alt="Dr. Story" />
+    <img src="/images/Doctors-story.png" alt="Dr. Story" />
   </div>
 
       <div className={`${styles.doctorsBody} ${styles.storyBody} ${styles.animateSlideUp}`}>
