@@ -178,7 +178,7 @@ export default function GlobalHeader() {
      {/*HOW TO HELP ACCORDION */}
                   <li className={`${styles.slideLeft} ${styles.aboutContainer}`}>
                     <div className={styles.accordionHeader} onClick={() => setOpenSection(openSection === 'help' ? null : 'help')}>
-                      <span className={styles.aboutParentText}>Events</span>
+                      <span className={styles.aboutParentText}>How To Help</span>
                       <span>{openSection === 'help' ? '▲' : '▼'}</span>
                     </div>
   
