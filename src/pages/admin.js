@@ -8,7 +8,7 @@ export default function AdminPage() {
   const [password, setPassword] = useState('');
 
   const checkPassword = () => {
-    if (password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
+    if (password === process.env.ADMIN_PASSWORD) {
       setIsAuthenticated(true);
     } else {
       alert('Incorrect password');
