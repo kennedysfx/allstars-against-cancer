@@ -90,7 +90,7 @@ fetch('/api/subscribers')
       </table>
 
       <h1>Email Subscribers</h1>
-      <table className={styles.table}>
+      <table className={`${styles.table} ${styles.subscriberTable}`}>
         <thead>
           <tr>
             <th>Email</th>

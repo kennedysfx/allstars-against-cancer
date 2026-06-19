@@ -203,7 +203,7 @@ export default function Stories() {
   </div>
 </section>
 
-<section className={styles.drSection}>
+<section id="breast-milk-story" className={styles.drSection}>
   {/* 1. Header Area */}
   <div className={`${styles.drHeader} ${styles.animateSlideUp}`}>
     <div className={styles.accentLine}></div>

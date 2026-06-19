@@ -169,7 +169,7 @@ export function HomepageContent({ hideLowerSections = false }) {
                   <h3 className="story-subheading">
                     Alison Diminuco: Two Weddings, Honoring Her Mom, and Living Fearlessly
                   </h3>
-                  <a href="/stories" className="story-link">
+                  <a href="/stories#patient-stories" className="story-link">
                     Read More &rarr;
                   </a>
                 </div>
@@ -182,7 +182,7 @@ export function HomepageContent({ hideLowerSections = false }) {
                   <h3 className="story-subheading">
                     Understanding How Protective Factors in Breast Milk Could Assist Cancer Prevention
                   </h3>
-                  <a href="/stories" className="story-link">
+                  <a href="/stories#breast-milk-story" className="story-link">
                     Read More &rarr;
                   </a>
                 </div>

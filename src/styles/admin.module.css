@@ -140,3 +140,39 @@ html, body {
   padding: 40px; /* Gives your content some breathing room from the edges */
   width: 100%;
 }
+
+/* Mobile-only styles */
+@media (max-width: 768px) {
+  .adminGreeting {
+    font-size: 40px;    /* Make it smaller for mobile */
+    font-weight: 900;
+    padding: 10px;      /* Add some breathing room */
+    text-align: left; /* Center it on small screens */
+  }
+  .table {
+    width: 95% !important;  /* !important forces it to override other styles */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block;         /* Allows the table to behave like a block element */
+    overflow-x: auto;       /* Adds a scrollbar if the content is still too wide */
+    white-space: nowrap;    /* Prevents text from breaking weirdly */
+    font-size: 12px;     /* Optional: smaller font fits better on mobile */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* If you want the container to be smaller */
+  .container {
+    padding: 10px;
+  }
+  .subscriberTable {
+    width: 90% !important;   /* Reduces the width on mobile */
+    margin: 0 auto !important; /* Centers the table */
+    display: table !important; /* Ensures it does not use overflow-x */
+    table-layout: fixed;      /* Helps force the table to stay within its width */
+  }
+
+  .subscriberTable td {
+    word-wrap: break-word;    /* Ensures long emails don't break the layout */
+  }
+
+}
