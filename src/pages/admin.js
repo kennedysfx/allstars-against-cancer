@@ -7,13 +7,21 @@ export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
 
-  const checkPassword = () => {
-    if (password === process.env.ADMIN_PASSWORD) {
-      setIsAuthenticated(true);
-    } else {
-      alert('Incorrect password');
-    }
-  };
+  const checkPassword = async () => {
+  const res = await fetch('/api/check-auth', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password }), // Sends the password to our new API route
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    setIsAuthenticated(true);
+  } else {
+    alert('Incorrect password');
+  }
+};
 
   useEffect(() => {
     if (isAuthenticated) {
