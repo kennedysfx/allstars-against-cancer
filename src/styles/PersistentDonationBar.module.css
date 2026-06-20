@@ -1,0 +1,126 @@
+.barContainer {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  padding: 15px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 9999;
+
+  animation: slideInLeft 0.8s ease-out forwards;
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Pushes content to the left and buttons to the right */
+  gap: 15px;
+}
+
+.contentWrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.heartIcon {
+  font-size: 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.description {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.buttonGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between Give button and X button */
+}
+
+.giveButton {
+  background-color: #7B2CBF;
+  color: white;
+  border: none;
+  padding: 10px 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  min-width: 100px;   /* Added minimum width for consistency */
+  height: 40px;
+  margin: -4
+}
+
+.closeButton {
+  background: none;
+  border: 1px solid #ccc; /* Adds a subtle border to make it look like a button */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.heartIcon {
+  font-size: 50px; /* Make it larger */
+  display: flex;
+  align-items: center;
+  color: #7B2CBF; /* Match the button color */
+}
+
+/* Tablet: 50% width */
+@media (min-width: 768px) {
+  .barContainer {
+    width: 50%;
+    left: 20px;
+    right: auto;
+  }
+}
+
+/* Desktop: 30% width */
+@media (min-width: 1024px) {
+  .barContainer {
+    width: 40%;
+    left: 20px; /* Fixed distance from the left */
+    right: auto;
+  }
+  .giveButton {
+    padding: 10px 32px; /* Increased horizontal padding */
+    min-width: 130px;   /* Added minimum width for consistency */
+    height: 40px;
+    margin: -1
+  }
+}
+
+/* 2. Mobile Only Media Query */
+@media (max-width: 480px) {
+  
+
+  .giveButton {
+    width: 100%; /* Makes button span the width on mobile */
+    margin-top: 10px;
+    margin: 3px;
+    min-width: 12px;
+    
+    padding: 6px 20.6px;
+  }
+}
+
+/* The actual animation logic */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

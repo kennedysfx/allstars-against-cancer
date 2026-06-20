@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { QRCodeSVG } from 'qrcode.react';
 import styles from '../styles/donate.module.css';
+import { useCampaign } from '../context/CampaignContext';
 
 const CRYPTO_WALLETS = {
   'Bitcoin (BTC)': { address: 'bc1qqkrc829ey3kh0vu6rwz9nera8z9chy9v46w55r', network: 'Bitcoin' },
@@ -19,6 +20,7 @@ export default function DonatePage() {
   const router = useRouter();
   const { from } = router.query;
   const { amount, cycle, autoAdvance } = router.query;
+  const { setDonationInProgress, setLastSelectedAmount } = useCampaign();
 
   
   
@@ -40,17 +42,12 @@ export default function DonatePage() {
 
   const presetAmounts = [50, 100, 500, 1000, 5000, 10000];
 
-  const handleAmountSelect = (amount) => {
-    setSelectedAmount(amount);
-    setCustomAmount(''); 
-  };
-
-  const handleCustomInputChange = (e) => {
-    const value = e.target.value.replace(/[^0-9]/g, ''); 
-    setCustomAmount(value);
-    setSelectedAmount('other');
-  };
-
+ const handleCustomInputChange = (e) => {
+  const value = e.target.value.replace(/[^0-9]/g, ''); 
+  setCustomAmount(value);
+  setSelectedAmount('other');
+  setLastSelectedAmount(value === '' ? 0 : parseFloat(value));
+};
 
   const handleDonateSubmit = () => {
     if (Number(currentDisplayAmount) > 0) {
@@ -140,8 +137,11 @@ if (!router.isReady) return;
       className={styles.closeButtonAbsolute}
       
       onClick={() => {
+        setDonationInProgress(true);
   
-        window.history.length > 1 ? router.back() : router.push('/');
+        setTimeout(() => {
+         window.history.length > 1 ? router.back() : router.push('/');
+        }, 50);
       }}
     >
       <span>Close</span> <span className={styles.closeXGlyph}>✕</span>
@@ -515,6 +515,7 @@ if (!router.isReady) return;
       <button 
   className={styles.confirmPaymentButton} 
   onClick={() => {
+    setDonationInProgress(false);
     if (from && from !== 'home') {
       router.push(`/${from}`);
     } else {

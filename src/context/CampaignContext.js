@@ -6,6 +6,33 @@ const CampaignContext = createContext();
 
 export function CampaignProvider({ children }) {
   const [activeSlug, setActiveSlug] = useState(null);
+
+  const [showLeaveModal, setShowLeaveModal] = useState(false);
+  const [donationInProgress, setDonationInProgress] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('donationInProgress') === 'true';
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('donationInProgress', donationInProgress);
+  }, [donationInProgress]);
+  // --- END OF REPLACEMENT ---
+
+const [lastSelectedAmount, setLastSelectedAmount] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('lastSelectedAmount');
+      return saved ? parseFloat(saved) : 1000;
+    }
+    return 1000;
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('lastSelectedAmount', lastSelectedAmount);
+  }, [lastSelectedAmount]);
+  // TO HERE.
+
   const router = useRouter();
 
   useEffect(() => {
@@ -32,7 +59,16 @@ export function CampaignProvider({ children }) {
   }, [router.query.slug, router.pathname, router.asPath]);
 
   return (
-    <CampaignContext.Provider value={{ activeSlug, setActiveSlug }}>
+   <CampaignContext.Provider value={{ 
+      activeSlug, 
+      setActiveSlug,
+      showLeaveModal,
+      setShowLeaveModal,
+      donationInProgress,
+      setDonationInProgress,
+      lastSelectedAmount,
+      setLastSelectedAmount
+    }}>
       {children}
     </CampaignContext.Provider>
   );

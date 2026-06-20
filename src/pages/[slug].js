@@ -30,11 +30,20 @@ export default function CelebrityProfile() {
 
 export async function getServerSideProps(context) {
   const { slug } = context.params;
-  const imagePath = path.join(process.cwd(), 'public', 'celebrities', `${slug.toLowerCase()}.webp`);
   
+  // path.resolve creates an absolute path, which is much more reliable 
+  // than path.join in server environments like Next.js
+  const filename = `${slug.toLowerCase()}.webp`;
+  const imagePath = path.resolve(process.cwd(), 'public', 'celebrities', filename);
   
-  if (!fs.existsSync(imagePath)) {
+  try {
+    // fs.promises.access is the standard, modern way to verify file existence
+    await fs.promises.access(imagePath, fs.constants.F_OK);
+    
+    // If the file exists, return the slug as a prop
+    return { props: { slug } };
+  } catch (err) {
+    // If there is any error (file not found), return 404
     return { notFound: true };
   }
-  return { props: {} };
 }
