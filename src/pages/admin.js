@@ -7,21 +7,24 @@ export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
 
-  const checkPassword = async () => {
-  const res = await fetch('/api/check-auth', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ password }), // Sends the password to our new API route
-  });
+  // 1. Updated this function to receive the form event (e)
+  const checkPassword = async (e) => {
+    e.preventDefault(); // <-- Prevents Enter key from reloading your page
+    
+    const res = await fetch('/api/check-auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password }), // Sends the password to our new API route
+    });
 
-  const data = await res.json();
+    const data = await res.json();
 
-  if (data.success) {
-    setIsAuthenticated(true);
-  } else {
-    alert('Incorrect password');
-  }
-};
+    if (data.success) {
+      setIsAuthenticated(true);
+    } else {
+      alert('Incorrect password');
+    }
+  };
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -32,22 +35,23 @@ export default function AdminPage() {
         .catch((err) => console.error("Donation fetch error:", err));
 
       // Inside your useEffect in admin.js
-fetch('/api/subscribers')
-  .then(async (res) => {
-    if (!res.ok) {
-      const errorText = await res.text();
-      throw new Error(`Server returned ${res.status}: ${errorText}`);
-    }
-    return res.json();
-  })
-  .then((data) => setSubscribers(data))
-  .catch((err) => console.error("Subscriber fetch error:", err));
+      fetch('/api/subscribers')
+        .then(async (res) => {
+          if (!res.ok) {
+            const errorText = await res.text();
+            throw new Error(`Server returned ${res.status}: ${errorText}`);
+          }
+          return res.json();
+        })
+        .then((data) => setSubscribers(data))
+        .catch((err) => console.error("Subscriber fetch error:", err));
     }
   }, [isAuthenticated]);
 
   if (!isAuthenticated) {
     return (
-      <div className={styles.loginBox}>
+      // 2. Swapped the wrapper div here to a <form> element hooked to your checkPassword submit handler
+      <form onSubmit={checkPassword} className={styles.loginBox}>
         <h1>ADMIN ACCESS</h1>
         <input 
           type="password" 
@@ -55,16 +59,15 @@ fetch('/api/subscribers')
           value={password} 
           onChange={(e) => setPassword(e.target.value)} 
         />
-        <button onClick={checkPassword}>Login</button>
-      </div>
+        {/* 3. Changed this to type="submit" so hitting Enter fires the form action */}
+        <button type="submit">Login</button>
+      </form>
     );
   }
-  
-
 
   return (
     <div className={styles.container}>
-        <h2 className={styles.adminGreeting}>Welcome, Admin Kennedy</h2>
+      <h2 className={styles.adminGreeting}>Welcome, Admin Kennedy</h2>
       <h1>Donation Dashboard</h1>
       <table className={styles.table}>
          <thead>
