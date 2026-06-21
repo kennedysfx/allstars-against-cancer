@@ -42,6 +42,12 @@ export default function DonatePage() {
 
   const presetAmounts = [50, 100, 500, 1000, 5000, 10000];
 
+  const handleAmountSelect = (amount) => {
+    setSelectedAmount(amount);
+    setLastSelectedAmount(amount); // Persists amount for the bar
+    setCustomAmount('');
+  };
+
  const handleCustomInputChange = (e) => {
   const value = e.target.value.replace(/[^0-9]/g, ''); 
   setCustomAmount(value);
