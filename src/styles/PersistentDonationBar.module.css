@@ -111,6 +111,11 @@
     
     padding: 6px 18px;
   }
+  .heartIcon {
+  font-size: 35px; /* Make it larger */
+  display: flex;
+  align-items: center;
+  color: #7B2CBF;
 }
 
 /* The actual animation logic */
