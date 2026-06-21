@@ -117,6 +117,7 @@
   align-items: center;
   color: #7B2CBF;
 }
+}
 
 /* The actual animation logic */
 @keyframes slideInLeft {
