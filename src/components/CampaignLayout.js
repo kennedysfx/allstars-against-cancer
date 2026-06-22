@@ -47,7 +47,7 @@ export default function CampaignLayout({ children }) {
     .join(' ');
 
   const personalNarratives = {
-    'kid-rock': "Cancer doesn't care who you are, but we care about beating it. I am leveraging my platform and calling on my fan community to join forces with AllStars Against Cancer. Together, we are funding ground-breaking clinical trials to put an end to this disease.",
+    'kid-rock': "You all know I love a good fight, and this is the biggest one there is. Cancer has touched all of our families. I’m asking my fans to stand shoulder-to-shoulder with me and AllStars Against Cancer Foundation. Every single dollar goes right to the front lines funding real, life-saving breakthroughs. No corporate BS just real people making a real difference.",
     'josh-groban': "Music has the power to heal, but medical research has the power to cure. I am proud to partner with AllStars Against Cancer to accelerate life-saving oncology breakthroughs. Every bit of support directly empowers brilliant scientists working on the frontlines."
   };
 

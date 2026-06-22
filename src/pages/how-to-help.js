@@ -1,11 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/how-to-help.module.css';
+import { useCampaign } from '../context/CampaignContext';
 
 export default function HowToHelpPage() {
   const router = useRouter();
   const sectionRef = useRef(null);
   const [isIntersecting, setIntersecting] = useState(false);
+
+  // 2. EXTRACT YOUR MODAL'S STATE SETTER FUNCTION FROM CONTEXT
+  // (Use whatever your context exposes, e.g., setDonationAmount or updateDonationAmount)
+  const { setLastSelectedAmount } = useCampaign();
 
   // Intersection Observer for scroll animation
   useEffect(() => {
@@ -41,17 +46,20 @@ export default function HowToHelpPage() {
   };
 
   const handleDonateSubmit = () => {
-    if (Number(currentDisplayAmount) > 0) {
-      router.push({
-        pathname: '/donate',
-        query: { 
-          amount: currentDisplayAmount, 
-          cycle: billingCycle,
-          autoAdvance: 'true' 
-        },
-      });
-    }
-  };
+  if (Number(currentDisplayAmount) > 0) {
+    
+   setLastSelectedAmount(Number(currentDisplayAmount)); 
+
+    router.push({
+      pathname: '/donate',
+      query: { 
+        amount: currentDisplayAmount, 
+        cycle: billingCycle,
+        autoAdvance: 'true' 
+      },
+    });
+  }
+};
 
   return (
     <>

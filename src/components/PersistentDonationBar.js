@@ -16,8 +16,6 @@ export default function PersistentDonationBar() {
 
   return (
     <div className={styles.barContainer}>
-
-
       <div className={styles.contentWrapper}>
         <span className={styles.heartIcon}>♡</span>
         <div className={styles.textContainer}>
@@ -26,22 +24,28 @@ export default function PersistentDonationBar() {
           <p className={styles.description}>
             Finish your ${lastSelectedAmount.toLocaleString()} gift to create an impact today.
           </p>
-          </div>
+        </div>
       </div>
       
       <div className={styles.buttonGroup}>
+        {/* UPDATED: Forward the exact selected amount via the router query */}
         <button 
           className={styles.giveButton} 
-          onClick={() => router.push('/donate')}
+          onClick={() => router.push({
+            pathname: '/donate',
+            query: { 
+              amount: lastSelectedAmount,
+              autoAdvance: 'true' 
+            }
+          })}
         >
           Give Now
         </button>
 
          <button className={styles.closeButton} onClick={() => setDonationInProgress(false)}>
-        ✕
-      </button>
-        
-    </div>
+          ✕
+        </button>
+      </div>
     </div>
   );
 }
