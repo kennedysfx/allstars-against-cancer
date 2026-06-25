@@ -39,13 +39,25 @@ export default function DonatePage() {
   const currentDisplayAmount = selectedAmount === 'other' ? (customAmount || 0) : selectedAmount;
   const presetAmounts = [50, 100, 500, 1000, 5000, 10000];
 
-  useEffect(() => {
-  const script = document.createElement('script');
-  script.id = 'flutterwave-script';
-  script.src = "https://checkout.flutterwave.com/v3.js";
-  script.async = true;
-  document.body.appendChild(script);
-}, []);
+ useEffect(() => {
+    // 1. Only run in the browser
+    if (typeof window !== 'undefined') {
+      // 2. Only inject if it doesn't already exist
+      if (!document.getElementById('flutterwave-script')) {
+        const script = document.createElement('script');
+        script.id = 'flutterwave-script';
+        script.src = "https://checkout.flutterwave.com/v3.js";
+        script.async = true;
+        
+        // 3. Add error handling so it doesn't crash the page on failure
+        script.onerror = () => {
+          console.error("Flutterwave script failed to load.");
+        };
+        
+        document.body.appendChild(script);
+      }
+    }
+  }, []);
 
   
   // --- LOGIC FUNCTIONS ---
@@ -104,6 +116,12 @@ const handleDonateSubmit = useCallback(() => {
 }, [currentDisplayAmount]);
 
 const initiatePayment = () => {
+
+  if (typeof window === 'undefined' || typeof window.FlutterwaveCheckout !== 'function') {
+    alert("Payment system is initializing. Please wait one moment and try again.");
+    return;
+  }
+  
   const amountToPay = Number(currentDisplayAmount);
   
   if (isNaN(amountToPay) || amountToPay <= 0) {

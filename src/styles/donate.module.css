@@ -1119,11 +1119,13 @@ button.faqFooterLinkBlock {
   .paymentMethodOptionsListContainer {
     width: 100%;
     margin-bottom: 20px;
+    padding: 0 0.3px;
+    box-sizing: border-box;
   }
 
   .methodSelectRowCard {
     padding: 16px 10px; /* Reduced horizontal padding */
-    gap: 8px;
+    gap: 7.3px;
   }
 
   /* 3. Force scaling of content within the rows */
@@ -1133,7 +1135,7 @@ button.faqFooterLinkBlock {
   }
 
   .paymentMethodLabelText {
-    font-size: 0.85rem; /* Slightly smaller to fit on small screens */
+    font-size: 0.8rem; /* Slightly smaller to fit on small screens */
     white-space: nowrap;
   }
 }
