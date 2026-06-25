@@ -313,10 +313,18 @@ const initiatePayment = () => {
                           <path d="M8.13 3.65H6.62v4.06h.74V6.13h.77c.71 0 1.27-.5 1.27-1.24 0-.74-.56-1.24-1.27-1.24Zm0 1.8H7.36v-1.1h.77c.35 0 .58.23.58.55 0 .33-.23.55-.58.55Zm3.94-1.87c-.57 0-1.05.29-1.25.73l.66.28c.13-.25.35-.37.59-.37.32 0 .54.16.54.49v.1c-.19-.1-.48-.18-.83-.18-.7 0-1.19.37-1.19.95 0 .55.43.86.96.86.42 0 .73-.19.87-.48h.02v.4h.71V4.89c0-.68-.53-1.31-1.64-1.31Zm-.08 2.09c-.24 0-.44-.13-.44-.35 0-.25.23-.35.5-.35.25 0 .44.06.57.12a.59.59 0 0 1-.63.58Zm4.1-2.09-.86 2.17h-.02l-.88-2.17h-.79l1.32 3.02-.38.84h.75l1.65-3.86h-.79Z" fill="#5F6368"/>
                         </svg>
                       </div>
-                      <span className={styles.paymentMethodLabelText}>Google Pay</span>
+                       <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000000', borderRadius: '10px', height: '20px', width: '35px', padding: '2px' }}>
+                            {/* Apple Pay Icon SVG */}
+                            <svg viewBox="0 0 16 16" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" style={{ height: '80%', width: '80%' }}>
+                              <path d="M12.4 8.7c-.1-1.6 1.3-2.4 1.4-2.4-.8-1.1-2-1.3-2.4-1.3-1.1-.1-2.1.7-2.6.7-.5 0-1.2-.7-2.1-.7-1.2 0-2.2.7-2.8 1.8-.6 1.1-.6 2.6.1 3.7.6 1 1.7 1.5 2.8 1.5.8 0 1.4-.5 2.2-.5.8 0 1.3.5 2.2.5 1.1 0 2-.6 2.5-1.5-.1-.1-1.2-.7-1.1-2.1zM10.5 3.3c.5-.6.8-1.4.7-2.2-.7.0-1.6.5-2.1 1.1-.4.5-.8 1.3-.7 2.1.8.1 1.6-.4 2.1-1z"/>
+                            </svg>
+                          </div>
+                      <span className={styles.paymentMethodLabelText}>Google Pay/Apple Pay</span>
                     </div>
                   </div>
                 </label>
+
+
 
                 <label className={`${styles.methodSelectRowCard} ${paymentMethod === 'credit' ? styles.activeMethodRowCard : ''}`}>
                   <div className={styles.cardLeftControlArea}>
