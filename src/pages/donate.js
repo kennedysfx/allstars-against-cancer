@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { QRCodeSVG } from 'qrcode.react';
 import styles from '../styles/donate.module.css';
 import { useCampaign } from '../context/CampaignContext';
+
 
 const CRYPTO_WALLETS = {
   'Bitcoin (BTC)': { address: 'bc1qqkrc829ey3kh0vu6rwz9nera8z9chy9v46w55r', network: 'Bitcoin' },
@@ -18,97 +19,68 @@ const copyToClipboard = (text) => {
 
 export default function DonatePage() {
   const router = useRouter();
-  const { from } = router.query;
-  const { amount, cycle, autoAdvance } = router.query;
+  const { from, amount, cycle, autoAdvance } = router.query;
   const { setDonationInProgress, setLastSelectedAmount } = useCampaign();
 
-  
-  
-  // Workflow step management: 1 = Choose Amount, 2 = Choose Payment Method, 3 = Select Crypto
-  const [step, setStep] = useState(1); 
-  
-  const [billingCycle, setBillingCycle] = useState('one-time'); 
-  const [selectedAmount, setSelectedAmount] = useState(100); 
+  // --- ALL STATE DECLARATIONS ---
+  const [step, setStep] = useState(1);
+  const [billingCycle, setBillingCycle] = useState('one-time');
+  const [selectedAmount, setSelectedAmount] = useState(100);
   const [customAmount, setCustomAmount] = useState('');
   const [isCustomFocused, setIsCustomFocused] = useState(false);
   const [endDate, setEndDate] = useState('');
-
-  // Payment Selection State
   const [paymentMethod, setPaymentMethod] = useState('googlepay');
-  const [cryptoSelection, setCryptoSelection] = useState(null); // Added crypto state
-
+  const [cryptoSelection, setCryptoSelection] = useState(null);
   const [donorName, setDonorName] = useState('');
   const [donorEmail, setDonorEmail] = useState('');
+  const [cryptoAmount, setCryptoAmount] = useState(null);
 
+  // --- DERIVED VALUES ---
+  const currentDisplayAmount = selectedAmount === 'other' ? (customAmount || 0) : selectedAmount;
   const presetAmounts = [50, 100, 500, 1000, 5000, 10000];
 
+  useEffect(() => {
+  const script = document.createElement('script');
+  script.id = 'flutterwave-script';
+  script.src = "https://checkout.flutterwave.com/v3.js";
+  script.async = true;
+  document.body.appendChild(script);
+}, []);
+
+  
+  // --- LOGIC FUNCTIONS ---
   const handleAmountSelect = (amount) => {
     setSelectedAmount(amount);
-    setLastSelectedAmount(amount); // Persists amount for the bar
+    setLastSelectedAmount(amount);
     setCustomAmount('');
   };
 
- const handleCustomInputChange = (e) => {
-  const value = e.target.value.replace(/[^0-9]/g, ''); 
-  setCustomAmount(value);
-  setSelectedAmount('other');
-  setLastSelectedAmount(value === '' ? 0 : parseFloat(value));
-};
-
-  const handleDonateSubmit = () => {
-    if (Number(currentDisplayAmount) > 0) {
-      setStep(2);
-    }
+  const handleCustomInputChange = (e) => {
+    const value = e.target.value.replace(/[^0-9]/g, ''); 
+    setCustomAmount(value);
+    setSelectedAmount('other');
+    setLastSelectedAmount(value === '' ? 0 : parseFloat(value));
   };
 
-  // Logic to handle the Pay with Crypto button
-  const handleCryptoTransition = () => {
-    if (paymentMethod === 'crypto') {
-      setStep(3);
-    }
+  const fetchCryptoPrice = async (selection) => {
+    const idMap = { "Bitcoin (BTC)": "bitcoin", "Ethereum (ETH)": "ethereum", "Tether (USDT)": "tether" };
+    const id = idMap[selection];
+    if (!id) return;
+    try {
+      const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`);
+      const data = await res.json();
+      const price = data[id]?.usd;
+      if (price) setCryptoAmount((currentDisplayAmount / price).toFixed(6));
+    } catch (err) { console.error("Price fetch failed:", err); }
   };
 
-  // Add this inside your DonatePage component
-const [cryptoAmount, setCryptoAmount] = useState(null);
-const currentDisplayAmount = selectedAmount === 'other' ? (customAmount || 0) : selectedAmount;
+  // --- EFFECTS ---
+  useEffect(() => {
+    if (step === 4 && cryptoSelection) fetchCryptoPrice(cryptoSelection);
+  }, [step, cryptoSelection, currentDisplayAmount]);
 
-const fetchCryptoPrice = async (cryptoSelection) => {
-  // Map your UI names to CoinGecko IDs
-  const idMap = {
-      "Bitcoin (BTC)": "bitcoin",
-      "Ethereum (ETH)": "ethereum",
-      "Tether (USDT)": "tether"
-    };
-
-  const id = idMap[cryptoSelection];
-  if (!id) return;
-
-  try {
-    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`);
-    const data = await res.json();
-    const price = data[id].usd;
-    
-    if (price) { 
-    // Calculate amount: (Target USD) / (Current Price)
-    const calculated = (currentDisplayAmount / price).toFixed(6);
-    setCryptoAmount(calculated);
-    }
-  } catch (err) {
-    console.error("Price fetch failed:", err);
-  }
-};
-
-// Call this when the user clicks 'Proceed' to Step 4
-// Or use useEffect triggered by the change in 'step'
-useEffect(() => {
-  if (step === 4) {
-    fetchCryptoPrice(cryptoSelection);
-  }
-}, [step, cryptoSelection]);
-
-useEffect(() => {
-if (!router.isReady) return;
-
+  useEffect(() => {
+    if (!router.isReady) return;
     if (amount) {
       const numericAmount = Number(amount);
       if ([50, 100, 500, 1000, 5000, 10000].includes(numericAmount)) {
@@ -118,16 +90,59 @@ if (!router.isReady) return;
         setCustomAmount(amount);
       }
     }
-    
-    if (cycle) {
-      setBillingCycle(cycle);
-    }
-
-    // Automatically advance to Step 2 if the flag is true
-    if (autoAdvance === 'true') {
-      setStep(2);
-    }
+    if (cycle) setBillingCycle(cycle);
+    if (autoAdvance === 'true') setStep(2);
   }, [router.isReady, amount, cycle, autoAdvance]);
+
+ 
+const handleDonateSubmit = useCallback(() => {
+  if (Number(currentDisplayAmount) <= 0) {
+    alert("Please enter a valid donation amount.");
+    return;
+  }
+  setStep(2);
+}, [currentDisplayAmount]);
+
+const initiatePayment = () => {
+  const amountToPay = Number(currentDisplayAmount);
+  
+  if (isNaN(amountToPay) || amountToPay <= 0) {
+    alert("Invalid amount: " + amountToPay);
+    return;
+  }
+
+  // Check if Flutterwave is already loaded
+  if (typeof window.FlutterwaveCheckout === 'function') {
+    window.FlutterwaveCheckout({
+      public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY,
+      tx_ref: `allstars-${Date.now()}`,
+      amount: amountToPay,
+      currency: 'USD',
+      payment_options: 'card, googlepay, paypal',
+      customer: {
+        email: donorEmail || "allstarsforcancercure@outlook.com",
+       
+      },
+      customizations: {
+        title: 'AllStars Against Cancer Foundation', 
+        description: 'Donation to AllStars Against Cancer Foundation',
+        logo: '/logo.png',
+      },
+      callback: (data) => {
+        console.log(data);
+        if (data.status === "successful") {
+          setStep(5);
+        }
+      },
+      onClose: () => {
+        console.log("Payment closed");
+      },
+    });
+  } else {
+    alert("Payment gateway is still loading. Please wait a second and try again.");
+  }
+};
+
 
 
 
@@ -357,28 +372,26 @@ if (!router.isReady) return;
                 </label>
               </div>
 
-              <div className={styles.paymentContextActionButtonContainer}>
-                {paymentMethod === 'googlepay' && (
-                  <button type="button" className={`${styles.primaryActionStep2SubmitCTA} ${styles.continueExactBlackButton}`}>
-                    Pay
-                  </button>
-                )}
-                {paymentMethod === 'credit' && (
-                  <button type="button" className={`${styles.primaryActionStep2SubmitCTA} ${styles.continueExactBlackButton}`}>
-                    Continue
-                  </button>
-                )}
-                {paymentMethod === 'paypal' && (
-                  <button type="button" className={`${styles.primaryActionStep2SubmitCTA} ${styles.paypalExactGoldButton}`}>
-                    Pay with PayPal
-                  </button>
-                )}
-                {paymentMethod === 'crypto' && (
-                  <button type="button" className={`${styles.primaryActionStep2SubmitCTA} ${styles.continueExactBlackButton}`} onClick={handleCryptoTransition}>
-                    Pay with Crypto
-                  </button>
-                )}
-              </div>
+<div className={styles.paymentContextActionButtonContainer}>
+  <button 
+    type="button" 
+    className={`${styles.primaryActionStep2SubmitCTA} ${paymentMethod === 'paypal' ? styles.paypalExactGoldButton : styles.continueExactBlackButton}`}
+// In your Step 2 UI (the "Proceed to Secure Payment" button):
+onClick={() => {
+  if (paymentMethod === 'crypto') {
+    setStep(3);
+    } else {
+    initiatePayment(); 
+  }
+}}
+  >
+    {paymentMethod === 'paypal' 
+      ? 'Pay with PayPal' 
+      : paymentMethod === 'crypto' 
+        ? 'Select Cryptocurrency' 
+        : 'Proceed to Secure Payment'}
+  </button>
+</div>
 
               <button 
                 type="button"
