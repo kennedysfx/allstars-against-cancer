@@ -1101,9 +1101,7 @@ button.faqFooterLinkBlock {
     padding: 14px;
     font-size: 1rem;
   }
-}
-/* --- MOBILE SPECIFIC FIXES --- */
-@media (max-width: 480px) {
+
   /* 1. Fix the Back Button Alignment */
   .formPanelSidePaymentVariant {
     padding-top: 60px; /* Provides space for the absolute-positioned back button */
@@ -1138,9 +1136,7 @@ button.faqFooterLinkBlock {
     font-size: 0.8rem; /* Slightly smaller to fit on small screens */
     white-space: nowrap;
   }
-}
-/* --- MOBILE ICON SCALING --- */
-@media (max-width: 480px) {
+
   .cardBrandBadgesRightGroup {
     gap: 0.5px; /* Tighten the space between icons on tiny screens */
   }
@@ -1151,6 +1147,14 @@ button.faqFooterLinkBlock {
     padding: 1px 2px;
     height: 14px; 
     line-height: 14px;
+  }
+
+  .activeMethodRowCard {
+    /* Adjust the border thickness or color specifically for mobile */
+    border: 2.8px solid #000000 !important; /* Example: Thicker border for better visibility */
+    
+    /* If you need to adjust the negative margin to prevent overlap issues on mobile */
+    margin: 1px -1px; 
   }
 }
 
