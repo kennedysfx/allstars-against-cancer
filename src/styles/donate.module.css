@@ -599,8 +599,11 @@ button.faqFooterLinkBlock {
 .activeMethodRowCard {
   background-color: #eaeaea !important; /* Authentic light gray background tint */
   border: 2px solid #111111 !important;  /* High contrast solid dark perimeter path */
-  margin: -1px -1px;                     /* Prevents double-border layouts */
-  z-index: 5;
+  margin: 1px -1px; 
+    width: calc(100% - 8px); 
+    
+    margin-left: auto;
+    margin-right: auto;width: 100%
 }
 
 /* Seamless corner wrapping fixes when an edge item is active */

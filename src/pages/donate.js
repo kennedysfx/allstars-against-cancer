@@ -116,12 +116,6 @@ const handleDonateSubmit = useCallback(() => {
 }, [currentDisplayAmount]);
 
 const initiatePayment = () => {
-
-  if (typeof window === 'undefined' || typeof window.FlutterwaveCheckout !== 'function') {
-    alert("Payment system is initializing. Please wait one moment and try again.");
-    return;
-  }
-  
   const amountToPay = Number(currentDisplayAmount);
   
   if (isNaN(amountToPay) || amountToPay <= 0) {
