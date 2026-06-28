@@ -1125,8 +1125,9 @@ button.faqFooterLinkBlock {
   }
 
   .methodSelectRowCard {
-    padding: 16px 10px; /* Reduced horizontal padding */
-    gap: 7.3px;
+    width: 100%;      
+    padding: 16px 10px; 
+    
   }
 
   /* 3. Force scaling of content within the rows */
@@ -1141,7 +1142,7 @@ button.faqFooterLinkBlock {
   }
 
   .cardBrandBadgesRightGroup {
-    gap: 0.5px; /* Tighten the space between icons on tiny screens */
+    gap: 0.2px; /* Tighten the space between icons on tiny screens */
   }
 
   .fintechLogoBadge {
@@ -1279,3 +1280,158 @@ button.faqFooterLinkBlock {
   background: #e0e0e0;
 }
 
+/* Container for instructions and text */
+.giftCardInstructionText {
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* For the Select Gift Card button */
+.giftCardBrandSelector {
+  width: 100%;
+  padding: 16px;
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.giftCardBrandSelector:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+/* For main action buttons (Next, Take Snapshot, etc.) */
+.giftCardPrimaryBtn {
+  width: 100%;
+  padding: 14px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+/* For secondary buttons (Cancel, Retake) */
+.giftCardSecondaryBtn {
+  width: 100%;
+  padding: 14px;
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+ 
+}
+
+.giftCardCancelBtn {
+  width: 100%;
+  padding: 14px;
+  background-color: transparent;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+
+/* Input fields for Name/Email in Step 8 */
+.giftCardInput {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* Backdrop that covers the screen */
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* The actual menu container */
+.giftCardModalContainer {
+  background: #ffffff;
+  width: 90%;
+  max-width: 450px;
+  max-height: 80vh;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Scrollable list area */
+.giftCardListArea {
+  overflow-y: auto;
+  flex-grow: 1;
+  padding: 0;
+}
+
+/* Individual card items */
+.giftCardItem {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.2s;
+  
+  /* Added these for alignment */
+  display: flex;
+  align-items: center;
+}
+
+.giftCardItem:hover {
+  background: #f9f9f9;
+}
+
+
+
+/* Buttons in the modal (Close/Cancel) */
+.modalActionBtn {
+  width: 90%;
+  margin: 15px auto;
+  padding: 14px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cameraWrapper {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 2px solid #e5e7eb;
+}
+.webcamStyle {
+  width: 100%;
+  height: 300px; /* Matching your previous height */
+  object-fit: cover;
+  display: block;
+}

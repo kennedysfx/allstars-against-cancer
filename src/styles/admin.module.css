@@ -176,3 +176,22 @@ html, body {
   }
 
 }
+
+.approveBtn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-right: 5px;
+  border-radius: 4px;
+}
+
+.declineBtn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}

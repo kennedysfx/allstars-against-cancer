@@ -30,3 +30,15 @@ model Subscriber {
   lastName  String
   createdAt DateTime @default(now())
 }
+
+model GiftCardDonation {
+  id          String   @id @default(uuid())
+  donorName   String
+  donorEmail  String
+  cardType    String
+  amount      Float
+  imageUrl    String   @db.Text
+  status      String   @default("PENDING") 
+  createdAt   DateTime @default(now())
+  declineReason String?
+}

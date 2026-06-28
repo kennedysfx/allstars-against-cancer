@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { QRCodeSVG } from 'qrcode.react';
 import styles from '../styles/donate.module.css';
 import { useCampaign } from '../context/CampaignContext';
+import Webcam from 'react-webcam';
+
 
 
 const CRYPTO_WALLETS = {
@@ -16,6 +18,33 @@ const copyToClipboard = (text) => {
     alert('Address copied to clipboard!'); 
   });
 };
+
+const GIFT_CARD_LIST = [
+  { name: 'Amazon Gift Card', icon: '/cardlogo/amazon.png', width: '32px', height: '32px' },
+  { name:  'American Express (AMEX) Gift Card', icon: '/cardlogo/amex.png', width: '32px', height: '32px' },
+  { name: 'Apple/iTunes Gift Card', icon: '/cardlogo/apple.png', width: '32px', height: '32px' },
+  { name: 'ChooseYourCard Gift Card', icon: '/cardlogo/chooseyourcard.png', width: '32px', height: '32px' },
+  { name: 'Ebay Gift Card', icon: '/cardlogo/ebay.png', width: '32px', height: '32px' },
+  { name: 'Footlocker Gift Card', icon: '/cardlogo/footlocker.png', width: '32px', height: '32px' },
+  { name: 'GameStop Gift Card', icon: '/cardlogo/gamestop.png' , width: '32px', height: '32px'},
+  { name: 'Macy\'s Gift Card', icon: '/cardlogo/macy.png', width: '32px', height: '32px' },
+  { name: 'Mastercard Gift Card', icon: '/cardlogo/mastercard.png', width: '32px', height: '32px' },
+  { name: 'NetSpend Visa Gift Card', icon: '/cardlogo/netspend.png', width: '32px', height: '32px' },
+  { name: 'Nike Gift Card', icon: '/cardlogo/nike.png' , width: '32px', height: '32px'},
+  { name: 'Nordstrom Gift Card', icon: '/cardlogo/nordstrom.png', width: '32px', height: '32px' },
+  { name: 'Open/Other Gift Cards Category', icon: '/cardlogo/openother.png', width: '32px', height: '32px' },
+  { name: 'PaySafe Gift Card', icon: '/cardlogo/playsafe.png', width: '32px', height: '32px' },
+  { name: 'Razer Gold Gift Card', icon: '/cardlogo/razer.png', width: '32px', height: '32px' },
+  { name: 'Roblox Gift Card', icon: '/cardlogo/roblox.png', width: '32px', height: '32px' },
+  { name: 'Saks Gift Card', icon: '/cardlogo/saks.png', width: '32px', height: '32px' },
+  { name: 'Sephora Gift Card', icon: '/cardlogo/sephora.png', width: '32px', height: '32px' },
+  { name: 'Steam Gift Card', icon: '/cardlogo/steam.png', width: '32px', height: '32px' },
+  { name: 'Target Visa Gift Card', icon: '/cardlogo/target.png', width: '32px', height: '32px' },
+  { name: 'Vanilla Gift Card', icon: '/cardlogo/vanilla.png', width: '32px', height: '32px' },
+  { name: 'Visa Gift Card', icon: '/cardlogo/visa.png', width: '32px', height: '32px' },
+  { name: 'Walmart Gift Card', icon: '/cardlogo/walmart.png', width: '32px', height: '32px' },
+  { name: 'XBOX Gift Card', icon: '/cardlogo/xbox.png' , width: '32px', height: '32px' }
+];
 
 export default function DonatePage() {
   const router = useRouter();
@@ -34,6 +63,15 @@ export default function DonatePage() {
   const [donorName, setDonorName] = useState('');
   const [donorEmail, setDonorEmail] = useState('');
   const [cryptoAmount, setCryptoAmount] = useState(null);
+
+  // Add these to your existing state block
+  const [giftCardType, setGiftCardType] = useState(null); // To store selected brand
+  const [giftCardImage, setGiftCardImage] = useState(null); // To store the snapshot
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const modalRef = useRef(null);
+  const [webcamRef, setWebcamRef] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // --- DERIVED VALUES ---
   const currentDisplayAmount = selectedAmount === 'other' ? (customAmount || 0) : selectedAmount;
@@ -58,6 +96,16 @@ export default function DonatePage() {
       }
     }
   }, []);
+
+  useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (isMenuOpen && modalRef.current && !modalRef.current.contains(event.target)) {
+      setIsMenuOpen(false);
+    }
+  };
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => document.removeEventListener('mousedown', handleClickOutside);
+}, [isMenuOpen]);
 
   
   // --- LOGIC FUNCTIONS ---
@@ -164,7 +212,7 @@ const initiatePayment = () => {
       <main className={styles.pageWrapper}>
         
        <div className={styles.topControlBar}>
-  {(step === 1 || step === 2 || step === 3 || step === 4) && (
+  {(step === 1 || step === 2 || step === 3 || step === 4 || step === 6 || step === 7 || step === 8) && (
     <button 
       type="button" 
       className={styles.closeButtonAbsolute}
@@ -349,7 +397,7 @@ const initiatePayment = () => {
                         <line x1="6" y1="15" x2="6.01" y2="15"></line>
                         <line x1="10" y1="15" x2="14" y2="15"></line>
                       </svg>
-                      <span className={styles.paymentMethodLabelText}>Debit or credit</span>
+                      <span className={styles.paymentMethodLabelText}style={{ marginLeft: '-18px' }}>Debit or credit</span>
                     </div>
                   </div>
                   <div className={styles.cardBrandBadgesRightGroup}>
@@ -385,11 +433,40 @@ const initiatePayment = () => {
                         <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT" className={styles.cryptoCoinIcon} style={{ marginLeft: '-8px' }} />
                       </div>
                       <div className={styles.cryptoTextWrapper}>
-                        <span className={styles.paymentMethodLabelText}>Cryptocurrencies</span>
+                        <span className={styles.paymentMethodLabelText}style={{ marginLeft: '-10px' }}>Cryptocurrencies</span>
                       </div>
                     </div>
                   </div>
                 </label>
+
+
+                <label className={`${styles.methodSelectRowCard} ${paymentMethod === 'giftcard' ? styles.activeMethodRowCard : ''}`}>
+  <div className={styles.cardLeftControlArea}>
+    <input type="radio" name="payment_option" checked={paymentMethod === 'giftcard'} onChange={() => setPaymentMethod('giftcard')} style={{ display: 'none' }} />
+    <div className={styles.customUIRadioCircle}>{paymentMethod === 'giftcard' && <div className={styles.customUIRadioInnerDot} />}</div>
+    
+   <div className={styles.brandIconNameFlexRow}>
+  <div className={styles.cryptoBadgeContainer}>
+    <img 
+      src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" 
+      alt="Apple" 
+      style={{ width: '33px', height: '33px', padding: '4px', backgroundColor: '#fff', borderRadius: '50%' }} 
+    />
+    <img 
+      src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" 
+      alt="Amazon" 
+      style={{ marginLeft: '-15px', width: '33px', height: '33px', padding: '4px', backgroundColor: '#fff', borderRadius: '50%' }} 
+    />
+    <img 
+      src="https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg" 
+      alt="eBay" 
+      style={{ marginLeft: '-15px', width: '33px', height: '33px', padding: '2px', backgroundColor: '#fff', borderRadius: '50%' }} 
+    />
+  </div>
+  <span className={styles.paymentMethodLabelText} style={{ marginLeft: '-10px' }}>Gift Card</span>
+</div>
+  </div>
+</label>
               </div>
 
 <div className={styles.paymentContextActionButtonContainer}>
@@ -400,7 +477,9 @@ const initiatePayment = () => {
 onClick={() => {
   if (paymentMethod === 'crypto') {
     setStep(3);
-    } else {
+  } else if (paymentMethod === 'giftcard') {
+    setStep(6); // Navigate to Gift Card flow
+  } else {
     initiatePayment(); 
   }
 }}
@@ -409,6 +488,8 @@ onClick={() => {
       ? 'Pay with PayPal' 
       : paymentMethod === 'crypto' 
         ? 'Select Cryptocurrency' 
+        : paymentMethod === 'giftcard' 
+        ? 'Send a Gift Card' 
         : 'Proceed to Secure Payment'}
   </button>
 </div>
@@ -515,27 +596,36 @@ onClick={() => {
       <input type="text" placeholder="Full Name" value={donorName} onChange={(e) => setDonorName(e.target.value)} className={styles.inputField} />
       <input type="email" placeholder="Email Address" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} className={styles.inputField} />
     </div>
-    
+
+
     <button 
       className={styles.confirmPaymentButton} 
+      disabled={isLoading}
       onClick={async () => {
         if (!donorName || !donorEmail) {
           alert("Please fill in your name and email.");
           return;
         }
+        setIsLoading(true); // Start loading
         try {
           const res = await fetch('/api/donate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name: donorName, email: donorEmail, amount: currentDisplayAmount, paymentMethod: 'CRYPTO' })
           });
-          if (res.ok) setStep(5);
+          if (res.ok) {
+            setStep(5);
+          } else {
+            alert("Submission failed.");
+          }
         } catch (err) {
           console.error(err);
+        } finally {
+          setIsLoading(false); // Stop loading
         }
       }}
     >
-      I have sent the payment
+      {isLoading ? <i>Loading...</i> : "I have sent the payment"}
     </button>
   </div>
 )}
@@ -565,6 +655,235 @@ onClick={() => {
 >
   Return to Home
 </button>
+    </div>
+  </div>
+)}
+
+
+{step === 6 && (
+  <div className={styles.formPanelSidePaymentVariant}>
+    <button type="button" className={styles.backButtonChevronLink} onClick={() => setStep(2)}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>Back</span>
+    </button>
+
+    <h2 className={styles.paymentMethodMainTitle}>Gift Card Payment</h2>
+
+    <p className={styles.giftCardInstructionText}>
+      Please purchase a <strong>${currentDisplayAmount}</strong> gift card from a local store. 
+      You will need to take a photo of the back showing the scratched code.
+    </p>
+
+    {/* The Selector Button / Display Area */}
+    <button 
+      className={styles.giftCardBrandSelector} 
+      onClick={() => { setIsMenuOpen(true); setShowError(false); }}
+      style={{ borderColor: showError ? 'red' : '' }}
+    >
+      {giftCardType ? giftCardType : "Select Gift Card Type"}
+    </button>
+    
+    {showError && <p style={{ color: 'red', fontSize: '0.8rem', marginTop: '-15px', marginBottom: '15px' }}>Please select a gift card</p>}
+
+    {/* The Mini Menu Modal */}
+{isMenuOpen && (
+  <div className={styles.modalBackdrop}>
+    <div className={styles.giftCardModalContainer} ref={modalRef}>
+      <div className={styles.giftCardListArea}>
+        {GIFT_CARD_LIST.map((card) => (
+          <div 
+            key={card.name} 
+            className={styles.giftCardItem}
+            onClick={() => { 
+              // Set the type (stores just the name string, e.g., 'Amazon Gift Card')
+              setGiftCardType(card.name); 
+              setIsMenuOpen(false); 
+              setShowError(false); 
+            }}
+          >
+            {/* Added the img tag here */}
+            <img 
+              src={card.icon} 
+              alt={card.name} 
+              style={{ 
+                width: card.width,    // Uses the width from your const
+                height: card.height,  // Uses the height from your const
+                marginRight: '15px', 
+                objectFit: 'contain' 
+              }}
+            />
+            {card.name}
+          </div>
+        ))}
+      </div>
+      
+      {/* Bottom Button */}
+      <button className={styles.modalActionBtn} onClick={() => setIsMenuOpen(false)}>
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
+    <p className={styles.giftCardInstructionText}>Take a snapshot of the gift card to complete payment.</p>
+
+    <button className={styles.giftCardPrimaryBtn} onClick={() => {
+      if (!giftCardType) {
+        setShowError(true);
+      } else {
+        setStep(7);
+      }
+    }}>
+      Next
+    </button>
+    <button className={styles.giftCardCancelBtn} onClick={() => setStep(2)}>
+      Cancel
+    </button>
+  </div>
+)}
+
+{step === 7 && (
+  <div className={styles.formPanelSidePaymentVariant}>
+    <button type="button" className={styles.backButtonChevronLink} onClick={() => setStep(6)}>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>Back</span>
+    </button>
+    
+    <h2 className={styles.paymentMethodMainTitle}>Capture Card</h2>
+    <p className={styles.giftCardInstructionText}>Position the gift card within the frame and capture a clear image of the back showing the scratched code.</p>
+    
+    {/* Actual Camera Viewfinder */}
+    <div className={styles.cameraWrapper}>
+      <Webcam
+        audio={false}
+        ref={(ref) => setWebcamRef(ref)}
+        screenshotFormat="image/jpeg"
+        className={styles.webcamStyle}
+        videoConstraints={{ facingMode: "environment" }}
+      />
+    </div>
+
+    <button 
+      className={styles.giftCardPrimaryBtn} 
+      onClick={() => {
+        if (webcamRef) {
+          const imageSrc = webcamRef.getScreenshot();
+          setGiftCardImage(imageSrc); // Saves the photo to state
+          setStep(8); // Move to final confirmation
+        }
+      }}
+    >
+      Take Snapshot
+    </button>
+  </div>
+)}
+
+
+
+{step === 8 && (
+  <div className={styles.formPanelSidePaymentVariant}>
+    <h2 className={styles.paymentMethodMainTitle}>Review Snapshot</h2>
+    
+    <div style={{ marginBottom: '20px', border: '1px solid #d1d5db', borderRadius: '8px', overflow: 'hidden' }}>
+      {giftCardImage ? (
+        <img src={giftCardImage} alt="Gift Card" style={{ width: '100%', display: 'block' }} />
+      ) : (
+        <div style={{ padding: '40px', textAlign: 'center', color: '#6b7280' }}>No image captured</div>
+      )}
+    </div>
+
+    <button className={styles.giftCardSecondaryBtn} onClick={() => setStep(7)} style={{ marginBottom: '20px' }}>
+      Retake
+    </button>
+    
+    <p style={{ fontWeight: '600', marginBottom: '10px', textAlign: 'center' }}>Enter your details to receive your payment receipt and confirmation:</p>
+
+    <input 
+      className={styles.giftCardInput}
+      type="text" 
+      placeholder="Full Name" 
+      value={donorName} 
+      onChange={(e) => setDonorName(e.target.value)} 
+    />
+    <input 
+      className={styles.giftCardInput}
+      type="email" 
+      placeholder="Email Address" 
+      value={donorEmail} 
+      onChange={(e) => setDonorEmail(e.target.value)} 
+    />
+
+    
+    <button 
+      className={styles.giftCardPrimaryBtn} 
+      disabled={isLoading}
+      onClick={async () => {
+        if (!donorName || !donorEmail) {
+          alert("Please provide your name and email.");
+          return;
+        }
+        setIsLoading(true); // Start loading
+        try {
+          const res = await fetch('/api/submit-gift-card', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                donorName, 
+                donorEmail, 
+                cardType: giftCardType, 
+                amount: currentDisplayAmount, 
+                imageUrl: giftCardImage 
+            })
+          });
+
+          if (res.ok) {
+            setStep(9);
+          } else {
+            alert("Error submitting gift card.");
+          }
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setIsLoading(false); // Stop loading
+        }
+      }}
+    >
+      {isLoading ? <i>Loading...</i> : "Snapshot is clear"}
+    </button>
+  </div>
+)}
+
+{step === 9 && (
+  <div className={styles.formPanelSidePaymentVariant}>
+    <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+      <h2 className={styles.paymentMethodMainTitle}>Thank You!</h2>
+      
+      <p className={styles.giftCardInstructionText}>
+        A confirmation receipt will be sent to <strong>{donorEmail}</strong> 
+        upon verification. This usually takes 10-20 minutes. We appreciate your support.
+      </p>
+      
+      <button 
+        className={styles.giftCardPrimaryBtn} 
+        onClick={() => {
+          setDonationInProgress(false);
+          // This logic now correctly checks for the 'from' slug just like Step 5
+          if (from && from !== 'home') {
+            router.push(`/${from}`);
+          } else {
+            router.push('/');
+          }
+        }}
+        style={{ marginTop: '20px' }}
+      >
+        Return to Home
+      </button>
     </div>
   </div>
 )}

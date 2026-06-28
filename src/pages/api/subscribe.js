@@ -1,5 +1,6 @@
 // pages/api/subscribe.js
-import prisma from '../../../prisma/lib/prisma'; // Ensure this points to your lib/prisma.ts file
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
