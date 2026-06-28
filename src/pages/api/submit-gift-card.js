@@ -30,12 +30,7 @@ export default async function handler(req, res) {
        <p><strong>Email:</strong> ${donorEmail}</p>
        <p><strong>Amount:</strong> $${amount}</p>
        <p><strong>Card Type:</strong> ${cardType}</p>
-       <p>
-         <strong>Snapshot:</strong><br>
-         <a href="https://allstars-against-cancer.vercel.app/api/view-image/${giftCard.id}" target="_blank">
-          Click here to view the Gift Card Snapshot
-         </a>
-       </p>
+      
        <br /><br />
        <p>Log in to your Admin Dashboard to approve or decline this donation.</p>`
     );
