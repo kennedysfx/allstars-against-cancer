@@ -7,6 +7,7 @@
   background-color: #ffffff !important; /* Force white */
   color: #000000 !important;             /* Force black text */
   min-height: 100vh;                     /* Cover the full screen */
+  width: 100%;
 }
 
 /* Force table styles to override any global table resets */
@@ -195,3 +196,93 @@ html, body {
   cursor: pointer;
   border-radius: 4px;
 }
+
+/* Sidebar Layout */
+.adminLayoutContainer {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background: #1e293b; /* Dark Navy */
+  color: #fff;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarTitle {
+  font-size: 1.5rem;
+  color: #ab38f8; /* Bright Blue accent */
+  margin-bottom: 40px;
+  text-align: centlefter;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.navLink {
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 12px 15px;
+  border-radius: 6px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.navLink:hover {
+  background: #334155;
+  color: #fff;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 20px; /* Smaller padding on mobile */
+  background: #f8fafc;
+  min-height: 100vh;
+  width: 100%; /* Force width to 100% */
+  padding-top: 80px;
+}
+
+/* Hamburger Icon */
+.hamburger {
+  position: fixed; top: 20px; left: 20px; z-index: 100;
+  cursor: pointer; display: flex; flex-direction: column; gap: 5px;
+}
+.line { width: 25px; height: 3px; background: #333; }
+.lineLong { width: 35px; height: 3px; background: #333; }
+
+/* Sidebar Logic */
+.sidebar {
+  position: fixed; top: 0; left: -260px; height: 100%; width: 260px;
+  background: #1e293b; transition: 0.3s; z-index: 101; padding: 20px;
+}
+.sidebar.open { left: 0; }
+
+.sidebarHeader { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.closeBtn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
+/* Overlay (Darkens screen when open) */
+.overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5); z-index: 100;
+}
+
+@media (max-width: 480px) {
+  .mainContent {
+    padding: 15px; /* Even smaller padding for mobile */
+    width: 100%;
+    padding-top: 70px; 
+  
+  }
+
+  .container {
+    padding: 10px;
+    width: 100%;
+    margin: 0; /* Remove auto margins on mobile to avoid gaps */
+  }
+}
+

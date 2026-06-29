@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import { useRouter } from 'next/router';
 import '../styles/globals.css';
+import { AuthProvider } from '../context/AuthContext';
 import { CampaignProvider, useCampaign } from '../context/CampaignContext';
 import CampaignLayout from '../components/CampaignLayout';
 import GlobalFooter from '../components/GlobalFooter';
@@ -27,10 +28,11 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   
   const isDonateRoute = router.pathname === '/donate';
-  const isAdminRoute = router.pathname === '/admin';
+  const isAdminRoute = router.pathname.startsWith('/admin');
   const isErrorPage = pageProps.statusCode === 404 || Component.name === 'Error';
 
   return (
+    <AuthProvider>
     <CampaignProvider>
       <CampaignWrapper>
         <div className={inter.className}>
@@ -66,6 +68,7 @@ function MyApp({ Component, pageProps }) {
         </div>
       </CampaignWrapper>
     </CampaignProvider>
+    </AuthProvider>
   );
 }
 

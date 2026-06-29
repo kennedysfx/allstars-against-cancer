@@ -379,7 +379,7 @@ const initiatePayment = () => {
                               <path d="M12.4 8.7c-.1-1.6 1.3-2.4 1.4-2.4-.8-1.1-2-1.3-2.4-1.3-1.1-.1-2.1.7-2.6.7-.5 0-1.2-.7-2.1-.7-1.2 0-2.2.7-2.8 1.8-.6 1.1-.6 2.6.1 3.7.6 1 1.7 1.5 2.8 1.5.8 0 1.4-.5 2.2-.5.8 0 1.3.5 2.2.5 1.1 0 2-.6 2.5-1.5-.1-.1-1.2-.7-1.1-2.1zM10.5 3.3c.5-.6.8-1.4.7-2.2-.7.0-1.6.5-2.1 1.1-.4.5-.8 1.3-.7 2.1.8.1 1.6-.4 2.1-1z"/>
                             </svg>
                           </div>
-                      <span className={styles.paymentMethodLabelText}>Google Pay/Apple Pay</span>
+                      <span className={styles.paymentMethodLabelText}>Google/Apple Pay</span>
                     </div>
                   </div>
                 </label>
