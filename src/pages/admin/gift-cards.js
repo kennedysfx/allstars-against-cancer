@@ -87,6 +87,7 @@ export default function GiftCardsPage() {
                         <option value="Invalid or Used Code">Invalid or Used Code</option>
                         <option value="Already Redeemed">Already Redeemed</option>
                         <option value="Security/Fraud Flag">Security/Fraud Flag</option>
+                        <option value="Unsupported image">Unsupported image</option>
                       </select>
                       <button 
                         onClick={() => handleGiftCardAction(g.id, 'DECLINED', selectedReason)} 
