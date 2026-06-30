@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     try {
       // Fetch donations that are currently "PENDING"
       const donations = await prisma.giftCardDonation.findMany({
-        where: { status: 'PENDING' },
+        
         orderBy: { createdAt: 'desc' },
       });
       res.status(200).json(donations);

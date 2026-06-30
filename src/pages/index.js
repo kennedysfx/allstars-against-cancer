@@ -1,10 +1,11 @@
-import { useEffect, useRef } from 'react'; 
+import { useEffect, useRef, useState } from 'react';
 import { useCampaign } from '../context/CampaignContext';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 export function HomepageContent({ hideLowerSections = false }) {
   const { activeSlug } = useCampaign(); 
+  const [loading, setLoading] = useState(false);
   const missionTextRef = useRef(null); 
   const router = useRouter();
   const from = router.query.slug || 'home';
@@ -207,6 +208,7 @@ export function HomepageContent({ hideLowerSections = false }) {
                className="newsletter-form" 
                 onSubmit={async (e) => {
                  e.preventDefault();
+                 setLoading(true);
         
                   // 1. Gather data from inputs
                 const formData = {
@@ -232,9 +234,11 @@ export function HomepageContent({ hideLowerSections = false }) {
                  alert("Subscription failed: " + result.message);
                  }
                  } catch (error) {
-          alert("Error connecting to server.");
-        }
-               }}
+                   alert("Error connecting to server.");
+                 }finally {
+                setLoading(false); // 4. Stop loading (success or fail)
+                }
+                }}
                 >
                <div className="form-group">
              <label htmlFor="firstName" className="form-label">First Name</label>
@@ -251,8 +255,12 @@ export function HomepageContent({ hideLowerSections = false }) {
               <input type="email" id="emailAddress" className="form-input" placeholder="example@email.com" required />
               </div>
 
-              <button type="submit" className="newsletter-submit-btn">
-             Submit
+             <button 
+              type="submit" 
+              className="newsletter-submit-btn" 
+              disabled={loading}
+            >
+              {loading ? 'LOADING...' : 'SUBMIT'}
             </button>
           </form>
         </div>

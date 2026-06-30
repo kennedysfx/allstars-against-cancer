@@ -223,6 +223,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex-grow: 1;
 }
 
 .navLink {
@@ -259,6 +260,7 @@ html, body {
 .sidebar {
   position: fixed; top: 0; left: -260px; height: 100%; width: 260px;
   background: #1e293b; transition: 0.3s; z-index: 101; padding: 20px;
+  display: flex; flex-direction: column;
 }
 .sidebar.open { left: 0; }
 
@@ -286,3 +288,24 @@ html, body {
   }
 }
 
+
+.logoutBtn {
+  background: #4206b1;
+  color: white;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  margin-top: auto; /* Ensures it sticks to the bottom */
+}
+
+.logoutBtn:hover {
+  background: #36047c;
+}
+
+.sidebarInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

@@ -3,37 +3,45 @@ import { useRouter } from 'next/router';
 import { useAuth } from '../../context/AuthContext';
 import AdminLayout from '../../components/AdminLayout';
 import styles from '../../styles/admin.module.css';
+import dynamic from 'next/dynamic'; // 1. Import Next's dynamic tool
 
-export default function HistoryPage() {
+function HistoryPage() {
   const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { isAuthenticated } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    // 1. Auth Guard
     if (!isAuthenticated) {
       router.push('/admin');
       return;
     }
 
-    // 2. Fetch all logs
-    Promise.all([
-      fetch('/api/donations').then(res => res.json()),
-      fetch('/api/gift-card-donations').then(res => res.json()),
-      fetch('/api/subscribers').then(res => res.json())
-    ]).then(([donations, giftCards, subscribers]) => {
-      
-      const allEvents = [
-        ...donations.map(d => ({ type: 'Donation', detail: `Received $${d.amount}`, date: d.date })),
-        ...giftCards.map(g => ({ type: 'GiftCard', detail: `Status: ${g.status} ($${g.amount})`, date: g.createdAt })),
-        ...subscribers.map(s => ({ type: 'Subscriber', detail: `New email: ${s.email}`, date: s.createdAt }))
-      ].sort((a, b) => new Date(b.date) - new Date(a.date));
+    const fetchData = async () => {
+      try {
+        const [donations, giftCards, subscribers] = await Promise.all([
+          fetch('/api/donations').then(res => res.json()),
+          fetch('/api/gift-card-donations').then(res => res.json()),
+          fetch('/api/subscribers').then(res => res.json())
+        ]);
+        
+        const allEvents = [
+          ...donations.map(d => ({ type: 'Donation', detail: `Received $${d.amount}`, date: d.date })),
+          ...giftCards.map(g => ({ type: 'GiftCard', detail: `Status: ${g.status} ($${g.amount})`, date: g.createdAt })),
+          ...subscribers.map(s => ({ type: 'Subscriber', detail: `New email: ${s.email}`, date: s.createdAt }))
+        ].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-      setHistory(allEvents);
-    }).catch(err => console.error("Failed to fetch history:", err));
+        setHistory(allEvents);
+      } catch (err) {
+        console.error("Failed to fetch history:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, [isAuthenticated, router]);
 
-  // 3. Prevent rendering until auth is confirmed
   if (!isAuthenticated) return null;
 
   return (
@@ -48,15 +56,24 @@ export default function HistoryPage() {
           </tr>
         </thead>
         <tbody>
-          {history.map((item, index) => (
-            <tr key={index}>
-              <td>{new Date(item.date).toLocaleDateString()}</td>
-              <td>{item.type}</td>
-              <td>{item.detail}</td>
-            </tr>
-          ))}
+          {loading ? (
+            <tr><td colSpan="3">Loading...</td></tr>
+          ) : history.length > 0 ? (
+            history.map((item, index) => (
+              <tr key={index}>
+                <td>{new Date(item.date).toLocaleDateString()}</td>
+                <td>{item.type}</td>
+                <td>{item.detail}</td>
+              </tr>
+            ))
+          ) : (
+            <tr><td colSpan="3">No history found.</td></tr>
+          )}
         </tbody>
       </table>
     </AdminLayout>
   );
 }
+
+// 2. Export the page with SSR completely disabled
+export default dynamic(() => Promise.resolve(HistoryPage), { ssr: false });

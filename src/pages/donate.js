@@ -673,8 +673,8 @@ onClick={() => {
     <h2 className={styles.paymentMethodMainTitle}>Gift Card Payment</h2>
 
     <p className={styles.giftCardInstructionText}>
-      Please purchase a <strong>${currentDisplayAmount}</strong> gift card from a local store. 
-      You will need to take a photo of the back showing the scratched code.
+      Purchase a physical <strong>${currentDisplayAmount}</strong> gift card from a local store. 
+      A snapshot of the revealed claim code will be required in the next step for verification.
     </p>
 
     {/* The Selector Button / Display Area */}

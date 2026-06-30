@@ -1,13 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '../../context/AuthContext'; // 1. Import the hook
+import { useAuth } from '../../context/AuthContext'; 
 import AdminLayout from '../../components/AdminLayout';
 import styles from '../../styles/admin.module.css';
 
 export default function AdminDashboard() {
-  const { isAuthenticated, setIsAuthenticated } = useAuth(); // 2. Use global state
+  const { isAuthenticated, setIsAuthenticated } = useAuth(); 
   const [password, setPassword] = useState('');
+  const [mounted, setMounted] = useState(false); // 1. Add mounted state
   const router = useRouter();
+
+  useEffect(() => {
+    setMounted(true); // 2. Tell React the browser is ready
+    if (!isAuthenticated) {
+      setPassword(''); 
+    }
+  }, [isAuthenticated]);
 
   const checkPassword = async (e) => {
     e.preventDefault();
@@ -21,12 +29,17 @@ export default function AdminDashboard() {
     const data = await res.json();
 
     if (data.success) {
-      setIsAuthenticated(true); // 3. Updates global state, unlocking all other pages
-      alert('Login successful!');
+      setIsAuthenticated(true); 
     } else {
       alert('Incorrect password');
+      setPassword('');
     }
   };
+
+  // 3. Prevent Server/Client mismatch by rendering nothing during hydration
+  if (!mounted) {
+    return null; 
+  }
 
   // If not authenticated, show the login form
   if (!isAuthenticated) {
