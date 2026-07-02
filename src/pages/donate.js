@@ -962,7 +962,7 @@ function Step10QRCode({ paymentMethod = 'Card', selectedAmount, donorEmail, onCa
 
   // 2. FIXED: Removed double slash and appended the encoded email parameter cleanly
   const safeEmail = encodeURIComponent(donorEmail || '');
-  const mobileCheckoutUrl = `https://allstars-against-cancer.vercel.app/donate/mobile-checkout?method=${paymentMethod}&amount=${selectedAmount}&email=${safeEmail}`;
+  const mobileCheckoutUrl = `https://xwjfx3n8-3000.uks1.devtunnels.ms/donate/mobile-checkout?method=${paymentMethod}&amount=${selectedAmount}&email=${safeEmail}`;
 
   return (
     <div className={styles.qrContainer}>

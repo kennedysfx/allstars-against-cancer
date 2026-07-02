@@ -15,6 +15,7 @@ function CampaignWrapper({ children }) {
   const router = useRouter();
   const { donationInProgress } = useCampaign();
   const isDonateRoute = router.pathname === '/donate';
+  const isMobileCheckoutRoute = router.pathname.includes('/donate/mobile-checkout');
 
   return (
     <>
@@ -29,7 +30,7 @@ function MyApp({ Component, pageProps }) {
   
   const isDonateRoute = router.pathname === '/donate';
   const isAdminRoute = router.pathname.startsWith('/admin');
-  const isMobileCheckoutRoute = router.pathname === '/donate/mobile-checkout';
+  const isMobileCheckoutRoute = router.pathname.includes('/donate/mobile-checkout');
   const isErrorPage = pageProps.statusCode === 404 || Component.name === 'Error';
 
   return (
@@ -56,11 +57,12 @@ function MyApp({ Component, pageProps }) {
           {/* 3. ERROR MODE */}
           {isErrorPage && <Component {...pageProps} />}
 
-          {/* 5. MOBILE CHECKOUT MODE (ADDED: Renders the component raw with zero layouts) */}
+          {/* 5. MOBILE CHECKOUT MODE */}
           {isMobileCheckoutRoute && <Component {...pageProps} />}
 
           {/* 4. NORMAL MODE */}
-          {!isAdminRoute && !isDonateRoute && !isErrorPage && (
+          {/* FIXED: Added !isMobileCheckoutRoute to block normal layouts from rendering here */}
+          {!isAdminRoute && !isDonateRoute && !isErrorPage && !isMobileCheckoutRoute && (
             <>
               <CampaignLayout>
                 <Component {...pageProps} />
