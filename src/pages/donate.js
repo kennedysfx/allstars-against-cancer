@@ -513,7 +513,7 @@ const initiatePayment = () => {
 onClick={() => {
   // Safe lowercase conversion to prevent any casing bugs
   const currentMethod = paymentMethod?.toLowerCase() || '';
-  const isMobileWallet = ['googlepay', 'applepay', 'paypal'].includes(currentMethod);
+  const isMobileWallet = ['googlepay', 'applepay', 'paypal', 'credit'].includes(currentMethod);
 
   if (currentMethod === 'crypto') {
     setStep(3);
@@ -962,7 +962,7 @@ function Step10QRCode({ paymentMethod = 'Card', selectedAmount, donorEmail, onCa
 
   // 2. FIXED: Removed double slash and appended the encoded email parameter cleanly
   const safeEmail = encodeURIComponent(donorEmail || '');
-  const mobileCheckoutUrl = `https://xwjfx3n8-3000.uks1.devtunnels.ms/donate/mobile-checkout?method=${paymentMethod}&amount=${selectedAmount}&email=${safeEmail}`;
+  const mobileCheckoutUrl = `https://allstars-against-cancer.vercel.app/donate/mobile-checkout?method=${paymentMethod}&amount=${selectedAmount}&email=${safeEmail}`;
 
   return (
     <div className={styles.qrContainer}>
