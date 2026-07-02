@@ -1,0 +1,95 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100dvh; /* Dynamic viewport height prevents mobile browser address bar layout jumps */
+  background-color: #f8fafc; /* Clean, soft background */
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.card {
+  background: #ffffff;
+  padding: 40px 24px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #0066cc; /* Matches your brand blue */
+  border-radius: 50%;
+  margin: 0 auto 24px auto;
+  animation: spin 1s linear infinite;
+}
+
+.card h2 {
+  font-size: 1.4rem;
+  color: #0f172a;
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.amountHighlight {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.errorIcon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.primaryButton {
+  background: #0066cc;
+  color: #ffffff;
+  border: none;
+  padding: 14px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: background 0.2s ease;
+}
+
+.primaryButton:hover {
+  background: #004499;
+}
+
+.secondaryButton {
+  background: transparent;
+  color: #64748b;
+  border: 1.5px solid #cbd5e1;
+  padding: 14px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.secondaryButton:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}

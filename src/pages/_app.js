@@ -19,7 +19,7 @@ function CampaignWrapper({ children }) {
   return (
     <>
       {children}
-      {donationInProgress && !isDonateRoute && <PersistentDonationBar />}
+      {donationInProgress && !isDonateRoute && !isMobileCheckoutRoute && <PersistentDonationBar />}
     </>
   );
 }
@@ -29,6 +29,7 @@ function MyApp({ Component, pageProps }) {
   
   const isDonateRoute = router.pathname === '/donate';
   const isAdminRoute = router.pathname.startsWith('/admin');
+  const isMobileCheckoutRoute = router.pathname === '/donate/mobile-checkout';
   const isErrorPage = pageProps.statusCode === 404 || Component.name === 'Error';
 
   return (
@@ -54,6 +55,9 @@ function MyApp({ Component, pageProps }) {
 
           {/* 3. ERROR MODE */}
           {isErrorPage && <Component {...pageProps} />}
+
+          {/* 5. MOBILE CHECKOUT MODE (ADDED: Renders the component raw with zero layouts) */}
+          {isMobileCheckoutRoute && <Component {...pageProps} />}
 
           {/* 4. NORMAL MODE */}
           {!isAdminRoute && !isDonateRoute && !isErrorPage && (
