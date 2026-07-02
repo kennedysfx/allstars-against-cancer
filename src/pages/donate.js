@@ -73,6 +73,8 @@ export default function DonatePage() {
   const [webcamRef, setWebcamRef] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isDesktop, setIsDesktop] = useState(false);
+
   // --- DERIVED VALUES ---
   const currentDisplayAmount = selectedAmount === 'other' ? (customAmount || 0) : selectedAmount;
   const presetAmounts = [50, 100, 500, 1000, 5000, 10000];
@@ -154,6 +156,39 @@ export default function DonatePage() {
     if (autoAdvance === 'true') setStep(2);
   }, [router.isReady, amount, cycle, autoAdvance]);
 
+
+  useEffect(() => {
+    // Ensure this only evaluates in the browser environment
+    if (typeof window !== 'undefined') {
+      const checkScreenSize = () => {
+        // 768px is the standard modern breakpoint for tablets and smaller screens
+        setIsDesktop(window.innerWidth >= 768);
+      };
+
+      // Run immediately on page mount
+      checkScreenSize();
+
+      // Listen for browser window resizes
+      window.addEventListener('resize', checkScreenSize);
+      return () => window.removeEventListener('resize', checkScreenSize);
+    }
+  }, []);
+
+
+
+  const handlePaymentProcessing = () => {
+    const targetMethods = ['card', 'googlepay', 'applepay', 'paypal'];
+
+    // If the device is a desktop AND the chosen payment method is one of our targets
+    if (isDesktop && targetMethods.includes(paymentMethod.toLowerCase())) {
+      setStep(10); // Divert directly to the Step 10 UI view
+      return;
+    }
+
+    // Otherwise, execute regular checkout for mobile screen users
+    initiatePayment();
+  };
+
  
 const handleDonateSubmit = useCallback(() => {
   if (Number(currentDisplayAmount) <= 0) {
@@ -207,12 +242,13 @@ const initiatePayment = () => {
 
 
 
+
   return (
     <div className={styles.isolatedPageViewportOverride}>
       <main className={styles.pageWrapper}>
         
        <div className={styles.topControlBar}>
-  {(step === 1 || step === 2 || step === 3 || step === 4 || step === 6 || step === 7 || step === 8) && (
+  {(step === 1 || step === 2 || step === 3 || step === 4 || step === 6 || step === 7 || step === 8|| step === 10) && (
     <button 
       type="button" 
       className={styles.closeButtonAbsolute}
@@ -473,25 +509,35 @@ const initiatePayment = () => {
   <button 
     type="button" 
     className={`${styles.primaryActionStep2SubmitCTA} ${paymentMethod === 'paypal' ? styles.paypalExactGoldButton : styles.continueExactBlackButton}`}
-// In your Step 2 UI (the "Proceed to Secure Payment" button):
+
 onClick={() => {
-  if (paymentMethod === 'crypto') {
+  // Safe lowercase conversion to prevent any casing bugs
+  const currentMethod = paymentMethod?.toLowerCase() || '';
+  const isMobileWallet = ['googlepay', 'applepay', 'paypal'].includes(currentMethod);
+
+  if (currentMethod === 'crypto') {
     setStep(3);
-  } else if (paymentMethod === 'giftcard') {
-    setStep(6); // Navigate to Gift Card flow
+  } else if (currentMethod === 'giftcard') {
+    setStep(6); 
   } else {
-    initiatePayment(); 
+    // Rely directly on your existing isDesktop state variable
+    if (isDesktop && isMobileWallet) {
+      setStep(10);
+    } else {
+      initiatePayment();
+    }
   }
 }}
-  >
-    {paymentMethod === 'paypal' 
-      ? 'Pay with PayPal' 
-      : paymentMethod === 'crypto' 
-        ? 'Select Cryptocurrency' 
-        : paymentMethod === 'giftcard' 
+>
+  {/* Keeps your exact original text structure, just added .toLowerCase() for safety */}
+  {paymentMethod?.toLowerCase() === 'paypal' 
+    ? 'Pay with PayPal' 
+    : paymentMethod?.toLowerCase() === 'crypto' 
+      ? 'Select Cryptocurrency' 
+      : paymentMethod?.toLowerCase() === 'giftcard' 
         ? 'Send a Gift Card' 
         : 'Proceed to Secure Payment'}
-  </button>
+</button>
 </div>
 
               <button 
@@ -887,8 +933,59 @@ onClick={() => {
     </div>
   </div>
 )}
-        </div>
-      </main>
+
+
+{step === 10 && (
+            <Step10QRCode 
+              paymentMethod={paymentMethod} 
+              selectedAmount={selectedAmount}
+              donorEmail={donorEmail}
+              onCancel={() => setStep(2)} 
+            />
+          )}
+
+        </div> {/* Closes donationModalContainer */}
+      </main> {/* Closes pageWrapper */}
+    </div> 
+  );
+}
+
+
+// 1. FIXED: Added 'donorEmail' to the destructured props here
+function Step10QRCode({ paymentMethod = 'Card', selectedAmount, donorEmail, onCancel }) {
+  const formatPaymentName = (method) => {
+    if (method.toLowerCase() === 'googlepay') return 'Google Pay';
+    if (method.toLowerCase() === 'applepay') return 'Apple Pay';
+    if (method.toLowerCase() === 'paypal') return 'PayPal';
+    return 'Debit/Credit Card';
+  };
+
+  // 2. FIXED: Removed double slash and appended the encoded email parameter cleanly
+  const safeEmail = encodeURIComponent(donorEmail || '');
+  const mobileCheckoutUrl = `https://allstars-against-cancer.vercel.app/donate/mobile-checkout?method=${paymentMethod}&amount=${selectedAmount}&email=${safeEmail}`;
+
+  return (
+    <div className={styles.qrContainer}>
+      <div className={styles.qrHeader}>
+        <h2>Authorize on Mobile Device</h2>
+        <p className={styles.subtitle}>
+          Scan the QR code below to complete your donation of <strong>${selectedAmount}</strong> via 
+          <strong> {formatPaymentName(paymentMethod)}</strong> on your mobile device.
+        </p>
+      </div>
+      <div className={styles.qrWrapper}>
+        {/* 3. Pass the dynamic URL into your QR generator */}
+        <QRCodeSVG 
+          value={mobileCheckoutUrl} 
+          size={200} 
+          includeMargin={true} 
+        />
+      </div>
+      <div className={styles.qrFooter}>
+        <button type="button" onClick={onCancel} className={styles.backButton}>
+          Choose another payment method
+        </button>
+      </div>
     </div>
   );
 }
