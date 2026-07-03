@@ -1556,3 +1556,9 @@ button.faqFooterLinkBlock {
   color: #ffffff;
   border-color: #111111;
 }
+
+.disabledCTA {
+  opacity: 0.65;
+  cursor: not-allowed !important;
+  /* You can also add background-color: #cccccc !important; if you want to turn it grey */
+}

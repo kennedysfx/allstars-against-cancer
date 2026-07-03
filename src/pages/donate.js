@@ -74,6 +74,7 @@ export default function DonatePage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [isDesktop, setIsDesktop] = useState(false);
+  const [hasAgreed, setHasAgreed] = useState(false);
 
   // --- DERIVED VALUES ---
   const currentDisplayAmount = selectedAmount === 'other' ? (customAmount || 0) : selectedAmount;
@@ -347,17 +348,39 @@ const initiatePayment = () => {
                 </div>
               </div>
 
-              <button 
-                type="button" 
-                className={styles.primaryActionStep1SubmitCTA}
-                disabled={Number(currentDisplayAmount) === 0}
-                onClick={handleDonateSubmit}
-              >
-                {Number(currentDisplayAmount) > 0 
-                  ? `Donate $${Number(currentDisplayAmount).toLocaleString()}${billingCycle === 'monthly' ? ' / month' : ''}` 
-                  : 'Choose an amount'
-                }
-              </button>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', margin: '20px 0', textAlign: 'left' }}>
+      <input
+        type="checkbox"
+        id="legalConsent"
+        checked={hasAgreed}
+        onChange={(e) => setHasAgreed(e.target.checked)}
+        style={{ marginTop: '3px', cursor: 'pointer', width: '16px', height: '16px' }}
+      />
+      <label htmlFor="legalConsent" style={{ fontSize: '14px', color: '#595959', cursor: 'pointer', userSelect: 'none', lineHeight: '1.4' }}>
+        I agree to the{' '}
+        <a href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#3030F1', textDecoration: 'none', fontWeight: 'bold' }}>
+          Terms of Use
+        </a>{' '}
+        and{' '}
+        <a href="/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#3030F1', textDecoration: 'none', fontWeight: 'bold' }}>
+          Privacy Policy
+        </a>.
+      </label>
+    </div>
+    {/* ======================================================== */}
+
+    {/* UPDATED BUTTON: Added "|| !hasAgreed" to disabled logic */}
+    <button 
+      type="button" 
+      className={`${styles.primaryActionStep1SubmitCTA} ${!hasAgreed ? styles.disabledCTA : ''}`}
+      disabled={Number(currentDisplayAmount) === 0 || !hasAgreed}
+      onClick={handleDonateSubmit}
+    >
+      {Number(currentDisplayAmount) > 0 
+        ? `Donate $${Number(currentDisplayAmount).toLocaleString()}${billingCycle === 'monthly' ? ' / month' : ''}` 
+        : 'Choose an amount'
+      }
+    </button>
 
               <button 
                 type="button"

@@ -220,3 +220,24 @@
     gap: 0;
   }
 }
+
+.legalLinks {
+  margin-top: 8px;
+  display: flex;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: #4c4f54; /* Adjust color to match your theme */
+}
+
+.legalLinks a {
+  text-decoration: underline;
+  color: inherit;
+}
+
+.legalLinks a:hover {
+  color: #000; /* Darken on hover for accessibility */
+}
+
+.separator {
+  color: #cbd5e1;
+}

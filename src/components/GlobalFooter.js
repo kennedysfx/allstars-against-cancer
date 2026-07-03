@@ -138,8 +138,14 @@ return (
         <img src="/logo.png" alt="Logo" className={styles.footerLogo} />
         <div className={styles.copyrightWrapper}>
           <p>Copyright © 2026 AllStars Against Cancer. All rights reserved.</p>
-        </div>
-      </div>
+          
+        <nav className={styles.legalLinks}>
+      <Link href="/privacy">Privacy Policy</Link>
+      <span className={styles.separator}>|</span>
+      <Link href="/terms">Terms and Conditions</Link>
+    </nav>
+  </div>
+</div>
     </footer>
   );
 }
