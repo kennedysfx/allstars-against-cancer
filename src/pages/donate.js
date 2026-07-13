@@ -467,19 +467,7 @@ const initiatePayment = () => {
                   </div>
                 </label>
 
-                <label className={`${styles.methodSelectRowCard} ${paymentMethod === 'paypal' ? styles.activeMethodRowCard : ''}`}>
-                  <div className={styles.cardLeftControlArea}>
-                    <input type="radio" name="payment_option" checked={paymentMethod === 'paypal'} onChange={() => setPaymentMethod('paypal')} style={{ display: 'none' }} />
-                    <div className={styles.customUIRadioCircle}>{paymentMethod === 'paypal' && <div className={styles.customUIRadioInnerDot} />}</div>
-                    <div className={styles.brandIconNameFlexRow}>
-                      <div className={styles.paypalMonogramAsset}>
-                        <span className={styles.ppDarkBlue}>P</span>
-                        <span className={styles.ppLightBlue}>P</span>
-                      </div>
-                      <span className={styles.paymentMethodLabelText}>PayPal</span>
-                    </div>
-                  </div>
-                </label>
+
 
                 <label className={`${styles.methodSelectRowCard} ${paymentMethod === 'crypto' ? styles.activeMethodRowCard : ''}`}>
                   <div className={styles.cardLeftControlArea}>
@@ -543,12 +531,7 @@ onClick={() => {
   } else if (currentMethod === 'giftcard') {
     setStep(6); 
   } else {
-    // Rely directly on your existing isDesktop state variable
-    if (isDesktop && isMobileWallet) {
-      setStep(10);
-    } else {
-      initiatePayment();
-    }
+    setStep(11);
   }
 }}
 >
@@ -966,6 +949,34 @@ onClick={() => {
               onCancel={() => setStep(2)} 
             />
           )}
+
+          {step === 11 && (
+  <div className={styles.formPanelSidePaymentVariant}>
+    {/* Optional Back Button for consistent UI */}
+    
+    {/* Notice I added a subtle red color to indicate an error/unavailable state */}
+    <h2 className={styles.paymentMethodMainTitle} style={{ color: '#f70e06' }}>
+      Payment Method Unavailable
+    </h2>
+    
+    <div style={{ textAlign: 'center', padding: '20px 0'}}>
+      <p className={styles.instructionText} style={{ marginBottom: '15px', textAlign: 'center', color: '#020202' }}>
+        We are currently unable to process Google Pay or Credit Card, transactions.
+      </p>
+      
+      <p className={styles.instructionText} style={{ fontWeight: '600', marginBottom: '30px' , textAlign: 'center', padding: '10px 0', color: '#020202'  }}>
+        Please use another payment method. We advise selecting either <strong>Crypto Currency</strong> or a <strong>Gift Card</strong> to complete your donation.
+      </p>
+      
+      <button 
+        className={styles.confirmPaymentButton} 
+        onClick={() => setStep(2)}
+      >
+        Choose Another Method
+      </button>
+    </div>
+  </div>
+)}
 
         </div> {/* Closes donationModalContainer */}
       </main> {/* Closes pageWrapper */}
