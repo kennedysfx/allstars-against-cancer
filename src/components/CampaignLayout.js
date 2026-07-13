@@ -51,6 +51,7 @@ export default function CampaignLayout({ children }) {
     'josh-groban': "Music has the power to heal, but medical research has the power to cure. I am proud to partner with AllStars Against Cancer to accelerate life-saving oncology breakthroughs. Every bit of support directly empowers brilliant scientists working on the frontlines.",
     'tems':"We are all connected, and no one should have to walk through the darkness of this disease alone. I’m using my voice to call on you to join forces with AllStars Against Cancer Foundation. Let’s fund real change and bring hope to so many lives",
     'reba-mcentire': "Cancer doesn't care who you are, but we sure care about looking out for one another. I’m calling on my wonderful family of fans to join hands with AllStars Against Cancer Foundation. Together, we can fund the ground-breaking clinical trials that will bring hope, healing, and an end to this disease for good.",
+    'jay-harrington': "It’s about action. I’m backing AllStars Against Cancer Foundation to fund the clinical trials that are saving lives right now. This is where real progress happens. I’m asking you to step up with me and make a donation, help us fund a breakthrough, and let's get results. We can do this.",
   };
 
   const activeMessage = personalNarratives[activeSlug.toLowerCase()] || 
