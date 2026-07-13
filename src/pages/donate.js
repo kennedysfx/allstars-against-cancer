@@ -326,7 +326,6 @@ const initiatePayment = () => {
               <div className={`${styles.customAmountFieldRow} ${selectedAmount === 'other' ? styles.activeCustomRow : ''}`}>
                 <div className={styles.currencyPrefixCell}>
                   <span>USD</span>
-                  <span className={styles.dropdownCaretIcon}>▼</span>
                 </div>
                 <div className={styles.inputWrapperBlock}>
                   <span className={styles.currencySymbolInline}>$</span>
