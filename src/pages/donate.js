@@ -950,7 +950,7 @@ onClick={() => {
           )}
 
           {step === 11 && (
-  <div className={styles.formPanelSidePaymentVariant}>
+  <div className={`${styles.formPanelSidePaymentVariant} ${styles.unavailableStepContainer}`}>
     {/* Optional Back Button for consistent UI */}
     
     {/* Notice I added a subtle red color to indicate an error/unavailable state */}

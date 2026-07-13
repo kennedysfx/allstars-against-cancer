@@ -1562,3 +1562,26 @@ button.faqFooterLinkBlock {
   cursor: not-allowed !important;
   /* You can also add background-color: #cccccc !important; if you want to turn it grey */
 }
+
+@media (max-width: 480px) {
+  .paymentMethodMainTitle
+  {
+    font-size: 1.29rem; /* Slightly smaller for mobile screens */
+  }
+  .unavailableStepContainer {
+    min-height: auto !important;
+    height: fit-content !important;
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+  }
+
+  /* Shrinks any accidental large default margins on the title inside this container */
+  .unavailableStepContainer .paymentMethodMainTitle {
+    margin-top: 5px !important;
+    margin-bottom: 15px !important;
+  }
+
+}
