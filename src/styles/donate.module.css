@@ -1566,7 +1566,7 @@ button.faqFooterLinkBlock {
 @media (max-width: 480px) {
   .paymentMethodMainTitle
   {
-    font-size: 1.25rem; /* Slightly smaller for mobile screens */
+    font-size: 1.22rem; /* Slightly smaller for mobile screens */
   }
   .unavailableStepContainer {
     min-height: auto !important;
