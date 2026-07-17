@@ -444,27 +444,52 @@ const initiatePayment = () => {
 
 
 
-                <label className={`${styles.methodSelectRowCard} ${paymentMethod === 'credit' ? styles.activeMethodRowCard : ''}`}>
-                  <div className={styles.cardLeftControlArea}>
-                    <input type="radio" name="payment_option" checked={paymentMethod === 'credit'} onChange={() => setPaymentMethod('credit')} style={{ display: 'none' }} />
-                    <div className={styles.customUIRadioCircle}>{paymentMethod === 'credit' && <div className={styles.customUIRadioInnerDot} />}</div>
-                    <div className={styles.brandIconNameFlexRow}>
-                      <svg className={styles.leftCreditCardIcon} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect>
-                        <line x1="2" y1="10" x2="22" y2="10"></line>
-                        <line x1="6" y1="15" x2="6.01" y2="15"></line>
-                        <line x1="10" y1="15" x2="14" y2="15"></line>
-                      </svg>
-                      <span className={styles.paymentMethodLabelText}style={{ marginLeft: '-18px' }}>Debit or credit</span>
-                    </div>
-                  </div>
-                  <div className={styles.cardBrandBadgesRightGroup}>
-                    <img src="https://img.icons8.com/color/48/visa.png" alt="Visa" className={styles.fintechImageAsset} />
-                    <img src="https://img.icons8.com/color/48/amex.png" alt="Amex" className={styles.fintechImageAsset} />
-                    <img src="https://img.icons8.com/color/48/discover.png" alt="Discover" className={styles.fintechImageAsset} />
-                    <img src="https://img.icons8.com/color/48/mastercard.png" alt="Mastercard" className={styles.fintechImageAsset} />
-                  </div>
-                </label>
+<label className={`${styles.methodSelectRowCard} ${paymentMethod === 'credit' ? styles.activeMethodRowCard : ''}`}>
+  <div className={styles.cardLeftControlArea}>
+    <input 
+      type="radio" 
+      name="payment_option" 
+      checked={paymentMethod === 'credit'} 
+      onChange={() => setPaymentMethod('credit')} 
+      style={{ display: 'none' }} 
+    />
+    <div className={styles.customUIRadioCircle}>
+      {paymentMethod === 'credit' && <div className={styles.customUIRadioInnerDot} />}
+    </div>
+    
+    <div className={styles.brandIconNameFlexRow}>
+      
+      <svg 
+        className={styles.leftCreditCardIcon} 
+        width="24" 
+        height="24" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="1.2" 
+        strokeLinecap="round" 
+        strokeLinejoin="round"
+      >
+        <rect x="2" y="5" width="20" height="14" rx="2.5" ry="2.5" />
+        <path d="M2 8.5h20V11H2z" fill="currentColor" stroke="none" />
+        <line x1="5" y1="14" x2="8" y2="14" />
+        <line x1="5" y1="16" x2="7" y2="16" />
+        <circle cx="18" cy="15" r="0.6" fill="currentColor" stroke="none" />
+      </svg>
+      
+      <span className={styles.paymentMethodLabelText} style={{ marginLeft: '-7px' }}>
+        Debit or credit
+      </span>
+    </div>
+  </div>
+  
+  <div className={styles.cardBrandBadgesRightGroup}>
+    <img src="https://img.icons8.com/color/48/visa.png" alt="Visa" className={styles.fintechImageAsset} />
+    <img src="https://img.icons8.com/color/48/amex.png" alt="Amex" className={styles.fintechImageAsset} />
+    <img src="https://img.icons8.com/color/48/discover.png" alt="Discover" className={styles.fintechImageAsset} />
+    <img src="https://img.icons8.com/color/48/mastercard.png" alt="Mastercard" className={styles.fintechImageAsset} />
+  </div>
+</label>
 
 
 
