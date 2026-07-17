@@ -477,13 +477,13 @@ const initiatePayment = () => {
         <circle cx="18" cy="15" r="0.6" fill="currentColor" stroke="none" />
       </svg>
       
-      <span className={styles.paymentMethodLabelText} style={{ marginLeft: '-10px' }}>
+      <span className={styles.paymentMethodLabelText} style={{ marginLeft: '-18px' }}>
         Debit or credit
       </span>
     </div>
   </div>
 {/* 🌟 FIXED: LIVE DIRECT URLS FOR THE EXACT UNIFORM ROUNDED BADGES 🌟 */}
-<div className={styles.cardBrandBadgesRightGroup} style={{ display: 'flex', gap: '4px', alignItems: 'center', flexShrink: 0 }}>
+<div className={styles.cardBrandBadgesRightGroup} style={{ display: 'flex', gap: '0px', alignItems: 'center', flexShrink: 0 }}>
     <img 
       src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/visa.svg" 
       alt="Visa" 
