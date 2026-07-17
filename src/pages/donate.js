@@ -477,17 +477,33 @@ const initiatePayment = () => {
         <circle cx="18" cy="15" r="0.6" fill="currentColor" stroke="none" />
       </svg>
       
-      <span className={styles.paymentMethodLabelText} style={{ marginLeft: '-7px' }}>
+      <span className={styles.paymentMethodLabelText} style={{ marginLeft: '-10px' }}>
         Debit or credit
       </span>
     </div>
   </div>
-  
-  <div className={styles.cardBrandBadgesRightGroup}>
-    <img src="https://img.icons8.com/color/48/visa.png" alt="Visa" className={styles.fintechImageAsset} />
-    <img src="https://img.icons8.com/color/48/amex.png" alt="Amex" className={styles.fintechImageAsset} />
-    <img src="https://img.icons8.com/color/48/discover.png" alt="Discover" className={styles.fintechImageAsset} />
-    <img src="https://img.icons8.com/color/48/mastercard.png" alt="Mastercard" className={styles.fintechImageAsset} />
+{/* 🌟 FIXED: LIVE DIRECT URLS FOR THE EXACT UNIFORM ROUNDED BADGES 🌟 */}
+<div className={styles.cardBrandBadgesRightGroup} style={{ display: 'flex', gap: '4px', alignItems: 'center', flexShrink: 0 }}>
+    <img 
+      src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/visa.svg" 
+      alt="Visa" 
+      style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
+    />
+    <img 
+      src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/american_express.svg" 
+      alt="Amex" 
+      style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
+    />
+    <img 
+      src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/discover.svg" 
+      alt="Discover" 
+      style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
+    />
+    <img 
+      src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/master.svg" 
+      alt="Mastercard" 
+      style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
+    />
   </div>
 </label>
 
