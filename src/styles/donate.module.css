@@ -1585,3 +1585,17 @@ button.faqFooterLinkBlock {
   }
 
 }
+
+@media (max-width: 480px) {
+  .cardBrandBadgesRightGroup {
+    /* Clips the container so anything outside the width is hidden */
+    overflow: hidden;
+    
+    /* Adjust this width value until exactly 3 cards are visible */
+    /* Based on 16px height + gaps, 100px-110px is usually the sweet spot */
+    max-width: 100px; 
+    
+    /* Ensures the cards start from the left */
+    justify-content: flex-start;
+  }
+}

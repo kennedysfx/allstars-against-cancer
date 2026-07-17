@@ -489,9 +489,9 @@ const initiatePayment = () => {
       alt="Visa" 
       style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
     />
-    <img 
-      src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/american_express.svg" 
-      alt="Amex" 
+        <img 
+      src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/master.svg" 
+      alt="Mastercard" 
       style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
     />
     <img 
@@ -499,9 +499,9 @@ const initiatePayment = () => {
       alt="Discover" 
       style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
     />
-    <img 
-      src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/master.svg" 
-      alt="Mastercard" 
+        <img 
+      src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/american_express.svg" 
+      alt="Amex" 
       style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
     />
   </div>
