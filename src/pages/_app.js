@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { Inter } from 'next/font/google';
 import { useRouter } from 'next/router';
 import '../styles/globals.css';
@@ -35,7 +36,13 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <AuthProvider>
-    <CampaignProvider>
+<CampaignProvider>
+
+      {/* 👉 2. PLACE YOUR GOOGLE VERIFICATION TAG HERE */}
+      <Head>
+        <meta name="google-site-verification" content="yDTpPppvvpkgSc3Aq1nr9ibqmymEyyjuHFvuc2P1sHQ" />
+      </Head>
+
       <CampaignWrapper>
         <div className={inter.className}>
           
