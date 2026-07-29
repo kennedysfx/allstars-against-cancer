@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import styles from '../styles/research.module.css';
@@ -132,6 +133,15 @@ const researchData = [
   return (
 
     <>
+    {/* 🟢 THIS IS THE NEW META TAG BLOCK 🟢 */}
+      <Head>
+        <title>Cancer Research Initiatives | AllStars Against Cancer</title>
+        <meta 
+          name="description" 
+          content="Explore the groundbreaking cancer research initiatives funded by AllStars Against Cancer across leading medical institutes and hospitals nationwide." 
+        />
+      </Head>
+
     <section className={styles.heroSection} id="research-overview">
       <div className={styles.container}>
         <div className={`${styles.textWrapper} ${styles.fadeUp}`} ref={addToRefs}>

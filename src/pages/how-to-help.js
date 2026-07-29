@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/how-to-help.module.css';
@@ -63,6 +64,14 @@ export default function HowToHelpPage() {
 
   return (
     <>
+    {/* 🟢 THIS IS THE NEW META TAG BLOCK 🟢 */}
+      <Head>
+        <title>How to Help | AllStars Against Cancer</title>
+        <meta 
+          name="description" 
+          content="Discover how you can make a difference. Explore the many ways to support AllStars Against Cancer and join our mission to fund life-saving cancer research." 
+        />
+      </Head>
       <section className={styles.helpSection}>
         <div className={styles.overlay}>
           <div className={styles.contentWrapper}>

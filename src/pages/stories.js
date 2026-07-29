@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import styles from '../styles/stories.module.css'; // Ensure this matches your file path
@@ -50,6 +51,15 @@ export default function Stories() {
 
 
   return (
+    <>
+      {/* 🟢 THIS IS THE NEW META TAG BLOCK 🟢 */}
+      <Head>
+        <title>Patient Stories | All Stars Against Cancer</title>
+        <meta 
+          name="description" 
+          content="Discover inspiring journeys from those whose lives have been touched by cancer, and learn about the experts leading the charge in modern medical research." 
+        />
+      </Head>
     <div className={styles.pageContainer}>
       {/* 1. Hero Section */}
       <section className={styles.heroSection}>
@@ -332,5 +342,6 @@ export default function Stories() {
 
 
     </div>
+    </>
   );
 }

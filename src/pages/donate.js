@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { QRCodeSVG } from 'qrcode.react';
@@ -245,6 +246,16 @@ const initiatePayment = () => {
 
 
   return (
+    <>
+      {/* 🟢 THIS IS THE NEW META TAG BLOCK 🟢 */}
+      <Head>
+        <title>Donate Today | AllStars Against Cancer</title>
+        <meta 
+          name="description" 
+          content="Make a meaningful impact today. Your donation directly funds groundbreaking cancer research and provides crucial assistance to families in need." 
+        />
+      </Head>
+
     <div className={styles.isolatedPageViewportOverride}>
       <main className={styles.pageWrapper}>
         
@@ -1021,6 +1032,7 @@ onClick={() => {
         </div> {/* Closes donationModalContainer */}
       </main> {/* Closes pageWrapper */}
     </div> 
+    </>
   );
 }
 

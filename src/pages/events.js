@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import styles from '../styles/events.module.css';
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -124,6 +125,15 @@ export default function EventsPage() {
   const addToRefs = (el) => { if (el && !refs.current.includes(el)) refs.current.push(el); };
 
   return (
+    <>
+      {/* 🟢 THIS IS THE NEW META TAG BLOCK 🟢 */}
+      <Head>
+        <title>Events & Fundraisers | AllStars Against Cancer</title>
+        <meta 
+          name="description" 
+          content="Join AllStars Against Cancer at our upcoming events and charity fundraisers. Help us raise vital funds and awareness for cancer research." 
+        />
+      </Head>
     <div className={styles.pageWrapper}>
       {/* Hero Section */}
       <section className={styles.heroContainer}>
@@ -299,6 +309,7 @@ export default function EventsPage() {
               
 
     </div>
+    </>
   );
 }
 

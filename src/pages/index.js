@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useEffect, useRef, useState } from 'react';
 import { useCampaign } from '../context/CampaignContext';
 import Link from 'next/link';
@@ -44,7 +45,17 @@ export function HomepageContent({ hideLowerSections = false }) {
   }, [hideLowerSections]);
 
   return (
+
     <div>
+      {/* 🟢 THIS IS THE NEW META TAG BLOCK 🟢 */}
+      <Head>
+        <title>AllStars Against Cancer | Funding Research & Supporting Families</title>
+        <meta 
+          name="description" 
+          content="AllStars Against Cancer is dedicated to funding innovative cancer research and delivering vital resources, care, and support to patients and families." 
+        />
+      </Head>
+
       {/* HERO SECTION - ALWAYS VISIBLE */}
       <main className={`hero-section ${activeSlug ? 'hide-hero-bg' : ''}`}>
         <div className="hero-content-left">

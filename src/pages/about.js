@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React, { useEffect, useRef, useState } from 'react';
 import styles from '../styles/about.module.css';
 import { useCampaign } from '../context/CampaignContext';
@@ -107,6 +108,15 @@ const boardData = {
 }, []);
 
   return (
+    <>
+      {/* 🟢 THIS IS THE NEW META TAG BLOCK 🟢 */}
+      <Head>
+        <title>About Us | AllStars Against Cancer</title>
+        <meta 
+          name="description" 
+          content="Learn about the mission, team, and story behind AllStars Against Cancer, and see how we are working together to fight cancer." 
+        />
+      </Head>
     
     <div className={styles.aboutContainer}>
       <section id="about-us" className={styles.heroSection}>
@@ -329,5 +339,6 @@ const boardData = {
   </div>
 </section>
     </div>
+    </>
   );
 }
