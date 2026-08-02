@@ -76,30 +76,24 @@ export default function DonatePage() {
 
   const [isDesktop, setIsDesktop] = useState(false);
   const [hasAgreed, setHasAgreed] = useState(false);
+  const [ngnRate, setNgnRate] = useState(null);
 
   // --- DERIVED VALUES ---
   const currentDisplayAmount = selectedAmount === 'other' ? (customAmount || 0) : selectedAmount;
   const presetAmounts = [50, 100, 500, 1000, 5000, 10000];
 
- useEffect(() => {
-    // 1. Only run in the browser
-    if (typeof window !== 'undefined') {
-      // 2. Only inject if it doesn't already exist
-      if (!document.getElementById('flutterwave-script')) {
-        const script = document.createElement('script');
-        script.id = 'flutterwave-script';
-        script.src = "https://checkout.flutterwave.com/v3.js";
-        script.async = true;
-        
-        // 3. Add error handling so it doesn't crash the page on failure
-        script.onerror = () => {
-          console.error("Flutterwave script failed to load.");
-        };
-        
-        document.body.appendChild(script);
-      }
+useEffect(() => {
+  if (typeof window !== 'undefined') {
+    if (!document.getElementById('paystack-script')) {
+      const script = document.createElement('script');
+      script.id = 'paystack-script';
+      script.src = "https://js.paystack.co/v1/inline.js";
+      script.async = true;
+      script.onerror = () => console.error("Paystack script failed to load.");
+      document.body.appendChild(script);
     }
-  }, []);
+  }
+}, []);
 
   useEffect(() => {
   const handleClickOutside = (event) => {
@@ -138,10 +132,26 @@ export default function DonatePage() {
     } catch (err) { console.error("Price fetch failed:", err); }
   };
 
+  const fetchNgnRate = async () => {
+  try {
+    const res = await fetch('https://open.er-api.com/v6/latest/USD');
+    const data = await res.json();
+    if (data?.rates?.NGN) setNgnRate(data.rates.NGN);
+  } catch (err) {
+    console.error("Exchange rate fetch failed:", err);
+  }
+};
+
+
   // --- EFFECTS ---
   useEffect(() => {
     if (step === 4 && cryptoSelection) fetchCryptoPrice(cryptoSelection);
   }, [step, cryptoSelection, currentDisplayAmount]);
+
+
+  useEffect(() => {
+  if (paymentMethod === 'credit') fetchNgnRate();
+  }, [paymentMethod]);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -178,18 +188,7 @@ export default function DonatePage() {
 
 
 
-  const handlePaymentProcessing = () => {
-    const targetMethods = ['card', 'googlepay', 'applepay', 'paypal'];
 
-    // If the device is a desktop AND the chosen payment method is one of our targets
-    if (isDesktop && targetMethods.includes(paymentMethod.toLowerCase())) {
-      setStep(10); // Divert directly to the Step 10 UI view
-      return;
-    }
-
-    // Otherwise, execute regular checkout for mobile screen users
-    initiatePayment();
-  };
 
  
 const handleDonateSubmit = useCallback(() => {
@@ -200,49 +199,67 @@ const handleDonateSubmit = useCallback(() => {
   setStep(2);
 }, [currentDisplayAmount]);
 
-const initiatePayment = () => {
-  const amountToPay = Number(currentDisplayAmount);
-  
-  if (isNaN(amountToPay) || amountToPay <= 0) {
-    alert("Invalid amount: " + amountToPay);
+
+const initiatePaystackPayment = () => {
+  const amountUSD = Number(currentDisplayAmount);
+
+  if (isNaN(amountUSD) || amountUSD <= 0) {
+    alert("Invalid amount: " + amountUSD);
     return;
   }
 
-  // Check if Flutterwave is already loaded
-  if (typeof window.FlutterwaveCheckout === 'function') {
-    window.FlutterwaveCheckout({
-      public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY,
-      tx_ref: `allstars-${Date.now()}`,
-      amount: amountToPay,
-      currency: 'USD',
-      payment_options: 'card, googlepay, paypal',
-      customer: {
-        email: donorEmail || "allstarsforcancercure@outlook.com",
-       
-      },
-      customizations: {
-        title: 'AllStars Against Cancer Foundation', 
-        description: 'Donation to AllStars Against Cancer Foundation',
-        logo: '/logo.png',
-      },
-      callback: (data) => {
-        console.log(data);
-        if (data.status === "successful") {
-          setStep(5);
-        }
-      },
-      onClose: () => {
-        console.log("Payment closed");
-      },
-    });
-  } else {
-    alert("Payment gateway is still loading. Please wait a second and try again.");
+  if (!ngnRate) {
+    alert("Still calculating the exchange rate — please try again in a moment.");
+    fetchNgnRate();
+    return;
   }
+
+  if (typeof window.PaystackPop === 'undefined') {
+    alert("Payment gateway is still loading. Please wait a second and try again.");
+    return;
+  }
+
+  const amountNGN = amountUSD * ngnRate;
+
+  const handler = window.PaystackPop.setup({
+    key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+    email: donorEmail || "allstarsforcancercure@outlook.com",
+    amount: Math.round(amountNGN * 100),
+    currency: 'NGN',
+    ref: `allstars-${Date.now()}`,
+    callback: function (response) {
+      verifyPaystackPayment(response.reference);
+    },
+    onClose: function () {
+      console.log("Paystack payment window closed");
+    },
+  });
+
+  handler.openIframe();
 };
 
+const verifyPaystackPayment = async (reference) => {
+  setIsLoading(true);
+  try {
+    const res = await fetch('/api/verify-paystack', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reference }),
+    });
+    const result = await res.json();
 
-
-
+    if (result.success) {
+      setStep(5);
+    } else {
+      alert("We couldn't verify your payment. Reference: " + reference + " — please contact support.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong verifying your payment.");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
 
   return (
@@ -427,145 +444,162 @@ const initiatePayment = () => {
                 </div>
               </div>
 
-              <div className={styles.paymentMethodOptionsListContainer}>
-                <label className={`${styles.methodSelectRowCard} ${paymentMethod === 'googlepay' ? styles.activeMethodRowCard : ''}`}>
-                  <div className={styles.cardLeftControlArea}>
-                    <input type="radio" name="payment_option" checked={paymentMethod === 'googlepay'} onChange={() => setPaymentMethod('googlepay')} style={{ display: 'none' }} />
-                    <div className={styles.customUIRadioCircle}>{paymentMethod === 'googlepay' && <div className={styles.customUIRadioInnerDot} />}</div>
-                    <div className={styles.brandIconNameFlexRow} style={{ gap: '10px' }}>
-                      <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffffff', border: '1px solid #747775', borderRadius: '10px', padding: '0.1px', height: '20px', width: '35px', userSelect: 'none', pointerEvents: 'none', flexShrink: 0 }}>
-                        <svg viewBox="0 0 28 11" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ height: '85%', width: '85%', display: 'block' }}>
-                          <path d="M2.56 5.37c0-.36-.03-.7-.09-1.03H0v1.95h1.44a1.23 1.23 0 0 1-.53.81v1.35h.86c.5-.47.8-1.16.8-2.08Z" fill="#4285F4"/>
-                          <path d="M0 4.34c.55 0 1.02.19 1.41.56l.66-.66A2.65 2.65 0 0 0 0 3.25C-1.16 3.25-2.17 3.93-2.65 4.93l.89.7c.22-.74.91-1.29 1.76-1.29Z" transform="translate(2.56, 0.01)" fill="#EA4335"/>
-                          <path d="M0 2.21c-.85 0-1.54-.55-1.76-1.29l-.89.7c.48 1 1.49 1.68 2.65 1.68.75 0 1.38-.25 1.84-.68l-.86-1.35C.74 2.13.42 2.21 0 2.21Z" transform="translate(2.56, 6.13)" fill="#34A853"/>
-                          <path d="M1.03 5.37c0-.21.03-.41.1-.61l-.89-.7c-.16.32-.24.68-.24 1.06 0 .38.08.74.24 1.06l.89-.7a1.12 1.12 0 0 1-.1-.61Z" fill="#FBBC05"/>
-                          <path d="M8.13 3.65H6.62v4.06h.74V6.13h.77c.71 0 1.27-.5 1.27-1.24 0-.74-.56-1.24-1.27-1.24Zm0 1.8H7.36v-1.1h.77c.35 0 .58.23.58.55 0 .33-.23.55-.58.55Zm3.94-1.87c-.57 0-1.05.29-1.25.73l.66.28c.13-.25.35-.37.59-.37.32 0 .54.16.54.49v.1c-.19-.1-.48-.18-.83-.18-.7 0-1.19.37-1.19.95 0 .55.43.86.96.86.42 0 .73-.19.87-.48h.02v.4h.71V4.89c0-.68-.53-1.31-1.64-1.31Zm-.08 2.09c-.24 0-.44-.13-.44-.35 0-.25.23-.35.5-.35.25 0 .44.06.57.12a.59.59 0 0 1-.63.58Zm4.1-2.09-.86 2.17h-.02l-.88-2.17h-.79l1.32 3.02-.38.84h.75l1.65-3.86h-.79Z" fill="#5F6368"/>
-                        </svg>
-                      </div>
-                       <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000000', borderRadius: '10px', height: '20px', width: '35px', padding: '2px' }}>
-                            {/* Apple Pay Icon SVG */}
-                            <svg viewBox="0 0 16 16" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" style={{ height: '80%', width: '80%' }}>
-                              <path d="M12.4 8.7c-.1-1.6 1.3-2.4 1.4-2.4-.8-1.1-2-1.3-2.4-1.3-1.1-.1-2.1.7-2.6.7-.5 0-1.2-.7-2.1-.7-1.2 0-2.2.7-2.8 1.8-.6 1.1-.6 2.6.1 3.7.6 1 1.7 1.5 2.8 1.5.8 0 1.4-.5 2.2-.5.8 0 1.3.5 2.2.5 1.1 0 2-.6 2.5-1.5-.1-.1-1.2-.7-1.1-2.1zM10.5 3.3c.5-.6.8-1.4.7-2.2-.7.0-1.6.5-2.1 1.1-.4.5-.8 1.3-.7 2.1.8.1 1.6-.4 2.1-1z"/>
-                            </svg>
-                          </div>
-                      <span className={styles.paymentMethodLabelText}>Google/Apple Pay</span>
-                    </div>
-                  </div>
-                </label>
-
-
-
-<label className={`${styles.methodSelectRowCard} ${paymentMethod === 'credit' ? styles.activeMethodRowCard : ''}`}>
-  <div className={styles.cardLeftControlArea}>
-    <input 
-      type="radio" 
-      name="payment_option" 
-      checked={paymentMethod === 'credit'} 
-      onChange={() => setPaymentMethod('credit')} 
-      style={{ display: 'none' }} 
-    />
-    <div className={styles.customUIRadioCircle}>
-      {paymentMethod === 'credit' && <div className={styles.customUIRadioInnerDot} />}
+<div className={styles.paymentMethodOptionsListContainer}>
+  <label className={`${styles.methodSelectRowCard} ${paymentMethod === 'googlepay' ? styles.activeMethodRowCard : ''}`}>
+    <div className={styles.cardLeftControlArea}>
+      <input type="radio" name="payment_option" checked={paymentMethod === 'googlepay'} onChange={() => setPaymentMethod('googlepay')} style={{ display: 'none' }} />
+      <div className={styles.customUIRadioCircle}>{paymentMethod === 'googlepay' && <div className={styles.customUIRadioInnerDot} />}</div>
+      <div className={styles.brandIconNameFlexRow} style={{ gap: '10px' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffffff', border: '1px solid #747775', borderRadius: '10px', padding: '0.1px', height: '20px', width: '35px', userSelect: 'none', pointerEvents: 'none', flexShrink: 0 }}>
+          <svg viewBox="0 0 28 11" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ height: '85%', width: '85%', display: 'block' }}>
+            <path d="M2.56 5.37c0-.36-.03-.7-.09-1.03H0v1.95h1.44a1.23 1.23 0 0 1-.53.81v1.35h.86c.5-.47.8-1.16.8-2.08Z" fill="#4285F4"/>
+            <path d="M0 4.34c.55 0 1.02.19 1.41.56l.66-.66A2.65 2.65 0 0 0 0 3.25C-1.16 3.25-2.17 3.93-2.65 4.93l.89.7c.22-.74.91-1.29 1.76-1.29Z" transform="translate(2.56, 0.01)" fill="#EA4335"/>
+            <path d="M0 2.21c-.85 0-1.54-.55-1.76-1.29l-.89.7c.48 1 1.49 1.68 2.65 1.68.75 0 1.38-.25 1.84-.68l-.86-1.35C.74 2.13.42 2.21 0 2.21Z" transform="translate(2.56, 6.13)" fill="#34A853"/>
+            <path d="M1.03 5.37c0-.21.03-.41.1-.61l-.89-.7c-.16.32-.24.68-.24 1.06 0 .38.08.74.24 1.06l.89-.7a1.12 1.12 0 0 1-.1-.61Z" fill="#FBBC05"/>
+            <path d="M8.13 3.65H6.62v4.06h.74V6.13h.77c.71 0 1.27-.5 1.27-1.24 0-.74-.56-1.24-1.27-1.24Zm0 1.8H7.36v-1.1h.77c.35 0 .58.23.58.55 0 .33-.23.55-.58.55Zm3.94-1.87c-.57 0-1.05.29-1.25.73l.66.28c.13-.25.35-.37.59-.37.32 0 .54.16.54.49v.1c-.19-.1-.48-.18-.83-.18-.7 0-1.19.37-1.19.95 0 .55.43.86.96.86.42 0 .73-.19.87-.48h.02v.4h.71V4.89c0-.68-.53-1.31-1.64-1.31Zm-.08 2.09c-.24 0-.44-.13-.44-.35 0-.25.23-.35.5-.35.25 0 .44.06.57.12a.59.59 0 0 1-.63.58Zm4.1-2.09-.86 2.17h-.02l-.88-2.17h-.79l1.32 3.02-.38.84h.75l1.65-3.86h-.79Z" fill="#5F6368"/>
+          </svg>
+        </div>
+        <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000000', borderRadius: '10px', height: '20px', width: '35px', padding: '2px' }}>
+          <svg viewBox="0 0 16 16" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" style={{ height: '80%', width: '80%' }}>
+            <path d="M12.4 8.7c-.1-1.6 1.3-2.4 1.4-2.4-.8-1.1-2-1.3-2.4-1.3-1.1-.1-2.1.7-2.6.7-.5 0-1.2-.7-2.1-.7-1.2 0-2.2.7-2.8 1.8-.6 1.1-.6 2.6.1 3.7.6 1 1.7 1.5 2.8 1.5.8 0 1.4-.5 2.2-.5.8 0 1.3.5 2.2.5 1.1 0 2-.6 2.5-1.5-.1-.1-1.2-.7-1.1-2.1zM10.5 3.3c.5-.6.8-1.4.7-2.2-.7.0-1.6.5-2.1 1.1-.4.5-.8 1.3-.7 2.1.8.1 1.6-.4 2.1-1z"/>
+          </svg>
+        </div>
+        <span className={styles.paymentMethodLabelText}>Google/Apple Pay</span>
+      </div>
     </div>
-    
-    <div className={styles.brandIconNameFlexRow}>
+  </label>
+
+  <label className={`${styles.methodSelectRowCard} ${paymentMethod === 'credit' ? styles.activeMethodRowCard : ''}`}>
+    <div className={styles.cardLeftControlArea}>
+      <input 
+        type="radio" 
+        name="payment_option" 
+        checked={paymentMethod === 'credit'} 
+        onChange={() => setPaymentMethod('credit')} 
+        style={{ display: 'none' }} 
+      />
+      <div className={styles.customUIRadioCircle}>
+        {paymentMethod === 'credit' && <div className={styles.customUIRadioInnerDot} />}
+      </div>
       
-      <svg 
-        className={styles.leftCreditCardIcon} 
-        width="24" 
-        height="24" 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth="1.2" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"
-      >
-        <rect x="2" y="5" width="20" height="14" rx="2.5" ry="2.5" />
-        <path d="M2 8.5h20V11H2z" fill="currentColor" stroke="none" />
-        <line x1="5" y1="14" x2="8" y2="14" />
-        <line x1="5" y1="16" x2="7" y2="16" />
-        <circle cx="18" cy="15" r="0.6" fill="currentColor" stroke="none" />
-      </svg>
-      
-      <span className={styles.paymentMethodLabelText} style={{ marginLeft: '-18px' }}>
-        Debit or credit
-      </span>
+      <div className={styles.brandIconNameFlexRow}>
+        
+        <svg 
+          className={styles.leftCreditCardIcon} 
+          width="24" 
+          height="24" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="1.2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        >
+          <rect x="2" y="5" width="20" height="14" rx="2.5" ry="2.5" />
+          <path d="M2 8.5h20V11H2z" fill="currentColor" stroke="none" />
+          <line x1="5" y1="14" x2="8" y2="14" />
+          <line x1="5" y1="16" x2="7" y2="16" />
+          <circle cx="18" cy="15" r="0.6" fill="currentColor" stroke="none" />
+        </svg>
+        
+        <span className={styles.paymentMethodLabelText} style={{ marginLeft: '-18px' }}>
+          Debit or credit
+        </span>
+      </div>
     </div>
-  </div>
-{/* 🌟 FIXED: LIVE DIRECT URLS FOR THE EXACT UNIFORM ROUNDED BADGES 🌟 */}
-<div className={styles.cardBrandBadgesRightGroup} style={{ display: 'flex', gap: '0px', alignItems: 'center', flexShrink: 0 }}>
-    <img 
-      src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/visa.svg" 
-      alt="Visa" 
-      style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
-    />
-        <img 
-      src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/master.svg" 
-      alt="Mastercard" 
-      style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
-    />
-    <img 
-      src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/discover.svg" 
-      alt="Discover" 
-      style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
-    />
-        <img 
-      src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/american_express.svg" 
-      alt="Amex" 
-      style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
-    />
-  </div>
-</label>
+    <div className={styles.cardBrandBadgesRightGroup} style={{ display: 'flex', gap: '0px', alignItems: 'center', flexShrink: 0 }}>
+      <img 
+        src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/visa.svg" 
+        alt="Visa" 
+        style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
+      />
+      <img 
+        src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/master.svg" 
+        alt="Mastercard" 
+        style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
+      />
+      <img 
+        src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/discover.svg" 
+        alt="Discover" 
+        style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
+      />
+      <img 
+        src="https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/american_express.svg" 
+        alt="Amex" 
+        style={{ height: '16px', width: 'auto', objectFit: 'contain' }} 
+      />
+    </div>
+  </label>
 
+  {paymentMethod === 'credit' && (
+    <div style={{
+      margin: '4px 0 12px 0',
+      padding: '10px 14px',
+      backgroundColor: '#F0F4FF',
+      border: '1px solid #C7D2FE',
+      borderRadius: '8px',
+      fontSize: '0.85rem',
+      color: '#3730A3',
+      lineHeight: '1.4'
+    }}>
+{ngnRate ? (
+  <>
+    Your card will be charged ₦{Math.round(Number(currentDisplayAmount) * ngnRate).toLocaleString()}{' '}
+    the secure equivalent of ${Number(currentDisplayAmount).toLocaleString()}.
+  </>
+) : (
+  <>Calculating exchange rate...</>
+)}
+    </div>
+  )}
 
+  <label className={`${styles.methodSelectRowCard} ${paymentMethod === 'crypto' ? styles.activeMethodRowCard : ''}`}>
+    <div className={styles.cardLeftControlArea}>
+      <input type="radio" name="payment_option" checked={paymentMethod === 'crypto'} onChange={() => setPaymentMethod('crypto')} style={{ display: 'none' }} />
+      <div className={styles.customUIRadioCircle}>{paymentMethod === 'crypto' && <div className={styles.customUIRadioInnerDot} />}</div>
+      <div className={styles.brandIconNameFlexRow}>
+        <div className={styles.cryptoBadgeContainer}>
+          <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC" className={styles.cryptoCoinIcon} />
+          <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH" className={styles.cryptoCoinIcon} style={{ marginLeft: '-8px' }} />
+          <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT" className={styles.cryptoCoinIcon} style={{ marginLeft: '-8px' }} />
+        </div>
+        <div className={styles.cryptoTextWrapper}>
+          <span className={styles.paymentMethodLabelText} style={{ marginLeft: '-10px' }}>Cryptocurrencies</span>
+        </div>
+      </div>
+    </div>
+  </label>
 
-                <label className={`${styles.methodSelectRowCard} ${paymentMethod === 'crypto' ? styles.activeMethodRowCard : ''}`}>
-                  <div className={styles.cardLeftControlArea}>
-                    <input type="radio" name="payment_option" checked={paymentMethod === 'crypto'} onChange={() => setPaymentMethod('crypto')} style={{ display: 'none' }} />
-                    <div className={styles.customUIRadioCircle}>{paymentMethod === 'crypto' && <div className={styles.customUIRadioInnerDot} />}</div>
-                    <div className={styles.brandIconNameFlexRow}>
-                      <div className={styles.cryptoBadgeContainer}>
-                        <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC" className={styles.cryptoCoinIcon} />
-                        <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH" className={styles.cryptoCoinIcon} style={{ marginLeft: '-8px' }} />
-                        <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT" className={styles.cryptoCoinIcon} style={{ marginLeft: '-8px' }} />
-                      </div>
-                      <div className={styles.cryptoTextWrapper}>
-                        <span className={styles.paymentMethodLabelText}style={{ marginLeft: '-10px' }}>Cryptocurrencies</span>
-                      </div>
-                    </div>
-                  </div>
-                </label>
-
-
-                <label className={`${styles.methodSelectRowCard} ${paymentMethod === 'giftcard' ? styles.activeMethodRowCard : ''}`}>
-  <div className={styles.cardLeftControlArea}>
-    <input type="radio" name="payment_option" checked={paymentMethod === 'giftcard'} onChange={() => setPaymentMethod('giftcard')} style={{ display: 'none' }} />
-    <div className={styles.customUIRadioCircle}>{paymentMethod === 'giftcard' && <div className={styles.customUIRadioInnerDot} />}</div>
-    
-   <div className={styles.brandIconNameFlexRow}>
-  <div className={styles.cryptoBadgeContainer}>
-    <img 
-      src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" 
-      alt="Apple" 
-      style={{ width: '33px', height: '33px', padding: '4px', backgroundColor: '#fff', borderRadius: '50%' }} 
-    />
-    <img 
-      src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" 
-      alt="Amazon" 
-      style={{ marginLeft: '-15px', width: '33px', height: '33px', padding: '4px', backgroundColor: '#fff', borderRadius: '50%' }} 
-    />
-    <img 
-      src="https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg" 
-      alt="eBay" 
-      style={{ marginLeft: '-15px', width: '33px', height: '33px', padding: '2px', backgroundColor: '#fff', borderRadius: '50%' }} 
-    />
-  </div>
-  <span className={styles.paymentMethodLabelText} style={{ marginLeft: '-10px' }}>Gift Card</span>
+  <label className={`${styles.methodSelectRowCard} ${paymentMethod === 'giftcard' ? styles.activeMethodRowCard : ''}`}>
+    <div className={styles.cardLeftControlArea}>
+      <input type="radio" name="payment_option" checked={paymentMethod === 'giftcard'} onChange={() => setPaymentMethod('giftcard')} style={{ display: 'none' }} />
+      <div className={styles.customUIRadioCircle}>{paymentMethod === 'giftcard' && <div className={styles.customUIRadioInnerDot} />}</div>
+      
+      <div className={styles.brandIconNameFlexRow}>
+        <div className={styles.cryptoBadgeContainer}>
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" 
+            alt="Apple" 
+            style={{ width: '33px', height: '33px', padding: '4px', backgroundColor: '#fff', borderRadius: '50%' }} 
+          />
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" 
+            alt="Amazon" 
+            style={{ marginLeft: '-15px', width: '33px', height: '33px', padding: '4px', backgroundColor: '#fff', borderRadius: '50%' }} 
+          />
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg" 
+            alt="eBay" 
+            style={{ marginLeft: '-15px', width: '33px', height: '33px', padding: '2px', backgroundColor: '#fff', borderRadius: '50%' }} 
+          />
+        </div>
+        <span className={styles.paymentMethodLabelText} style={{ marginLeft: '-10px' }}>Gift Card</span>
+      </div>
+    </div>
+  </label>
 </div>
-  </div>
-</label>
-              </div>
+
+
 
 <div className={styles.paymentContextActionButtonContainer}>
   <button 
@@ -581,6 +615,8 @@ onClick={() => {
     setStep(3);
   } else if (currentMethod === 'giftcard') {
     setStep(6); 
+  } else if (currentMethod === 'credit') {
+    initiatePaystackPayment();
   } else {
     setStep(11);
   }
@@ -1011,12 +1047,12 @@ onClick={() => {
     </h2>
     
     <div style={{ textAlign: 'center', padding: '20px 0'}}>
-      <p className={styles.instructionText} style={{ marginBottom: '15px', textAlign: 'center', color: '#020202' }}>
+      <p className={styles.instructionText} style={{ fontWeight: '600', marginBottom: '15px', textAlign: 'center', color: '#020202' }}>
         We are currently unable to process Google Pay or Credit Card, transactions.
       </p>
       
       <p className={styles.instructionText} style={{ fontWeight: '600', marginBottom: '30px' , textAlign: 'center', padding: '10px 0', color: '#020202'  }}>
-        Please use another payment method. We advise selecting either <strong>Crypto Currency</strong> or a <strong>Gift Card</strong> to complete your donation.
+        Please use another payment method. We advise selecting either <strong>Card</strong>, <strong>Crypto Currency</strong> or a <strong>Gift Card</strong> to complete your donation.
       </p>
       
       <button 

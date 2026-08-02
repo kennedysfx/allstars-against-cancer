@@ -52,6 +52,7 @@ export default function CampaignLayout({ children }) {
     'tems':"We are all connected, and no one should have to walk through the darkness of this disease alone. I’m using my voice to call on you to join forces with AllStars Against Cancer Foundation. Let’s fund real change and bring hope to so many lives",
     'reba-mcentire': "Cancer doesn't care who you are, but we sure care about looking out for one another. I’m calling on my wonderful family of fans to join hands with AllStars Against Cancer Foundation. Together, we can fund the ground-breaking clinical trials that will bring hope, healing, and an end to this disease for good.",
     'jay-harrington': "It’s about action. I’m backing AllStars Against Cancer Foundation to fund the clinical trials that are saving lives right now. This is where real progress happens. I’m asking you to step up with me and make a donation, help us fund a breakthrough, and let's get results. We can do this.",
+    'morgan-wallen': "Hey y'all, cancer has touched way too many of our lives. I’m backing AllStars Against Cancer Foundation to fund the research that actually beats this thing. If you can pitch in a donation today, let’s step up and make a difference together. Love y'all.",
   };
 
   const activeMessage = personalNarratives[activeSlug.toLowerCase()] || 
@@ -107,7 +108,7 @@ export default function CampaignLayout({ children }) {
                   {/* FIXED: Official Fan Proceeds Guarantee Text Element */}
                   <div className="slug-action-caption-wrapper" style={{ marginTop: '10px', textAlign: 'center' }}>
                     <p className="slug-action-caption" style={{ fontSize: '0.82rem', color: '#475467', margin: 0, lineHeight: '1.4' }}>
-                      100% of direct fan proceeds are securely routed to critical oncology research.
+                      100% of your donation goes directly toward critical cancer research and patient care.
                     </p>
                   </div>
                 </div>
