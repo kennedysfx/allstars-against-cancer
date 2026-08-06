@@ -26,7 +26,7 @@ export default function DonationsPage() {
 
   return (
     <AdminLayout>
-      <h1>Donations</h1>
+      <h1>Crypto Donations</h1>
       
       <table className={styles.table}>
         <thead>
