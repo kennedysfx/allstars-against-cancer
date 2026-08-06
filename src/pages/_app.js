@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
 
       {/* 👉 2. PLACE YOUR GOOGLE VERIFICATION TAG HERE */}
       <Head>
-        <meta name="google-site-verification" content="yDTpPppvvpkgSc3Aq1nr9ibqmymEyyjuHFvuc2P1sHQ" />
+        <meta name="google-site-verification" content="tO-shgyY2g-D3ozKd-YPGsNybkBN4hWY4BxLlL138io" />
       </Head>
 
       <CampaignWrapper>
