@@ -17,8 +17,8 @@ export default async function handler(req, res) {
     });
 
    await resend.emails.send({
-  from: 'All Stars Against Cancer Team <onboarding@resend.dev>', // Use your verified sender
-  to: 'kennedysezebilo@gmail.com', // Your verified test address
+  from: 'All Stars Against Cancer Team <contact@allstarsagainstcancer.org>', // Use your verified sender
+  to: email, // Your verified test address
   subject: 'Welcome to the All Stars Against Cancer Foundation',
   html: `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
