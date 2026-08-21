@@ -1048,7 +1048,7 @@ onClick={() => {
     
     <div style={{ textAlign: 'center', padding: '20px 0'}}>
       <p className={styles.instructionText} style={{ fontWeight: '600', marginBottom: '15px', textAlign: 'center', color: '#020202' }}>
-        We are currently unable to process Google Pay or Credit Card, transactions.
+        We are currently unable to process Google/Apple Pay transactions.
       </p>
       
       <p className={styles.instructionText} style={{ fontWeight: '600', marginBottom: '30px' , textAlign: 'center', padding: '10px 0', color: '#020202'  }}>
