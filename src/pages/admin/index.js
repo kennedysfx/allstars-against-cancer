@@ -171,7 +171,7 @@ export default function AdminDashboard() {
         
         <div className={styles.adminHeaderBox}>
            <h2 className={styles.adminGreeting}>Welcome, Admin Kennedy</h2>
-           <h1 className={styles.adminMainHeadline}>This Hussle is Blessed</h1>
+           <h1 className={styles.adminMainHeadline}>This Hustle is Blessed</h1>
            <p className={styles.adminAmenMessage}>In Jesus name, Amen</p>
         </div>
 
